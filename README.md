@@ -1,7 +1,5 @@
 # **Scoring Oral Skills**
 
----
-
 This project has a two-fold aim. On one hand, it aims at providing students of Italian from the beginners stream a way of monitoring their progress in the area of pronunciation and fluency. On the other, it is meant to provide data for the investigation of whether repetition of strings of words impacts the learning of pronunciation and fluency in Italian, and whether an innovative way of receiving feedback motivates students in their learning.
 The project involves the development of an application that will allow students to engage in the following sequence of tasks:
 
