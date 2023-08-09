@@ -1,4 +1,4 @@
-#### Definitions
+### Definitions
 
 <p>Stories: A user story is an informal, general explanation of a software feature written from the perspective of the end user or customer. User stories are a few sentences in simple language that outline the desired outcome. They don't go into detail. Requirements are added later, once agreed upon by the team.</p>
 
@@ -6,9 +6,9 @@
 
 <p>Initiatives: Collections of epics that drive toward a common goal. (likely too large for this project scope)</p>
 
-#### Our project stories
+### Our project stories
 
-<p>Template: “As a **person**, I **want to**... **so that**...”</p>
+<p>Template: “As a __person__, I __want to__... __so that__...”</p>
 
 <ul>
 
