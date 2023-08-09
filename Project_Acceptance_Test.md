@@ -35,13 +35,13 @@ Data would be collected within the application. Ratings by the client would be c
 
 ### Procedure:
 
-Test Analysis Report
+## Test Analysis Report
 Ease of use and accuracy of provided score are examined here.
-<<The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
+*The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
 Function
 Performance
 Data measures, including whether target requirements have been met
-If an error or deficiency has been discovered, the report discusses its impact.>>
+If an error or deficiency has been discovered, the report discusses its impact.*
 
 # Test B
 Students listen to an Italian audio snippet and submit a speaking attempt.
