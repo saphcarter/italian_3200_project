@@ -43,69 +43,31 @@ Performance
 Data measures, including whether target requirements have been met
 If an error or deficiency has been discovered, the report discusses its impact.>>
 
-Test B
+# Test B
 Students listen to an Italian audio snippet and submit a speaking attempt.
-Test Specification
-<<The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.>>
+## Test Specification
+*The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*
 -Audio is recorded accurately and in sufficient quality.
 -Background interference should be minimized.
-Test Description
+## Test Description
 Clients/End user will use the recording functionality of the application 
-<<The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
-Location of test (hyperlink to test)
-Means of Control: Describes how data are entered (manually or automatically with a test driver)
-Data
-Input Data
-Input Commands
-Output Data
-System Messages
-Procedures: The test procedure is often specificed in form of a test script.
-Test Analysis Report
-<<The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
-Function
-Performance
-Data measures, including whether target requirements have been met
-If an error or deficiency has been discovered, the report discusses its impact.>>
 
-Test C
+## Test Analysis Report
+
+# Test C
 Student recording can be played back/re-recorded by the student.
-Test Specification
-<<The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test. >>
-Test Description
-<<The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
-Location of test (hyperlink to test)
-Means of Control: Describes how data are entered (manually or automatically with a test driver)
-Data
-Input Data
-Input Commands
-Output Data
-System Messages
-Procedures: The test procedure is often specificed in form of a test script.
-Test Analysis Report
-<<The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
-Function
-Performance
-Data measures, including whether target requirements have been met
-If an error or deficiency has been discovered, the report discusses its impact.>>
+## Test Specification
+
+## Test Description
+
+## Test Analysis Report
 
 
-Test D
+
+# Test D
 Students can view their past attempts and scores
-Test Specification
-<<The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test. >>
-Test Description
-<<The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
-Location of test (hyperlink to test)
-Means of Control: Describes how data are entered (manually or automatically with a test driver)
-Data
-Input Data
-Input Commands
-Output Data
-System Messages
-Procedures: The test procedure is often specificed in form of a test script.
-Test Analysis Report
-<<The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
-Function
-Performance
-Data measures, including whether target requirements have been met
-If an error or deficiency has been discovered, the report discusses its impact.>>
+## Test Specification
+
+## Test Description
+
+## Test Analysis Report
