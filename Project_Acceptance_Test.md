@@ -1,7 +1,6 @@
 # PROJECT ACCEPTANCE TESTING
 ## Objectives
-* Forecast the testing strategy, the unit tests, integation test and system tests listed in this document.*
-
+*Forecast the testing strategy, the unit tests, integation test and system tests listed in this document.*
 This document will detail the project acceptance testing procedure to be used to access the highest priority features of this project. After having the client complete a $100 test on the proposed features of the product, a prioritized list of features was constructed. Of that list, the features that comprised the top $70 of value were selected:
 Students listen to an Italian audio snippet and submit a speaking attempt
 - Students submit a self-evaluation score and receive a similarity score
@@ -21,14 +20,7 @@ Students submit a self evaluation score and receive a similarity score. ($25)
 *The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*
 The test will be performed under regular application run time conditions. 
 ## Test Description
-Take recordings of a student pronouncing the words and run the similarity algorithm to generate a score. Present our client with the recording and have them provide a score. Examine how our generated rating compares to how the client would rate them. If there are major discrepancies between these scores, the test would fail. This could be done by using a paired t-test to see if there is significant variation.
-
-Data would be collected within the application. Ratings by the client would be collected manually by a team member and entered into a computer for statistical analysis.
-
-Procedure:
-
-
-<<The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
+*The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
 Location of test (hyperlink to test)
 Means of Control: Describes how data are entered (manually or automatically with a test driver)
 Data
@@ -36,7 +28,13 @@ Input Data
 Input Commands
 Output Data
 System Messages
-Procedures: The test procedure is often specificed in form of a test script.
+Procedures: The test procedure is often specificed in form of a test script.*
+Take recordings of a student pronouncing the words and run the similarity algorithm to generate a score. Present our client with the recording and have them provide a score. Examine how our generated rating compares to how the client would rate them. If there are major discrepancies between these scores, the test would fail. This could be done by using a paired t-test to see if there is significant variation.
+
+Data would be collected within the application. Ratings by the client would be collected manually by a team member and entered into a computer for statistical analysis.
+
+### Procedure:
+
 Test Analysis Report
 Ease of use and accuracy of provided score are examined here.
 <<The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
