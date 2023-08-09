@@ -8,7 +8,7 @@
 
 ### Our project stories
 
-<p>Template: “As a __person__, I __want to__... __so that__...”</p>
+<p>Template: “As a <strong>person<strong>, I [want to]... __so that__...”</p>
 
 <ul>
 
