@@ -20,7 +20,13 @@ Students listen to an Italian audio snippet and submit a speaking attempt
 Students submit a self evaluation score and receive a similarity score. ($25)
 ## Test Specification
 *The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*</br>
-The test will be performed under regular application run time conditions. 
+### Requirements being tested:
+- 
+### Conditions of the test:
+- Quality
+- Functionality
+- Usability (How intuitive is the design): Is the scoring system easy to understand?
+The test will be performed under regular application run time conditions.
 ## Test Description
 *The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
 Location of test (hyperlink to test)
@@ -31,12 +37,19 @@ Input Commands
 Output Data
 System Messages
 Procedures: The test procedure is often specificed in form of a test script.*</br>
-Take recordings of a student pronouncing the words and run the similarity algorithm to generate a score. Present our client with the recording and have them provide a score. Examine how our generated rating compares to how the client would rate them. If there are major discrepancies between these scores, the test would fail. This could be done by using a paired t-test to see if there is significant variation.
 
-Data would be collected within the application. Ratings by the client would be collected manually by a team member and entered into a computer for statistical analysis.
-
+### Means of Control: 
+Data is entered automatically with test script.
+### Data
+- Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:  `105`, `70`.
+- Output Data: error, success
+- System Message: `integer out of range`, `successfully committed to database`
 ### Procedure:
 
+### Procedure:
+Take recordings of a student pronouncing the words and run the similarity algorithm to generate a score using an API. Present our client with the recording and have them provide a score. Examine how our generated rating compares to how the client would rate them. If there are major discrepancies between these scores, the test would fail. This could be done by using a paired t-test to see if there is significant variation. This would enable us to ensure that the pronounciation automated scores.
+
+Data would be collected within the application. Ratings by the client would be collected manually by a team member and entered into a computer for statistical analysis.The self evaluation scoring system and the similarity scoring system should be </br>
 ## Test Analysis Report
 Ease of use and accuracy of provided score are examined here.</br>
 *The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
