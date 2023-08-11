@@ -1,4 +1,4 @@
-# PROJECT ACCEPTANCE TESTING
+# *PROJECT ACCEPTANCE TESTING*
 ## Objectives
 *Forecast the testing strategy, the unit tests, integation test and system tests listed in this document.* </br>
 This document will detail the project acceptance testing procedure to be used to access the highest priority features of this project. After having the client complete a $100 test on the proposed features of the product, a prioritized list of features was constructed. Of that list, the features that comprised the top $70 of value were selected:</br>
@@ -20,9 +20,9 @@ Students listen to an Italian audio snippet and submit a speaking attempt
 Students submit a self evaluation score. (Part of $25)
 ## Test Specification
 *The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*</br>
-### Requirements being tested:
+### Methods Tested:
 - 
-### Conditions of the test:
+### Conditions Of The Test:
 - Quality
 - Functionality
 - Usability (How intuitive is the design): Is the scoring system easy to understand?
@@ -124,7 +124,7 @@ Students can view their past attempts and scores ($10)
 - Usability: Students are able to easily access old scores and get a sense of improvement.
 ## Test Description
 ### Means of Control:
-Everything is done manueally.
+Automatic test to see if the expected score matches the recieved score.
 ### Data
 - Input Data: User input: Clicks on play button.
 - Output Data: Audio file played through system speakers.
