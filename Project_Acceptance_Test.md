@@ -16,8 +16,8 @@ Students listen to an Italian audio snippet and submit a speaking attempt
 ## Testing Strategy
 *In this section, define the subsystem or subsystems to be tested, the system integration strategy and how, where, when, and by whom the tests will be conducted. You may want to include drawings depicting relationships among the major classes of the subsystem or the subsystem decomposition, if you feel this is appropriate.*
 
-# Test A
-Students submit a self evaluation score and receive a similarity score. ($25)
+# Test 1.1
+Students submit a self evaluation score. (Part of $25)
 ## Test Specification
 *The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*</br>
 ### Requirements being tested:
@@ -46,42 +46,87 @@ Data is entered automatically with test script.
 - System Message: `integer out of range`, `successfully committed to database`
 ### Procedure:
 
-### Procedure:
-Take recordings of a student pronouncing the words and run the similarity algorithm to generate a score using an API. Present our client with the recording and have them provide a score. Examine how our generated rating compares to how the client would rate them. If there are major discrepancies between these scores, the test would fail. This could be done by using a paired t-test to see if there is significant variation. This would enable us to ensure that the pronounciation automated scores.
 
-Data would be collected within the application. Ratings by the client would be collected manually by a team member and entered into a computer for statistical analysis.The self evaluation scoring system and the similarity scoring system should be </br>
-## Test Analysis Report
-Ease of use and accuracy of provided score are examined here.</br>
-*The Test Analysis Report lists the functions and performance characteristics that were to be demonstrated, and describes the actual test results. The description of the results must include the following:
-Function
-Performance
-Data measures, including whether target requirements have been met
-If an error or deficiency has been discovered, the report discusses its impact.*
-
-# Test B
-Students listen to an Italian audio snippet and submit a speaking attempt.
+# Test 1.2
+Students receive a similarity score. (Part of $25)
 ## Test Specification
-*The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.* <br/>
+*The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test.*</br>
+### Requirements being tested:
+- 
+### Conditions of the test:
+- Quality
+- Functionality
+- Usability (How intuitive is the design): Is the scoring system easy to understand?
+The test will be performed under regular application run time conditions.
+## Test Description
+
+### Means of Control: 
+Data is entered automatically with test script.
+### Data
+- Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:  `105`, `70`.
+- Output Data: error, success
+- System Message: `integer out of range`, `successfully committed to database`
+
+# Test 2.1
+Students listen to an Italian audio snippet (Part of $25).
+## Test Specification
+### Methods Tested:
+- Audio is played at a quality that it is considered audible.
+- Audio is played at a suitable volume (Decibel range that is accessible)
+### Conditions of testing
+- Quality (Are the audio samples of a high enough quality)
+- Functionality (Is it playable on different microphones: Mobile, Laptop, Desktop)
+- Usability (Take into consideration those with difficulty hearing)
+## Test Description
+### Means of Control:
+Everything is done manually.
+### Data
+- Input Data: User input: Clicks on play button.
+- Output Data: Audio file played through system speakers.
+- System Message: None.
+### Procedure:
+
+
+# Test 2.2
+Students submit a speaking attempt (Part of $25).
+## Test Specification
+### Methods Tested:
 - Audio is recorded accurately and in sufficient quality.
 - Background interference should be minimized.
+### Conditions of testing
+- Quality (Are the audio samples of a high enough quality)
+- Functionality (Is the software usable using different microphones: Mobile, Laptop, Desktop)
 ## Test Description
 Clients/End user will use the recording functionality of the application 
+### Means of Control:
+Everything is done manually.
+### Data
+- Input Data: User input: Clicks on play button.
+- Output Data: Audio file played through system speakers.
+- System Message: None.
 
-## Test Analysis Report
-
-# Test C
-Student recording can be played back/re-recorded by the student.
+# Test 3
+Student recording can be played back/re-recorded by the student.($10)
 ## Test Specification
 
 ## Test Description
 
-## Test Analysis Report
 
-
-# Test D
-Students can view their past attempts and scores
+# Test 4
+Students can view their past attempts and scores ($10)
 ## Test Specification
-
+### Methods Tested:
+- Scores are stored correctly in database.
+- Scores are able to be accessed easily.
+- Scores are displayed clearly by date/test.
+### Conditions of testing
+- Functionality: Scores are able to accessed and are correct
+- Usability: Students are able to easily access old scores and get a sense of improvement.
 ## Test Description
+### Means of Control:
+Everything is done manueally.
+### Data
+- Input Data: User input: Clicks on play button.
+- Output Data: Audio file played through system speakers.
+- System Message: None.
 
-## Test Analysis Report
