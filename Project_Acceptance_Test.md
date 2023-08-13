@@ -111,26 +111,26 @@ We will examine the audio elements of the platform, including playing question's
 - A user can record their own audio (functionality).
 - Audio playing and recording functions work on both windows and macOS (functionality).
 - Audio tracks are decipherable and above a certain decibel threshold (quality).
-- A test user can play and record audio without outside help.
+- A user can play and record audio without outside help (usability).
 
 ### 2.2 Conditions of testing
 
 - Conduct test in a quiet room.
 - Ensure hardware used in testing is known to function adequately.
-- Test user must not be someone who developed the platform.
+- Usability tester must not be someone who developed the platform.
 
 ### 2.3 Test Descriptions
 
-#### 2.3.1 Test A - Play audio, manual test
+#### 2.3.1 Test A - Play audio
 
 Procedure:
 
-1. Navigate to a test question screen and ensure volume is turned up.
-2. Activate component that plays test audio.
+1. Navigate to a quiz question screen and ensure volume is turned up.
+2. Activate component that plays the question audio.
 
 Expected output: the audio file will play and sound can be heard from the device
 
-#### 2.3.2 Test B - Record audio, manual test
+#### 2.3.2 Test B - Record audio
 
 Procedure:
 
@@ -140,7 +140,7 @@ Procedure:
 
 Expected output: audio that was recorded will be heard
 
-#### 2.3.3 Test C - Repeat Test A and B on different operating systems, manual test
+#### 2.3.3 Test C - Repeat Test A and B on different operating systems
 
 Procedure:
 
@@ -148,22 +148,23 @@ Procedure:
 2. Repeat Test A on both computers.
 3. Repeat Test B on both computers.
 
-Expected output: see Test A and Test B.
+Expected output: see Test A and Test B expected outputs.
 
-#### 2.3.4 Test D - Audio tracks produce enough decibels, manual test
+#### 2.3.4 Test D - Audio tracks produce enough decibels
 
 Procedure:
 
 1. To establish an appropriate decibel level begin by turning up the computer volume.
 2. Using a device that is not your computer, measure the computers decibel output when playing a phrase from google text to speech.
 3. Write down the avg decibels measured during step 2.
-4. Without adjusting your volume or your measuring device (and take care not to adjust these until the test is complete), repeat steps 2 and 3 two more times.
+4. Without adjusting your volume or your measuring device (and take care not to adjust these until the test is complete), repeat steps 2 and 3 twice more.
 5. Find the average of the values written down in step 3 and 4.
-6. Now play an audio track from the platform and measure the avg decibels.
+6. Now play an audio track from one of the quiz questions, measuring and recording the avg decibels.
+7. Repeat step 6 twice more and calculate the avg decibels of the audio tracks.
 
-Expected output: the average decibels in step 6 should be no less than 80% of the average decibels calculated in step 5.
+Expected output: the average decibels in step 7 should be no less than 80% of the average decibels calculated in step 5.
 
-#### 2.3.5 Test E - Intuitiveness, manual test
+#### 2.3.5 Test E - Intuitiveness
 
 Procedure:
 
@@ -171,36 +172,6 @@ Procedure:
 2. Have a user (who is not from the development team) play and record an audio without any prompts from outside the application.
 
 Expected output: user is able to play and record audio tracks without any help.
-
-# Test 2.2
-
-Students submit a speaking attempt (Part of $25).
-
-## Test Specification
-
-### Methods Tested:
-
-- Audio is recorded accurately and in sufficient quality.
-- Background interference should be minimized.
-
-### Conditions of testing
-
-- Quality (Are the audio samples of a high enough quality)
-- Functionality (Is the software usable using different microphones: Mobile, Laptop, Desktop)
-
-## Test Description
-
-Clients/End user will use the recording functionality of the application
-
-### Means of Control:
-
-Everything is done manually.
-
-### Data
-
-- Input Data: User input: Clicks on play button.
-- Output Data: Audio file played through system speakers.
-- System Message: None.
 
 # Test 3
 
@@ -212,29 +183,39 @@ Student recording can be played back/re-recorded by the student.($10)
 
 # Test 4
 
-Students can view their past attempts and scores ($10)
+We will examine user access to their quiz data. This is related to the requirement 'Students can view their past attempts and scores' valued at $10 by the client in the $100 test. We will be considering two factors for success:
 
-## Test Specification
+- Functionality: Does it work?
+- Usability: Is the design easy to intuit and is the data understandable?
 
-### Methods Tested:
+### 4.1 Test Specification
 
-- Scores are stored correctly in database.
-- Scores are able to be accessed easily.
-- Scores are displayed clearly by date/test.
+- A user can see their correctly reported past scores for each question in a quiz as well as their overall score (functionality).
+- A user can understand the presentation of their data and easily navigate to the attempt and scores they want to see (usability).
 
-### Conditions of testing
+### 4.2 Conditions of testing
 
-- Functionality: Scores are able to accessed and are correct
-- Usability: Students are able to easily access old scores and get a sense of improvement.
+- Usability tester must not be someone who developed the platform.
+- Platform must be signed into an account with previously completed test attempts.
 
-## Test Description
+### 4.3 Test Descriptions
 
-### Means of Control:
+#### 4.3.1 Test A - Viewing scores
 
-Automatic test to see if the expected score matches the recieved score.
+Procedure:
 
-### Data
+1. Navigate to a quiz, complete the quiz noting the reported similarity score and the self-evaluation score you select (do not worry about the accuracy of your answers).
+2. Navigate to the previous attempts view.
+3. Select the quiz that was just attempted and click through individual scores.
 
-- Input Data: User input: Clicks on play button.
-- Output Data: Audio file played through system speakers.
-- System Message: None.
+Expected output: platform will display individual question scores, the overall scores and they match what was noted in step 1.
+
+#### 4.3.2 Test B - Intuitiveness
+
+Procedure:
+
+1. Log into an account with previous quiz attempts.
+2. Navigate to the home screen.
+3. Have a user (who is not from the development team) find the previous attempts and view the scores.
+
+Expected output: user is able to find previous attemps, and can correctly identify the individual question scores and overall scores.
