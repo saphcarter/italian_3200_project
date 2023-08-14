@@ -184,6 +184,7 @@ We will examine how audio recorded by the user is able to be played back and re-
 - User must be basically familiar with the recording functionality of the application.
 ### 3.3 Test Descriptions
 ### 3.3.1 User is provided 3 attempts to record
+Procedure:
 1. User is asked to record an audio file.
 2. User is asked to re-record an audio file.
 3. User is asked to re-record a final time.
@@ -192,6 +193,7 @@ Expected Output Data: Success
 Expected System Message: `Out of recording attempts`
 
 ### 3.3.2 User is able to immediately play back audio
+Procedure:
 1. User is asked to record an audio file.
 2. User is asked to playback the audio file.
 3. User is asked to re-record the audio file.
@@ -199,6 +201,7 @@ Expected System Message: `Out of recording attempts`
 
 Expected Output Data: The first recorded file should be stored for playback. This file should be replaced by the second recording once it is complete.
 ### 3.3.3 The time frame for recording is enough for users.
+Procedure:
 1. The user is provided 4 short words in Italian.
 2. The user is asked to record their pronounciation of the word.
 3. The user is provided 4 long words in Italian.
@@ -215,7 +218,18 @@ Example Questions:
 
 This data would help to influence further decisions on provided time limits for recordings.
 ### 3.3.4 The provided delay is helpful in preparing the user for recording
+Procedure:
+1. The user is asked to complete a quiz.
+2. The user is provided with a questionairre related to the delay.
 
+Expected Input data: Data would be recorded as nominal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
+Example Questions:
+1. The delay helped me to feel more prepared.
+2. The delay should be shorter.
+3. The delay should be longer.
+4. I would prefer no delay.
+
+This data would help to influence further decisions on how a delay should be included, if at all.
 # Test 4
 
 We will examine user access to their quiz data. This is related to the requirement 'Students can view their past attempts and scores' valued at $10 by the client in the $100 test. We will be considering two factors for success:
