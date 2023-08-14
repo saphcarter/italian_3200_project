@@ -37,11 +37,7 @@ Students submit a self evaluation score. (Part of $25)
 - The scoring system can handle incorrect values (non integer and out of range exceptions) (functionality)
 - The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)</br>
 Students receive a similarity score. (Part of $25)
-- 
-
-### Methods Tested:
-
--
+  
 
 ### 1.2 Conditions Of The Testing:
 Data is entered automatically with test script.
@@ -72,13 +68,6 @@ Expected System Message: `integer out of range`, `non integer value`
 #### 1.3.4 Test Generated Score with speaking audio file.
 
 #### 1.3.5 Test Generated Score with Client provided speaking file.
-
-
-### Data
-
--
-- Output Data: error, success
-- System Message: `integer out of range`, `successfully committed to database`
 
 
 # Test 2
