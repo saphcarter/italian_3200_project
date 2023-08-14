@@ -50,44 +50,33 @@ Data is entered automatically with test script.
 
 ### 1.3 Test Descriptions
 
-### 1.3.1 Test Correct Input for Self Evaluation
+#### 1.3.1 Test Correct Input for Self Evaluation
 Procedure:
 1. User is directed to provide a score that is an integer between 1 to 100.
 
+Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
 Expected Output Data: Success
 Expected System Message: `successfully committed to database`
 
-### 1.3.2 Test Incorrect Input for Self Evaluation
+#### 1.3.2 Test Incorrect Input for Self Evaluation
 Procedure:
 1. User is directed to provide a score that is less than 1.
 2. User is then directed to enter a non integer value.
 
+Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:`-1`, `105`.
 Expected Output Data: Error
 Expected System Message: `integer out of range`, `non integer value`
 
-### 1.3.3 Gather usability data for self evaluation.
+#### 1.3.3 Gather usability data for self evaluation.
 
-### 1.3.4 Test Generated Score with speaking audio file.
+#### 1.3.4 Test Generated Score with speaking audio file.
 
-### 1.3.5 Test Generated Score with Client provided speaking file.
-
-_The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
-Location of test (hyperlink to test)
-Means of Control: Describes how data are entered (manually or automatically with a test driver)
-Data
-Input Data
-Input Commands
-Output Data
-System Messages
-Procedures: The test procedure is often specificed in form of a test script._</br>
-
-
-
+#### 1.3.5 Test Generated Score with Client provided speaking file.
 
 
 ### Data
 
-- Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `105`, `70`.
+-
 - Output Data: error, success
 - System Message: `integer out of range`, `successfully committed to database`
 
