@@ -169,10 +169,17 @@ Procedure:
 Expected output: user is able to play and record audio tracks without any help.
 
 # Test 3
+We will examine how audio recorded by the user is able to be played back and re-recorded. The client has specififed that they would like students to be given 3 attempts at recording audio for quizes. This is related to the 'Student recording can be played back/re-recorded by the student' which was valued at $10 by the client. The following considerations will be made to determine succesful completion of the tests:
 
-Student recording can be played back/re-recorded by the student.($10)
+- Functionality: Students are able to record/re-record audio and play it back.
+- Usability: The recording functionality is easy to use.
 
-## Test Specification
+## 3.1 Test Specification
+
+- A user is able to record/re-record audio files for each word up to 3 times (functionality).
+- A user is able to play back recorded audio (functionality).
+- A user can record audio for up to 20 seconds (functionality).
+- The
 
 ## Test Description
 
