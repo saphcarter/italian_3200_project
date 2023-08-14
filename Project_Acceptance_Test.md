@@ -31,12 +31,11 @@ We will be examining how the implemented scoring system meets the specified requ
 
 The test will be performed under regular application run time conditions.
 
-## 1.1 Test Specification
+### 1.1 Test Specification
 Students submit a self evaluation score. (Part of $25)
 - A user can manually enter in an integer value within the range of 1 - 100 (functionality)
 - The scoring system can handle incorrect values (non integer and out of range exceptions) (functionality)
-- The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)
-
+- The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)</br>
 Students receive a similarity score. (Part of $25)
 - 
 
@@ -44,10 +43,33 @@ Students receive a similarity score. (Part of $25)
 
 -
 
-### Conditions Of The Test:
+### 1.2 Conditions Of The Testing:
+Data is entered automatically with test script.
+- Needs to have functionality for audio recording.
+- 
 
+### 1.3 Test Descriptions
 
-## Test Description
+### 1.3.1 Test Correct Input for Self Evaluation
+Procedure:
+1. User is directed to provide a score that is an integer between 1 to 100.
+
+Expected Output Data: Success
+Expected System Message: `successfully committed to database`
+
+### 1.3.2 Test Incorrect Input for Self Evaluation
+Procedure:
+1. User is directed to provide a score that is less than 1.
+2. User is then directed to enter a non integer value.
+
+Expected Output Data: Error
+Expected System Message: `integer out of range`, `non integer value`
+
+### 1.3.3 Gather usability data for self evaluation.
+
+### 1.3.4 Test Generated Score with speaking audio file.
+
+### 1.3.5 Test Generated Score with Client provided speaking file.
 
 _The Test Description is used as a guide in performing the test. It lists the input data and input commands for each test, as well as expected out put and system messages. If you find that you are unable to describe expected output numerically, use a natural language description. A test description consists of
 Location of test (hyperlink to test)
@@ -59,43 +81,16 @@ Output Data
 System Messages
 Procedures: The test procedure is often specificed in form of a test script._</br>
 
-### Means of Control:
-
-Data is entered automatically with test script.
-
-### Data
-
-- Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `105`, `70`.
-- Output Data: error, success
-- System Message: `integer out of range`, `successfully committed to database`
-
-### Procedure:
-
-# Test 1.2
 
 
 
-## Test Specification
-
-_The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test._</br>
-
-### Requirements being tested:
-
--
-
-### Conditions of the test:
-
-## Test Description
-
-### Means of Control:
-
-Data is entered automatically with test script.
 
 ### Data
 
 - Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `105`, `70`.
 - Output Data: error, success
 - System Message: `integer out of range`, `successfully committed to database`
+
 
 # Test 2
 
