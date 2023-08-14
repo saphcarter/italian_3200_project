@@ -208,7 +208,7 @@ Procedure:
 4. The user is asked to record their pronounciation of the word.
 5. The user is then provided a short questionairre on how they felt the recording time impacted their attempts.
 
-Expected Input data: Data would be recorded as nominal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
+Expected Input data: Data would be recorded as ordinal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
 Example Questions:
 1. The time limit made me felt pressured to answer quickly.
 2. The time limit felt suitable for pronounciation of short words.
@@ -222,7 +222,7 @@ Procedure:
 1. The user is asked to complete a quiz.
 2. The user is provided with a questionairre related to the delay.
 
-Expected Input data: Data would be recorded as nominal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
+Expected Input data: Data would be recorded as ordinal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
 Example Questions:
 1. The delay helped me to feel more prepared.
 2. The delay should be shorter.
