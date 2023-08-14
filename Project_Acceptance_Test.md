@@ -174,14 +174,47 @@ We will examine how audio recorded by the user is able to be played back and re-
 - Functionality: Students are able to record/re-record audio and play it back.
 - Usability: The recording functionality is easy to use.
 
-## 3.1 Test Specification
-
+### 3.1 Test Specification
 - A user is able to record/re-record audio files for each word up to 3 times (functionality).
 - A user is able to play back recorded audio (functionality).
-- A user can record audio for up to 20 seconds (functionality).
-- The
+- A user can record audio for up to 5 seconds (functionality).
+- The user is given a delay in order to prepare for recording (Usability).
 
-## Test Description
+### 3.2 Conditions of testing
+- User must be basically familiar with the recording functionality of the application.
+### 3.3 Test Descriptions
+### 3.3.1 User is provided 3 attempts to record
+1. User is asked to record an audio file.
+2. User is asked to re-record an audio file.
+3. User is asked to re-record a final time.
+
+Expected Output Data: Success
+Expected System Message: `Out of recording attempts`
+
+### 3.3.2 User is able to immediately play back audio
+1. User is asked to record an audio file.
+2. User is asked to playback the audio file.
+3. User is asked to re-record the audio file.
+4. User is asked to playback the audio file.
+
+Expected Output Data: The first recorded file should be stored for playback. This file should be replaced by the second recording once it is complete.
+### 3.3.3 The time frame for recording is enough for users.
+1. The user is provided 4 short words in Italian.
+2. The user is asked to record their pronounciation of the word.
+3. The user is provided 4 long words in Italian.
+4. The user is asked to record their pronounciation of the word.
+5. The user is then provided a short questionairre on how they felt the recording time impacted their attempts.
+
+Expected Input data: Data would be recorded as nominal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)
+Example Questions:
+1. The time limit made me felt pressured to answer quickly.
+2. The time limit felt suitable for pronounciation of short words.
+3. The time limit felt suitable for pronounciation of long words.
+4. I would prefer a 10 second time limit.
+5. The time limit should be shorter.
+
+This data would help to influence further decisions on provided time limits for recordings.
+### 3.3.4 The provided delay is helpful in preparing the user for recording
 
 # Test 4
 
