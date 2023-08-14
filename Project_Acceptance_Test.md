@@ -23,13 +23,22 @@ _In this section, describe the functions of the system tested in this document (
 
 _In this section, define the subsystem or subsystems to be tested, the system integration strategy and how, where, when, and by whom the tests will be conducted. You may want to include drawings depicting relationships among the major classes of the subsystem or the subsystem decomposition, if you feel this is appropriate._
 
-# Test 1.1
+# Test 1
+We will be examining how the implemented scoring system meets the specified requirements. This has been broken down into two parts; the user provided self evaluation score and the API generated similarity score. These two requirements combined form a value of $25 in the $100 test that was performed with the client. We will be considering these following factors:
+- Quality: Is the quality of the socring system to the standard of the client.
+- Functionality: Does it function as specified by the requirements.
+- Usability (How intuitive is the design): Is the scoring system easy to understand?
 
+The test will be performed under regular application run time conditions.
+
+## 1.1 Test Specification
 Students submit a self evaluation score. (Part of $25)
+- A user can manually enter in an integer value within the range of 1 - 100 (functionality)
+- The scoring system can handle incorrect values (non integer and out of range exceptions) (functionality)
+- The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)
 
-## Test Specification
-
-_The Test Specification lists the requirements whose satisfaction will be demonstrated by the test. It lists the methods tested, and describes the conditions of the test._</br>
+Students receive a similarity score. (Part of $25)
+- 
 
 ### Methods Tested:
 
@@ -37,10 +46,6 @@ _The Test Specification lists the requirements whose satisfaction will be demons
 
 ### Conditions Of The Test:
 
-- Quality
-- Functionality
-- Usability (How intuitive is the design): Is the scoring system easy to understand?
-  The test will be performed under regular application run time conditions.
 
 ## Test Description
 
@@ -68,7 +73,7 @@ Data is entered automatically with test script.
 
 # Test 1.2
 
-Students receive a similarity score. (Part of $25)
+
 
 ## Test Specification
 
@@ -79,11 +84,6 @@ _The Test Specification lists the requirements whose satisfaction will be demons
 -
 
 ### Conditions of the test:
-
-- Quality
-- Functionality
-- Usability (How intuitive is the design): Is the scoring system easy to understand?
-  The test will be performed under regular application run time conditions.
 
 ## Test Description
 
