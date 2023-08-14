@@ -183,7 +183,7 @@ We will examine how audio recorded by the user is able to be played back and re-
 ### 3.2 Conditions of testing
 - User must be basically familiar with the recording functionality of the application.
 ### 3.3 Test Descriptions
-### 3.3.1 User is provided 3 attempts to record
+#### 3.3.1 User is provided 3 attempts to record
 Procedure:
 1. User is asked to record an audio file.
 2. User is asked to re-record an audio file.
@@ -192,7 +192,7 @@ Procedure:
 Expected Output Data: Success
 Expected System Message: `Out of recording attempts`
 
-### 3.3.2 User is able to immediately play back audio
+#### 3.3.2 User is able to immediately play back audio
 Procedure:
 1. User is asked to record an audio file.
 2. User is asked to playback the audio file.
@@ -200,7 +200,7 @@ Procedure:
 4. User is asked to playback the audio file.
 
 Expected Output Data: The first recorded file should be stored for playback. This file should be replaced by the second recording once it is complete.
-### 3.3.3 The time frame for recording is enough for users.
+#### 3.3.3 The time frame for recording is enough for users.
 Procedure:
 1. The user is provided 4 short words in Italian.
 2. The user is asked to record their pronounciation of the word.
@@ -217,7 +217,7 @@ Example Questions:
 5. The time limit should be shorter.
 
 This data would help to influence further decisions on provided time limits for recordings.
-### 3.3.4 The provided delay is helpful in preparing the user for recording
+#### 3.3.4 The provided delay is helpful in preparing the user for recording
 Procedure:
 1. The user is asked to complete a quiz.
 2. The user is provided with a questionairre related to the delay.
