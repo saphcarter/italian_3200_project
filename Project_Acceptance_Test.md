@@ -114,6 +114,11 @@ Procedure:
 
 The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, the results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
 
+Data would be recorded as ordinal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)</br>
+
+Example Questions:
+1. I feel that the generated score is a good representation of similarity.
+2. The score out of 100 is easy to understand.
 
 
 # Test 2
