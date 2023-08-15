@@ -11,25 +11,17 @@ Students listen to an Italian audio snippet and submit a speaking attempt
 - Students can view their past attempts and scores
 - Acceptance tests were then constructed for these requirements.
 
-## Document References
-
-_In this section, reference the major documents produced during project development. Explains the relationships among the requirements documents, design documents, implementation documents and the test procedures._
-
 ## Test Summary
 
 _In this section, describe the functions of the system tested in this document (Refer to Requirements Analysis Document and Problem Statement)_</br>
 
-## Testing Strategy
-
-_In this section, define the subsystem or subsystems to be tested, the system integration strategy and how, where, when, and by whom the tests will be conducted. You may want to include drawings depicting relationships among the major classes of the subsystem or the subsystem decomposition, if you feel this is appropriate._
 
 # Test 1
 We will be examining how the implemented scoring system meets the specified requirements. This has been broken down into two parts; the user provided self evaluation score and the API generated similarity score. These two requirements combined form a value of $25 in the $100 test that was performed with the client. We will be considering these following factors:
+
 - Quality: Is the quality of the socring system to the standard of the client.
 - Functionality: Does it function as specified by the requirements.
 - Usability (How intuitive is the design): Is the scoring system easy to understand?
-
-The test will be performed under regular application run time conditions.
 
 ### 1.1 Test Specification
 Students submit a self evaluation score. (Part of $25)
@@ -40,34 +32,81 @@ Students receive a similarity score. (Part of $25)
   
 
 ### 1.2 Conditions Of The Testing:
-Data is entered automatically with test script.
-- Needs to have functionality for audio recording.
-- 
+
+- Users must have an understanding of basic functionality provided to them.
+- The test will be performed under regular application run time conditions.
+- All testing will be performed using the same laptop/environment.
 
 ### 1.3 Test Descriptions
 
 #### 1.3.1 Test Correct Input for Self Evaluation
+
 Procedure:
-1. User is directed to provide a score that is an integer between 1 to 100.
+
+1. User is provided with the application running on a laptop.
+2. User is directed to provide a score that is an integer between 0 to 100.
 
 Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
 Expected Output Data: Success
 Expected System Message: `successfully committed to database`
 
 #### 1.3.2 Test Incorrect Input for Self Evaluation
-Procedure:
-1. User is directed to provide a score that is less than 1.
-2. User is then directed to enter a non integer value.
 
-Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:`-1`, `105`.
+Procedure:
+
+1. User is provided with the application running on a laptop.
+2. User is directed to provide a score that is less than 0.
+3. User is then directed to enter a non integer value.
+
+Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:`-1`, `ABCD`.
 Expected Output Data: Error
 Expected System Message: `integer out of range`, `non integer value`
 
 #### 1.3.3 Gather usability data for self evaluation.
 
+Procedure:
+
+1. User is provided with the application running on a laptop.
+2. User is asked to record themselves using the application record functionality.
+3. User is directed to score themselves with an integer between 0 to 100.
+4. User is then directed to enter this value into the application as the self evaluation score.
+5. User is then provided with a short questionairre.
+
+The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, teh results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
+
+Expected Input Data: 
+- User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
+Data would be recorded as ordinal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)</br>
+
+Example Questions:
+1. I feel that a numbered score is a good way of evaluating pronounciation.
+2. I would prefer a rating system that did not use numbers.
+3. The rating range (0-100) is too large.
+4. The rating range (0-100) is too small.
+
+
 #### 1.3.4 Test Generated Score with speaking audio file.
 
+Procedure:
+
+1. Audio file is 
+2. User is asked to record themselves using the application record functionality.
+3. User is directed to score themselves with an integer between 0 to 100.
+4. User is then directed to enter this value into the application as the self evaluation score.
+5. User is then provided with a short questionairre.
+
 #### 1.3.5 Test Generated Score with Client provided speaking file.
+
+Procedure:
+
+1. User is provided with the application running on a laptop.
+2. User is asked to record themselves using the application record functionality.
+3. User is asked to submit recording.
+4. User is provided with a generated similarity score.
+5. User is then provided with a short questionairre.
+
+The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, teh results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
+
 
 
 # Test 2
@@ -153,16 +192,22 @@ We will examine how audio recorded by the user is able to be played back and re-
 - Usability: The recording functionality is easy to use.
 
 ### 3.1 Test Specification
+
 - A user is able to record/re-record audio files for each word up to 3 times (functionality).
 - A user is able to play back recorded audio (functionality).
 - A user can record audio for up to 5 seconds (functionality).
 - The user is given a delay in order to prepare for recording (Usability).
 
 ### 3.2 Conditions of testing
+
+- The test will be performed under regular application run time conditions.
 - User must be basically familiar with the recording functionality of the application.
+
 ### 3.3 Test Descriptions
 #### 3.3.1 User is provided 3 attempts to record
+
 Procedure:
+
 1. User is asked to record an audio file.
 2. User is asked to re-record an audio file.
 3. User is asked to re-record a final time.
@@ -171,15 +216,20 @@ Expected Output Data: Success
 Expected System Message: `Out of recording attempts`
 
 #### 3.3.2 User is able to immediately play back audio
+
 Procedure:
+
 1. User is asked to record an audio file.
 2. User is asked to playback the audio file.
 3. User is asked to re-record the audio file.
 4. User is asked to playback the audio file.
 
 Expected Output Data: The first recorded file should be stored for playback. This file should be replaced by the second recording once it is complete.
+
 #### 3.3.3 The time frame for recording is enough for users.
+
 Procedure:
+
 1. The user is provided 4 short words in Italian.
 2. The user is asked to record their pronounciation of the word.
 3. The user is provided 4 long words in Italian.
@@ -195,8 +245,11 @@ Example Questions:
 5. The time limit should be shorter.
 
 This data would help to influence further decisions on provided time limits for recordings.
+
 #### 3.3.4 The provided delay is helpful in preparing the user for recording
+
 Procedure:
+
 1. The user is asked to complete a quiz.
 2. The user is provided with a questionairre related to the delay.
 
@@ -208,6 +261,8 @@ Example Questions:
 4. I would prefer no delay.
 
 This data would help to influence further decisions on how a delay should be included, if at all.
+
+
 # Test 4
 
 We will examine user access to their quiz data. This is related to the requirement 'Students can view their past attempts and scores' valued at $10 by the client in the $100 test. We will be considering two factors for success:
