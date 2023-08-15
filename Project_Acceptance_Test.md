@@ -67,7 +67,7 @@ Procedure:
 4. User is then directed to enter this value into the application as the self evaluation score.
 5. User is then provided with a short questionairre.
 
-The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, teh results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
+The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, the results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
 
 Expected Input Data: 
 - User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
@@ -97,7 +97,7 @@ Procedure:
 11. Compare client's scores to generated scores.
 
 Expected Input Data: User recorded audio file. Fluent speaker's recorded file.
-Expected Output Data: Generated Similarity Score (0 - 100). Client's similarity score.
+Expected Output Data: Generated Similarity Score (0 - 100). Client's similarity score. </br>
 
 This data will be collected. If there are any large variations between the generated scores and the client scores then updates will need to be made. These could be changes to the comparison audio files or changes to the similarity algorithm itself.
 
@@ -111,7 +111,7 @@ Procedure:
 4. User is provided with a generated similarity score.
 5. User is then provided with a short questionairre.
 
-The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, teh results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
+The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, the results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
 
 
 
