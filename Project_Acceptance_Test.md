@@ -22,9 +22,10 @@ We will be examining how the implemented scoring system meets the specified requ
 Students submit a self evaluation score. (Part of $25)
 - A user can manually enter in an integer value within the range of 1 - 100 (functionality)
 - The scoring system can handle incorrect values (non integer and out of range exceptions) (functionality)
-- The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)</br>
+- The users find the scoring system intuitive and useful for reflection on their pronounciation (Usability)
 Students receive a similarity score. (Part of $25)
-  
+- The generated score is accurate to the clients specifications (Functionality)
+- The generated score is helpful to the user (Usability)
 
 ### 1.2 Conditions Of The Testing:
 
