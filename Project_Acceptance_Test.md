@@ -41,8 +41,8 @@ Procedure:
 1. User is provided with the application running on a laptop.
 2. User is directed to provide a score that is an integer between 0 to 100.
 
-Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
-Expected Output Data: Success
+Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example: `70`. </br>
+Expected Output Data: Success </br>
 Expected System Message: `successfully committed to database`
 
 #### 1.3.2 Test Incorrect Input for Self Evaluation
@@ -53,8 +53,8 @@ Procedure:
 2. User is directed to provide a score that is less than 0.
 3. User is then directed to enter a non integer value.
 
-Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:`-1`, `ABCD`.
-Expected Output Data: Error
+Expected Input Data: User is prompted for an Integer value (`Range 0 - 100`). Example:`-1`, `ABCD`. </br>
+Expected Output Data: Error </br>
 Expected System Message: `integer out of range`, `non integer value`
 
 #### 1.3.3 Gather usability data for self evaluation.
@@ -70,7 +70,7 @@ Procedure:
 The data would be collected using an online form presented on a laptop. The data collected would be annonymous. Once data is collected, the results will be analysed to make decisions to improve the usability and likeability of the self evaluation system.</br>
 
 Expected Input Data: 
-- User is prompted for an Integer value (`Range 0 - 100`). Example: `70`.
+- User is prompted for an Integer value (`Range 0 - 100`). Example: `70`. </br>
 Data would be recorded as ordinal data (Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree)</br>
 
 Example Questions:
@@ -96,7 +96,7 @@ Procedure:
 10. Ask the client to listen to each score and provide her own personal rating (0 - 100).
 11. Compare client's scores to generated scores.
 
-Expected Input Data: User recorded audio file. Fluent speaker's recorded file.
+Expected Input Data: User recorded audio file. Fluent speaker's recorded file.</br>
 Expected Output Data: Generated Similarity Score (0 - 100). Client's similarity score. </br>
 
 This data will be collected. If there are any large variations between the generated scores and the client scores then updates will need to be made. These could be changes to the comparison audio files or changes to the similarity algorithm itself.
@@ -218,7 +218,7 @@ Procedure:
 2. User is asked to re-record an audio file.
 3. User is asked to re-record a final time.
 
-Expected Output Data: Success
+Expected Output Data: Success </br>
 Expected System Message: `Out of recording attempts`
 
 #### 3.3.2 User is able to immediately play back audio
