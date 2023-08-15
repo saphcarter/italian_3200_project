@@ -11,11 +11,6 @@ Students listen to an Italian audio snippet and submit a speaking attempt
 - Students can view their past attempts and scores
 - Acceptance tests were then constructed for these requirements.
 
-## Test Summary
-
-_In this section, describe the functions of the system tested in this document (Refer to Requirements Analysis Document and Problem Statement)_</br>
-
-
 # Test 1
 We will be examining how the implemented scoring system meets the specified requirements. This has been broken down into two parts; the user provided self evaluation score and the API generated similarity score. These two requirements combined form a value of $25 in the $100 test that was performed with the client. We will be considering these following factors:
 
@@ -85,15 +80,26 @@ Example Questions:
 4. The rating range (0-100) is too small.
 
 
-#### 1.3.4 Test Generated Score with speaking audio file.
+#### 1.3.4 Test Generated Score with Speaking Audio File.
 
 Procedure:
 
-1. Audio file is 
-2. User is asked to record themselves using the application record functionality.
-3. User is directed to score themselves with an integer between 0 to 100.
-4. User is then directed to enter this value into the application as the self evaluation score.
-5. User is then provided with a short questionairre.
+1. The user similarity scores are generated through comparison with audio files collected from fluent speakers.
+2. For each word, there will be several recordings made from different fluent speakers.
+3. The similarity score is generated using these audio files.
+4. 10 words of varying length will be selected (These will be the same for each user).
+5. Users will be instructed to make recordings of themsleves pronouncing each word (allowing them to record 3 attempts).
+6. The best attempt for each will be kept.
+7. Directly compare these files with each of the prerecorded correct pronounciation audio files.
+8. The algorithm should then provide a score, (0 - 100) based on similarity, for each comparison.
+9. Take the average of these scores.
+10. Ask the client to listen to each score and provide her own personal rating (0 - 100).
+11. Compare client's scores to generated scores.
+
+Expected Input Data: User recorded audio file. Fluent speaker's recorded file.
+Expected Output Data: Generated Similarity Score (0 - 100). Client's similarity score.
+
+This data will be collected. If there are any large variations between the generated scores and the client scores then updates will need to be made. These could be changes to the comparison audio files or changes to the similarity algorithm itself.
 
 #### 1.3.5 Test Generated Score with Client provided speaking file.
 
