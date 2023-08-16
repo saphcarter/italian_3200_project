@@ -6,3 +6,5 @@ logs
 **/*.back.*
 
 node_modules
+
+dist
