@@ -5,6 +5,10 @@ logs
 **/*.backup.*
 **/*.back.*
 
+##npm
 node_modules
-
 dist
+
+## flask
+venv
+__pycache__
