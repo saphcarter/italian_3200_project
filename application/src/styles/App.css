@@ -1,0 +1,33 @@
+.App{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.section-header{
+    padding-bottom: 1rem;
+}
+
+.task-section{
+    padding: 2rem;
+}
+
+.card-section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.task-card{
+    width: 20rem;
+    min-width: 15rem;
+    max-width: 90%;
+    border: 0.05rem solid black;
+    padding-top: 0.3rem;
+    padding-left: 0.3rem;
+}
+
+.task-row {
+    display: flex;
+    flex-direction: row;
+}
