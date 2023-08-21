@@ -70,7 +70,7 @@ To start the back end server, open up a second terminal and start venv
 `$ cd italian_3200_project/application/backend `  
 `/backend $ source venv/bin/activate`  
 `(venv) /backend $ cd ..`  
-`(venv) $ npm run start-API`
+`(venv) $ npm run start-api`
 
 Now website should be current time is 1692... some very long number.
 
@@ -83,4 +83,4 @@ You can run 'npm run dev' outside of venv and preview the website, this will jus
 Should only need these three commands after first set up:  
 `/backend $ source venv/bin/activate`  
 `(venv) $ npm run dev`  
-`(venv) $ npm run start-API`
+`(venv) $ npm run start-api`
