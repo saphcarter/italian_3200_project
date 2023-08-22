@@ -4,9 +4,9 @@ import Container from "react-bootstrap/Container";
 function ScoreCard({taskName, SelfScore, GivenScore}) {
   return (
       <div className = "score-card">
-        <h4 class="score-text">{taskName}</h4>
-        <p class="score-text">Self Evaluation Score: {SelfScore}</p>
-        <p class="score-text">Similarity Score: {GivenScore}</p>
+        <h4 className="score-text">{taskName}</h4>
+        <p className="score-text">Self Evaluation Score: {SelfScore}</p>
+        <p className="score-text">Similarity Score: {GivenScore}</p>
       </div>
   );
 }

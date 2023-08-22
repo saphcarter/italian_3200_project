@@ -6,6 +6,7 @@ import TaskSection from "./components/Tasks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./home";
 import Quiz from "./quiz"
+import Results from "./results"
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/quiz" element={<Quiz />}></Route>
+            <Route path="/results" element={<Results />}></Route>
           </Routes>
         </div>
 
