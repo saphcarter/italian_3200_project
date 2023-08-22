@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // individual task entry point, will take you to quiz page
 function TaskCard({taskName, dueDate, link}) {
   return (
-      <Link to ="../quiz" className = "btn btn-primary task-card">
+      <Link to ="../quiz" className = "btn btn-primary">
         <h4>{taskName}</h4>
         <p>Due date: {dueDate}</p>
       </Link>
@@ -15,9 +15,9 @@ function TaskCard({taskName, dueDate, link}) {
 function TaskSection() {
   return (
       <>
-        <div className = "task-section">
+        <div className = "section">
           <h2 className = "section-header">Your Tasks</h2>
-          <div className = "card-section">
+          <div className = "task-card-section">
             <TaskCard taskName = "Week 1 Quiz" dueDate="dueDate"/>
             <TaskCard taskName = "Week 2 Quiz" dueDate="dueDate"/>
             <TaskCard taskName = "Week 3 Quiz" dueDate="dueDate"/>
