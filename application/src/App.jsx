@@ -1,30 +1,40 @@
 import "./styles/App.css";
 import { useState } from "react";
 import { useEffect } from "react";
-import NavbarComponent from "./Components/Navbar";
+import NavbarComponent from "./components/Navbar";
 import TaskSection from "./components/Tasks";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./home";
+import Quiz from "./quiz"
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(() => {
-    fetch("/time")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentTime(data.time);
-      });
-  }, []);
-
+  // the basic logic of our application
   return (
-    <div className="App">
-      <NavbarComponent />
-      <header className="App-header">
-        <h1>Testing</h1>
-        <p>The current time is {currentTime}.</p>
-      </header>
-      <TaskSection />
-    </div>
+    <Router>
+      <div className="App">
+        
+        <NavbarComponent />
+
+        {
+        // HOME SECTION START
+        }
+
+        <div className = "content">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/quiz" element={<Quiz />}></Route>
+          </Routes>
+        </div>
+
+        {
+          // HOME SECTION END - MOVE LATER
+        }
+
+      </div>
+    </Router>
   );
+  
 }
 
 export default App;
