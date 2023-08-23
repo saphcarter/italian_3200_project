@@ -4,7 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AudioRecorder from "../components/Recorder";
+import AudioRecorder from "../components/AudioRecorder";
 
 type Question = {
   description: string;
