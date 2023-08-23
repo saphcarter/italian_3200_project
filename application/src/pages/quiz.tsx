@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AudioRecorder from "../components/AudioRecorder";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 type Question = {
   description: string;
@@ -19,6 +20,8 @@ function QuestionView({ q }: { q: Question }) {
   const handleAudioChange = (newAudio) => {
     setRecordedAudio([...recordedAudio, newAudio]);
   };
+
+  const [selected, setSelected] = useState(0);
 
   return (
     <Stack gap={4}>
@@ -44,15 +47,35 @@ function QuestionView({ q }: { q: Question }) {
             </Stack>
           </Col>
           <Col>
-            <Stack gap={3}>
+            <Stack gap={4}>
               {recordedAudio.length != 0
                 ? recordedAudio.map((audio, index) => (
-                    <div key={index}>
-                      <audio
-                        src={audio}
-                        controls
-                        controlsList="nodownload noplaybackrate"
-                      ></audio>
+                    <div className="d-flex align-items-center" key={index}>
+                      <div className="form-check">
+                        <input
+                          className={`form-check-input ${
+                            index == selected ? "bg-primary" : ""
+                          }`}
+                          type="checkbox"
+                          checked={index == selected}
+                          onChange={() => setSelected(index)}
+                        />
+                      </div>
+                      <div>
+                        <audio
+                          src={audio}
+                          controls
+                          controlsList="nodownload noplaybackrate"
+                          className={
+                            index == selected
+                              ? "border border-2 border-primary"
+                              : ""
+                          }
+                          style={
+                            index == selected ? { borderRadius: "30px" } : {}
+                          }
+                        ></audio>
+                      </div>
                     </div>
                   ))
                 : null}
