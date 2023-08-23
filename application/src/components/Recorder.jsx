@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack";
 
 const MicIcon = (props) =>
   React.createElement(
@@ -45,10 +44,12 @@ const IconEnum = {
   Stop: "Stop",
 };
 
-function RecordButton({ handleClick, icon }) {
+function RecordButton({ handleClick, icon, disabled }) {
   return (
     <div
-      className="bg-primary rounded-circle recordBtn"
+      className={`${disabled ? "bg-grey-dark" : "bg-primary"} rounded-circle ${
+        disabled ? "" : "recordBtn"
+      }`}
       style={{ width: "150px", height: "150" }}
     >
       <div onClick={handleClick}>
@@ -78,7 +79,7 @@ const RecordingStatus = {
   Paused: 2,
 };
 
-const AudioRecorder = () => {
+const AudioRecorder = ({ onAudioChange }) => {
   const [permission, setPermission] = useState(false);
   const [stream, setStream] = useState(null);
   const mediaRecorder = useRef(null);
@@ -86,7 +87,7 @@ const AudioRecorder = () => {
     RecordingStatus.Inactive
   );
   const [audioChunks, setAudioChunks] = useState([]);
-  const [audio, setAudio] = useState([]);
+  const [recordingCounter, setRecordingCounter] = useState(0);
 
   const getMicrophonePermission = async () => {
     if ("MediaRecorder" in window) {
@@ -106,7 +107,8 @@ const AudioRecorder = () => {
   };
 
   const startRecording = async () => {
-    if (audio.length < 3) {
+    if (recordingCounter < 3) {
+      setRecordingCounter(recordingCounter + 1);
       setRecordingStatus(RecordingStatus.Recording);
       //create new Media recorder instance using the stream
       const media = new MediaRecorder(stream, { type: mimeType });
@@ -133,7 +135,7 @@ const AudioRecorder = () => {
       const audioBlob = new Blob(audioChunks, { type: mimeType });
       //creates a playable URL from the blob file.
       const audioUrl = URL.createObjectURL(audioBlob);
-      setAudio([...audio, audioUrl]);
+      onAudioChange(audioUrl);
       setAudioChunks([]);
     };
   };
@@ -151,21 +153,25 @@ const AudioRecorder = () => {
           </Button>
         ) : null}
         {permission && recordingStatus == RecordingStatus.Inactive ? (
-          <RecordButton handleClick={startRecording} icon={IconEnum.Mic} />
+          <RecordButton
+            handleClick={startRecording}
+            icon={IconEnum.Mic}
+            disabled={recordingCounter >= 3}
+          />
         ) : null}
         {recordingStatus == RecordingStatus.Recording ? (
           <RecordButton handleClick={stopRecording} icon={IconEnum.Stop} />
         ) : null}
       </div>
-      <Stack gap={3}>
+      {/* <Stack gap={3}>
         {audio
           ? audio.map((a, index) => (
-              <div className="audio-container" key={index}>
+              <div key={index}>
                 <audio src={a} controls></audio>
               </div>
             ))
           : null}
-      </Stack>
+      </Stack> */}
     </div>
   );
 };

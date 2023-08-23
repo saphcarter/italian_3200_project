@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/App.css";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
@@ -14,10 +14,20 @@ type Question = {
 function QuestionView({ q }: { q: Question }) {
   const { description, audio } = q;
 
+  const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
+
+  const handleAudioChange = (newAudio) => {
+    setRecordedAudio([...recordedAudio, newAudio]);
+  };
+
   return (
     <Stack gap={4}>
       <div>{description}</div>
-      <audio controls controlsList="nodownload" src="/its-me-mario.mp3"></audio>
+      <audio
+        controls
+        controlsList="nodownload noplaybackrate"
+        src="/its-me-mario.mp3"
+      ></audio>
       <div className="fs-5">Record your answer</div>
       <Container>
         <Row>
@@ -28,10 +38,26 @@ function QuestionView({ q }: { q: Question }) {
                 that select your best try.
               </div>
               {/* <Record /> */}
-              <AudioRecorder />
+              <AudioRecorder
+                onAudioChange={(audio) => handleAudioChange(audio)}
+              />
             </Stack>
           </Col>
-          <Col></Col>
+          <Col>
+            <Stack gap={3}>
+              {recordedAudio.length != 0
+                ? recordedAudio.map((audio, index) => (
+                    <div key={index}>
+                      <audio
+                        src={audio}
+                        controls
+                        controlsList="nodownload noplaybackrate"
+                      ></audio>
+                    </div>
+                  ))
+                : null}
+            </Stack>
+          </Col>
           <Col></Col>
         </Row>
       </Container>
