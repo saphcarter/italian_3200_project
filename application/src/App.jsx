@@ -4,24 +4,22 @@ import { useEffect } from "react";
 import NavbarComponent from "./components/Navbar";
 import TaskSection from "./components/Tasks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./home";
-import Quiz from "./quiz"
-import Results from "./results"
+import Home from "./pages/home";
+import Quiz from "./pages/quiz";
+import Results from "./pages/results";
 
 function App() {
-
   // the basic logic of our application
   return (
     <Router>
-      <div className="App">
-        
+      <div className="App container-xl">
         <NavbarComponent />
 
         {
-        // HOME SECTION START
+          // HOME SECTION START
         }
 
-        <div className = "content">
+        <div className="content">
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/quiz" element={<Quiz />}></Route>
@@ -32,11 +30,9 @@ function App() {
         {
           // HOME SECTION END - MOVE LATER
         }
-
       </div>
     </Router>
   );
-  
 }
 
 export default App;
