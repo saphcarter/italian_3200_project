@@ -2,26 +2,36 @@ import "./styles/App.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import NavbarComponent from "./components/Navbar";
+import TaskSection from "./components/Tasks";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/home";
+import Quiz from "./pages/quiz";
+import Results from "./pages/results";
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    fetch("/time")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentTime(data.time);
-      });
-  }, []);
-
+  // the basic logic of our application
   return (
-    <div className="App">
-      <NavbarComponent />
-      <header className="App-header">
-        <h1>Testing</h1>
-        <p>The current time is {currentTime}.</p>
-      </header>
-    </div>
+    <Router>
+      <div className="App container-xl">
+        <NavbarComponent />
+
+        {
+          // HOME SECTION START
+        }
+
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/quiz" element={<Quiz />}></Route>
+            <Route path="/results" element={<Results />}></Route>
+          </Routes>
+        </div>
+
+        {
+          // HOME SECTION END - MOVE LATER
+        }
+      </div>
+    </Router>
   );
 }
 

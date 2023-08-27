@@ -1,0 +1,82 @@
+.App {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.section-header {
+  padding-bottom: 1rem;
+}
+
+.section {
+  padding: 2rem;
+}
+
+/* TASKS STYLING */
+
+.task-card-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.customBtn {
+  background-color: transparent;
+  color: black;
+  width: 20rem;
+  max-width: 90%;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border: 0.05rem solid black;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  transition: transform 2 ease-in;
+}
+
+.customBtn:hover {
+  background-color: #bdbdbd;
+  color: black;
+  transform: scale(1.02);
+  border: 0.05rem solid black;
+}
+
+.task-row {
+  display: flex;
+  flex-direction: row;
+}
+
+/* TASKS STYLING */
+
+.score-card {
+  margin-bottom: 1rem;
+  width: 90%;
+  border: 0.05rem solid black;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.score-card-section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.score-text {
+  display: inline;
+  margin: 1rem;
+}
+
+.recordBtn {
+  transition: transform 3 ease-in;
+}
+
+.recordBtn:hover {
+  /* background-color: #bdbdbd;
+  color: black; */
+  transform: scale(1.05);
+  /* border: 0.05rem solid black; */
+}
