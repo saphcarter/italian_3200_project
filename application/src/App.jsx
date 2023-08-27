@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import { useState } from "react";
 import { useEffect } from "react";
-import NavbarComponent from "./Components/Navbar";
+import NavbarComponent from "./components/Navbar";
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
