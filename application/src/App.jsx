@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Quiz from "./pages/quiz";
 import Results from "./pages/results";
+import Login from './components/Login';
 
 function App() {
   // the basic logic of our application
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/quiz" element={<Quiz />}></Route>
             <Route path="/results" element={<Results />}></Route>
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
 
