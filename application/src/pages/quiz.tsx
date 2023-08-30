@@ -8,10 +8,21 @@ import AudioRecorder from "../components/AudioRecorder";
 import Button from "react-bootstrap/esm/Button";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import QuizEndScreen from "./quizEnd";
 
 type Question = {
   description: string;
   audio: string;
+};
+
+type Result = {
+  similarityScore: number;
+  selfEvaluationScore: number;
+};
+
+type QuizResult = {
+  question: number;
+  result: Result;
 };
 
 function SelfEvaluation({
@@ -91,7 +102,13 @@ function SelfEvaluation({
   );
 }
 
-function QuestionView({ q }: { q: Question }) {
+function QuestionView({
+  q,
+  submitResult,
+}: {
+  q: Question;
+  submitResult: (result: Result) => void;
+}) {
   const { description, audio } = q;
 
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
@@ -109,7 +126,19 @@ function QuestionView({ q }: { q: Question }) {
     setIsRecordingView(false);
   }
 
-  function saveSelfEvalScore(value: number) {}
+  function submit(selfEval: number) {
+    //reset variables
+    setIsRecordingView(true);
+    setSelected(0);
+    setRecordedAudio([]);
+
+    //send result
+    const result: Result = {
+      similarityScore: 0,
+      selfEvaluationScore: selfEval,
+    };
+    submitResult(result);
+  }
 
   return (
     <Stack gap={4}>
@@ -190,7 +219,7 @@ function QuestionView({ q }: { q: Question }) {
       ) : (
         <SelfEvaluation
           recordedAudio={recordedAudio[selected]}
-          submitScore={saveSelfEvalScore}
+          submitScore={submit}
         />
       )}
     </Stack>
@@ -207,16 +236,31 @@ function Quiz() {
     { description: "this is second question", audio: "somefile" },
   ];
 
-  const questionNumber = 0;
+  const [questionNumber, setQuestionNumber] = useState(0);
+
+  const [quizResults, setQuizResults] = useState<Array<QuizResult>>([]);
+
+  function submitResult(result: Result) {
+    const quizResult: QuizResult = { question: questionNumber, result: result };
+    setQuizResults([...quizResults, quizResult]);
+    setQuestionNumber(questionNumber + 1);
+  }
 
   return (
     <div className="p-4">
       <div className="fs-2 fw-medium"> Quiz Name </div>
       <hr className="border-2"></hr>
-      <Stack gap={3} className="mx-3">
-        <div className="fs-4">Question {questionNumber + 1}</div>
-        <QuestionView q={questions[questionNumber]} />
-      </Stack>
+      {questionNumber < questions.length ? (
+        <Stack gap={3} className="mx-3">
+          <div className="fs-4">Question {questionNumber + 1}</div>
+          <QuestionView
+            q={questions[questionNumber]}
+            submitResult={submitResult}
+          />
+        </Stack>
+      ) : (
+        <QuizEndScreen />
+      )}
     </div>
   );
 }
