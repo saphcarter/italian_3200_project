@@ -13,16 +13,16 @@ db = SQLAlchemy(app)
 
 # create database model
 class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    assigned_tasks = db.Column(db.String(50), nullable = False)
-    due_dates = db.Column(db.String(200), nullable = False)
+    task_id = db.Column(db.Integer, primary_key = True)
+    questions = db.Column(db.String(200), nullable = False)
+    due_date = db.Column(db.String(20), nullable = False)
 
     # create a string
     def __repr__(self):
-        return '<Name %r>' % self.name
+        return '<Task-Id %r>' % self.task_id
 
-@app.route('/tasks', methods=['GET', 'POST'])
-def assign_tasks():
+@app.route('/addtask', methods=['GET', 'POST'])
+def assign_task():
     return 'filler'
      
 # Running app
