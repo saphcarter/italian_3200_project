@@ -6,12 +6,90 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AudioRecorder from "../components/AudioRecorder";
 import Button from "react-bootstrap/esm/Button";
-import Slider from "@mui/material/Slider";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 type Question = {
   description: string;
   audio: string;
 };
+
+function SelfEvaluation({
+  recordedAudio,
+  submitScore,
+}: {
+  recordedAudio: string;
+  submitScore: (number) => void;
+}) {
+  const [selfEvalScore, setSelfEvalScore] = useState(70);
+
+  function handleSelfEvalChange(value: number | number[]) {
+    if (typeof value == "number") {
+      setSelfEvalScore(value || value[0]);
+    }
+  }
+
+  function handleSubmit() {
+    submitScore(selfEvalScore);
+  }
+
+  return (
+    <>
+      <div className="mt-4 fs-5">Self-evaluation score</div>
+      <Stack gap={4}>
+        <div>
+          Give a score between 0 and 100% rating how similar you think your
+          submission is to the original audio.
+        </div>
+        <Container className="mt-4 mx-0 d-flex align-items-start gap-5 px-0 flex-wrap container-fluid">
+          <div>
+            <div className="mb-3">Your audio:</div>
+            <audio
+              controls
+              controlsList="nodownload noplaybackrate"
+              src={recordedAudio}
+            ></audio>
+          </div>
+          <Stack gap={1} style={{ maxWidth: "400px", minWidth: "200px" }}>
+            <div className="d-flex align-items-baseline justify-content-between">
+              <div>Self Evaluation Score</div>
+              <h1
+                className="mb-0"
+                style={{ fontSize: "60px", textAlign: "right" }}
+              >
+                {selfEvalScore}%
+              </h1>
+            </div>
+            <Slider
+              defaultValue={selfEvalScore}
+              aria-label="Default"
+              startPoint={0}
+              min={1}
+              onChange={handleSelfEvalChange}
+              trackStyle={{ background: "#0A998F" }}
+              handleStyle={[
+                {
+                  border: "solid 2px #0A998F",
+                  borderRadius: "50%",
+                  opacity: "1",
+                },
+              ]}
+            />
+            <Button
+              variant="outline-danger"
+              style={{ width: "100px" }}
+              className="align-self-end mt-4"
+              type="button"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </Stack>
+        </Container>
+      </Stack>
+    </>
+  );
+}
 
 function QuestionView({ q }: { q: Question }) {
   const { description, audio } = q;
@@ -30,6 +108,8 @@ function QuestionView({ q }: { q: Question }) {
     //fake save
     setIsRecordingView(false);
   }
+
+  function saveSelfEvalScore(value: number) {}
 
   return (
     <Stack gap={4}>
@@ -108,27 +188,10 @@ function QuestionView({ q }: { q: Question }) {
           </Container>
         </>
       ) : (
-        <>
-          <div className="fs-5">Self-evaluation score</div>
-          <Stack gap={4}>
-            <div>
-              Give a score between 0 and 100% rating how similar you think your
-              submission is to the original audio.
-            </div>
-            <Container>
-              <audio
-                controls
-                controlsList="nodownload noplaybackrate"
-                src={recordedAudio[selected]}
-              ></audio>
-            </Container>
-            <Slider
-              defaultValue={50}
-              aria-label="Default"
-              valueLabelDisplay="auto"
-            />
-          </Stack>
-        </>
+        <SelfEvaluation
+          recordedAudio={recordedAudio[selected]}
+          submitScore={saveSelfEvalScore}
+        />
       )}
     </Stack>
   );
