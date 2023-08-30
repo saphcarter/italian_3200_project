@@ -149,7 +149,7 @@ const AudioRecorder = ({ onAudioChange }) => {
             type="button"
             onClick={getMicrophonePermission}
           >
-            Allow microphone use
+            Ready to record
           </Button>
         ) : null}
         {permission && recordingStatus == RecordingStatus.Inactive ? (
@@ -163,15 +163,6 @@ const AudioRecorder = ({ onAudioChange }) => {
           <RecordButton handleClick={stopRecording} icon={IconEnum.Stop} />
         ) : null}
       </div>
-      {/* <Stack gap={3}>
-        {audio
-          ? audio.map((a, index) => (
-              <div key={index}>
-                <audio src={a} controls></audio>
-              </div>
-            ))
-          : null}
-      </Stack> */}
     </div>
   );
 };
