@@ -8,6 +8,7 @@ import Home from "./pages/home";
 import Quiz from "./pages/quiz";
 import Results from "./pages/results";
 import Login from './components/Login';
+import RegistrationForm from './components/RegistrationForm';
 
 function App() {
   // the basic logic of our application
@@ -26,6 +27,11 @@ function App() {
             <Route path="/quiz" element={<Quiz />}></Route>
             <Route path="/results" element={<Results />}></Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/italian_3200_project/application/registration" component={RegistrationForm} />
+
+            
+
+
           </Routes>
         </div>
 
