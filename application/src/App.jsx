@@ -8,30 +8,25 @@ import Home from "./pages/home";
 import Quiz from "./pages/quiz";
 import Results from "./pages/results";
 import Login from './components/Login';
-import RegistrationForm from './components/RegistrationForm';
+//import RegistrationForm from './components/RegistrationForm';
+import LoginButton from "./components/LoginButton";
+
 
 function App() {
   // the basic logic of our application
   return (
+
     <Router>
       <div className="App container-xl">
         <NavbarComponent />
-
-        {
-          // HOME SECTION START
-        }
+        <LoginButton />
 
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/quiz" element={<Quiz />}></Route>
             <Route path="/results" element={<Results />}></Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/italian_3200_project/application/registration" component={RegistrationForm} />
-
-            
-
-
+            <Route path="/italian_3200_project/application/login" Component={Login} />
           </Routes>
         </div>
 
