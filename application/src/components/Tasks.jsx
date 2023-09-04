@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 // individual task entry point, will take you to quiz page
-function TaskCard({ taskName, dueDate, link }) {
+function TaskCard({ taskName, dueDate }) {
   return (
-    <Link to="../quiz" className="customBtn btn-primary">
-      <h4>{taskName}</h4>
-      <p>Due date: {dueDate}</p>
+    <Link to="../quiz" className="task-card">
+      <div className="task-card-name">{taskName}</div>
+      <div className="task-card-date">Due date: {dueDate}</div>
     </Link>
   );
 }
