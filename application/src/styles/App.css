@@ -80,3 +80,17 @@
   transform: scale(1.05);
   /* border: 0.05rem solid black; */
 }
+
+.auth0-button {
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  border: 0px;
+  width: 10rem;
+  transition: transform 2 ease-in;
+}
+
+.auth0-button:hover {
+  color: lightblue;
+  border: 0px;
+}
