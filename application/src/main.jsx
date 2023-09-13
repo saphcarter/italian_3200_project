@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./styles/App.css";
+// Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./sass/custom.scss";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -13,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri={window.location.origin}
+    authorizationParams={{ redirect_uri: window.location.origin }}
   >
     <App />
   </Auth0Provider>

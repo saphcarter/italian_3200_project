@@ -7,15 +7,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Quiz from "./pages/quiz";
 import Results from "./pages/results";
-import Login from './components/Login';
 //import RegistrationForm from './components/RegistrationForm';
 import LoginButton from "./components/LoginButton";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import Loader from "./components/Loader";
+import { AuthenticationGuard } from "./components/AuthenticationGuard";
+import { ProfilePage } from "./pages/profile";
 
 function App() {
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <Loader />;
+  }
   // the basic logic of our application
   return (
-
     <Router>
       <div className="App container-xl">
         <NavbarComponent />
@@ -24,15 +30,20 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/quiz" element={<Quiz />}></Route>
-            <Route path="/results" element={<Results />}></Route>
-            <Route path="/italian_3200_project/application/login" Component={Login} />
+            <Route
+              path="/quiz"
+              element={<AuthenticationGuard component={Quiz} />}
+            />
+            <Route
+              path="/results"
+              element={<AuthenticationGuard component={Results} />}
+            />
+            <Route
+              path="/profile"
+              element={<AuthenticationGuard component={ProfilePage} />}
+            />
           </Routes>
         </div>
-
-        {
-          // HOME SECTION END - MOVE LATER
-        }
       </div>
     </Router>
   );
