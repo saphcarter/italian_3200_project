@@ -36,7 +36,7 @@ def assign_task():
 def get_task(task_id):
     task = Task.query.get(task_id)
     if task:
-        return jsonify({"id": tasks.task_id, "questions": task.questions, "audio_paths": task.audio_path, "due_date": task.due_date})
+        return jsonify({"id": task.task_id, "questions": task.questions, "audio_paths": task.audio_path, "due_date": task.due_date})
     return jsonify({"message": "Task not found"}), 404
 
 
@@ -53,13 +53,13 @@ def update_task(task_id):
 
 
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(user_id):
+def delete_task(task_id):
     task = Task.query.get(task_id)
-    if user:
+    if task:
         db.session.delete(task)
         db.session.commit()
-        return jsonify({"message": "User deleted successfully"})
-    return jsonify({"message": "User not found"}), 404
+        return jsonify({"message": "Task deleted successfully"})
+    return jsonify({"message": "Task not found"}), 404
 
 
 @app.route('/tasks/addtest')
