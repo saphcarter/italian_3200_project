@@ -146,7 +146,7 @@ function QuestionView({
       <audio
         controls
         controlsList="nodownload noplaybackrate"
-        src="/its-me-mario.mp3"
+        src={audio}
       ></audio>
       {isRecordingView ? (
         <>
@@ -229,11 +229,14 @@ function QuestionView({
 function Quiz() {
   const questions: Question[] = [
     {
-      description:
-        "Instructions lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam vel nulla ut luctus. Vivamus a auctor est. Quisque efficitur. lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam vel nulla ut luctus. Vivamus a auctor est. Quisque efficitur. ",
-      audio: "somefile",
+      description: "placeholder description",
+      audio: "/1-come-ti-chiami-trim.wav",
     },
-    { description: "this is second question", audio: "somefile" },
+    { description: "placeholder description", audio: "/2-come-stai-trim.wav" },
+    {
+      description: "placeholder description",
+      audio: "/3-questo-e-Matteo-trim.wav",
+    },
   ];
 
   const [questionNumber, setQuestionNumber] = useState(0);
