@@ -22,7 +22,7 @@ function NavbarComponent() {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="#home" className="fw-medium fs-3 pl-10">
+        <Navbar.Brand href="/" className="fw-medium fs-3 pl-10">
           Learn Italian
         </Navbar.Brand>
         {isAuthenticated && (
