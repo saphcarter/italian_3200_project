@@ -1,15 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./styles/App.css";
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./sass/custom.scss";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import App from "./App";
+import { Auth0Provider } from "@auth0/auth0-react";
 
-// the entry point for our application
+const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID;
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    authorizationParams={{ redirect_uri: window.location.origin }}
+  >
     <App />
-  </React.StrictMode>
+  </Auth0Provider>
 );
