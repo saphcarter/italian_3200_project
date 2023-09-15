@@ -54,42 +54,42 @@ def delete_user(user_id):
 @app.route('/quizzes', methods=['GET'])
 def get_tasks():
     quizzes = Quizzes.query.all()
-    quiz_list = [{"id": quizzes.quiz_id, "name": quiz.name, "due_date": quiz.due_date} for quiz in quizzes]
+    quiz_list = [{"id": quizzes.id, "name": quiz.name, "due_date": quiz.due_date} for quiz in quizzes]
     return jsonify(quiz_list)
 
 
 @app.route('/quizzes/addquiz', methods=['POST'])
 def assign_task():
     data = request.json
-    new = Quizzes(quiz_id=data['quiz_id'], name=data['name'],due_date=data['due_date'])
+    new = Quizzes(id=data['id'], name=data['name'],due_date=data['due_date'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Quiz created successfully"}), 201
 
 
-@app.route('/quizzes/<int:quiz_id>', methods=['GET'])
-def get_task(quiz_id):
-    quiz = Quizzes.query.get(quiz_id)
+@app.route('/quizzes/<int:id>', methods=['GET'])
+def get_task(id):
+    quiz = Quizzes.query.get(id)
     if quiz:
-        return jsonify({"id": quiz.quiz_id, "name": quiz.name, "due_date": quiz.due_date})
+        return jsonify({"id": quiz.id, "name": quiz.name, "due_date": quiz.due_date})
     return jsonify({"message": "Quiz not found"}), 404
 
 
-@app.route('/quizzes/<int:quiz_id>', methods=['PUT'])
-def update_task(quiz_id):
-    quiz = Quizzes.query.get(quiz_id)
+@app.route('/quizzes/<int:id>', methods=['PUT'])
+def update_task(id):
+    quiz = Quizzes.query.get(id)
     if quiz:
         data = request.json
-        quiz.quiz_id = data['quiz_id']
+        quiz.id = data['id']
         quiz.name = data['name']
         db.session.commit()
         return jsonify({"message": "Task updated successfully"})
     return jsonify({"message": "Task not found"}), 404
 
 
-@app.route('/quizzes/<int:quiz_id>', methods=['DELETE'])
-def delete_task(quiz_id):
-    task = Quizzes.query.get(quiz_id)
+@app.route('/quizzes/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = Quizzes.query.get(id)
     if task:
         db.session.delete(task)
         db.session.commit()
@@ -99,7 +99,7 @@ def delete_task(quiz_id):
 
 @app.route('/quizzes/addtest')
 def add_test():
-    new_task = Quizzes(quiz_id=1, questions="test",audio_paths="test2",due_date="1-8-2023")
+    new_task = Quizzes(id=1, questions="test",audio_paths="test2",due_date="1-8-2023")
     db.session.add(new_task)
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
