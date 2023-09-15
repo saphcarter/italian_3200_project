@@ -12,3 +12,6 @@ dist
 ## flask
 venv
 __pycache__
+
+## database
+*.db
