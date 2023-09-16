@@ -39,11 +39,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           <div>
             <div>
               Similarity Score:
-              <span>{` ${payload[0].value}%`}</span>
+              <span className="fw-medium">{` ${payload[0].value}%`}</span>
             </div>
             <div>
               Self Evaluation Score:
-              <span>{` ${payload[1].value}%`}</span>
+              <span className="fw-medium">{` ${payload[1].value}%`}</span>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export default function QuizEndScreen({
+export default function ResultsView({
   results,
 }: {
   results: Array<QuizResult>;
@@ -90,7 +90,7 @@ export default function QuizEndScreen({
 
   return (
     <div>
-      <ResponsiveContainer width={"80%"} height={500}>
+      <ResponsiveContainer width={"100%"} height={500}>
         <ComposedChart
           width={700}
           height={300}

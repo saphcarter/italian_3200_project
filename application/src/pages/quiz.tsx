@@ -8,7 +8,8 @@ import AudioRecorder from "../components/AudioRecorder";
 import Button from "react-bootstrap/esm/Button";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import QuizEndScreen from "./quizEnd";
+import ResultsView from "./quizResults";
+import { redirect } from "react-router-dom";
 
 type Question = {
   description: string;
@@ -250,20 +251,35 @@ function Quiz() {
     setQuestionNumber(questionNumber + 1);
   }
 
+  function handleClick() {
+    window.location.href = "/";
+  }
+
   return (
     <div className="p-4">
-      <div className="fs-2 fw-medium"> Quiz Name </div>
-      <hr className="border-2"></hr>
       {questionNumber < questions.length ? (
-        <Stack gap={3} className="mx-3">
-          <div className="fs-4">Question {questionNumber + 1}</div>
-          <QuestionView
-            q={questions[questionNumber]}
-            submitResult={submitResult}
-          />
-        </Stack>
+        <>
+          <div className="fs-2 fw-medium"> Quiz Name </div>
+          <hr className="border-2"></hr>
+          <Stack gap={3} className="mx-3">
+            <div className="fs-4">Question {questionNumber + 1}</div>
+            <QuestionView
+              q={questions[questionNumber]}
+              submitResult={submitResult}
+            />
+          </Stack>
+        </>
       ) : (
-        <QuizEndScreen results={quizResults} />
+        <>
+          <div className="fs-2 fw-medium"> Quiz Name Results </div>
+          <hr className="border-2"></hr>
+          <ResultsView results={quizResults} />
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button className="btn btn-primary" onClick={handleClick}>
+              Finish Quiz
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
