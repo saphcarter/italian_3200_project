@@ -122,6 +122,8 @@ function QuestionView({
 
   const [isRecordingView, setIsRecordingView] = useState(true);
 
+  const [isRecording, setIsRecording] = useState(false);
+
   function submitAudio() {
     //fake save
     setIsRecordingView(false);
@@ -164,6 +166,10 @@ function QuestionView({
                   {/* <Record /> */}
                   <AudioRecorder
                     onAudioChange={(audio) => handleAudioChange(audio)}
+                    isRecording={isRecording}
+                    setIsRecording={(value: boolean) => {
+                      setIsRecording(value);
+                    }}
                   />
                 </Stack>
               </Col>
@@ -207,9 +213,10 @@ function QuestionView({
               <Col>
                 {recordedAudio.length > 0 && (
                   <Button
-                    variant="outline-success"
+                    variant="outline-danger"
                     type="button"
                     onClick={submitAudio}
+                    disabled={isRecording == true}
                   >
                     Submit
                   </Button>

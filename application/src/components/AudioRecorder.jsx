@@ -73,19 +73,10 @@ function RecordButton({ handleClick, icon, disabled }) {
   );
 }
 
-const RecordingStatus = {
-  Recording: 0,
-  Inactive: 1,
-  Paused: 2,
-};
-
-const AudioRecorder = ({ onAudioChange }) => {
+const AudioRecorder = ({ onAudioChange, isRecording, setIsRecording }) => {
   const [permission, setPermission] = useState(false);
   const [stream, setStream] = useState(null);
   const mediaRecorder = useRef(null);
-  const [recordingStatus, setRecordingStatus] = useState(
-    RecordingStatus.Inactive
-  );
   const [audioChunks, setAudioChunks] = useState([]);
   const [recordingCounter, setRecordingCounter] = useState(0);
 
@@ -109,7 +100,7 @@ const AudioRecorder = ({ onAudioChange }) => {
   const startRecording = async () => {
     if (recordingCounter < 3) {
       setRecordingCounter(recordingCounter + 1);
-      setRecordingStatus(RecordingStatus.Recording);
+      setIsRecording(true);
       //create new Media recorder instance using the stream
       const media = new MediaRecorder(stream, { type: mimeType });
       //set the MediaRecorder instance to the mediaRecorder ref
@@ -127,7 +118,7 @@ const AudioRecorder = ({ onAudioChange }) => {
   };
 
   const stopRecording = () => {
-    setRecordingStatus(RecordingStatus.Inactive);
+    setIsRecording(false);
     //stops the recording instance
     mediaRecorder.current.stop();
     mediaRecorder.current.onstop = () => {
@@ -152,14 +143,14 @@ const AudioRecorder = ({ onAudioChange }) => {
             Ready to record
           </Button>
         ) : null}
-        {permission && recordingStatus == RecordingStatus.Inactive ? (
+        {permission && isRecording == false ? (
           <RecordButton
             handleClick={startRecording}
             icon={IconEnum.Mic}
             disabled={recordingCounter >= 3}
           />
         ) : null}
-        {recordingStatus == RecordingStatus.Recording ? (
+        {isRecording == true ? (
           <RecordButton handleClick={stopRecording} icon={IconEnum.Stop} />
         ) : null}
       </div>
