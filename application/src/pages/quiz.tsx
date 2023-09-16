@@ -20,7 +20,7 @@ type Result = {
   selfEvaluationScore: number;
 };
 
-type QuizResult = {
+export type QuizResult = {
   question: number;
   result: Result;
 };
@@ -134,7 +134,8 @@ function QuestionView({
 
     //send result
     const result: Result = {
-      similarityScore: 0,
+      //fake score
+      similarityScore: Math.floor(100 * Math.random()),
       selfEvaluationScore: selfEval,
     };
     submitResult(result);
@@ -262,7 +263,7 @@ function Quiz() {
           />
         </Stack>
       ) : (
-        <QuizEndScreen />
+        <QuizEndScreen results={quizResults} />
       )}
     </div>
   );

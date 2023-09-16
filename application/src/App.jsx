@@ -13,6 +13,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Loader from "./components/Loader";
 import { AuthenticationGuard } from "./components/AuthenticationGuard";
 import { ProfilePage } from "./pages/profile";
+import QuizEndScreen from "./pages/quizEnd";
 
 function App() {
   const { isLoading } = useAuth0();
@@ -25,7 +26,6 @@ function App() {
     <Router>
       <div className="App container-xl">
         <NavbarComponent />
-        <LoginButton />
 
         <div className="content">
           <Routes>
@@ -41,6 +41,11 @@ function App() {
             <Route
               path="/profile"
               element={<AuthenticationGuard component={ProfilePage} />}
+            />
+            {/* testing route remove at end */}
+            <Route
+              path="/quizEnd"
+              element={<AuthenticationGuard component={QuizEndScreen} />}
             />
           </Routes>
         </div>
