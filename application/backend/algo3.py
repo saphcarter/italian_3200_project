@@ -158,20 +158,18 @@ def compareFiles(path1, path2):
     if(duration1 < duration2):
         # slow down audio 1
         ratio = duration2/duration1
-        print(f'rate1 before: {rate1}')
         audio1 = librosa.effects.time_stretch(y=audio1, rate=1/ratio)
         rate1 = round(rate1/ratio)
-        print(f'rate1 after: {rate1}')
     else:
         ratio = duration1/duration2
         audio2 = librosa.effects.time_stretch(y=audio2, rate=1/ratio)
-        print(f'rate2 before: {rate2}')
         rate2 = round(rate2/ratio)
-        print(f'rate2 after: {rate2}')
 
     # Define the desired frequency range
     f_low = 300  # Lower frequency bound in Hz
     f_high = 4000  # Upper frequency bound in Hz
+
+    # --------- PROCESS AUDIOS -----------
 
     # process audio 1
     b, a = signal.butter(10, [f_low, f_high], btype='bandpass', fs=rate1)
@@ -186,8 +184,6 @@ def compareFiles(path1, path2):
     
     # filter spectogram to reduce noise
     spectogram_filter1 = np.minimum(dbSpectogram1, librosa.decompose.nn_filter(dbSpectogram1, rec=rec1, aggregate=np.average, metric='cosine'))
-    
-    # - - -
 
     # process audio 2
     b, a = signal.butter(10, [f_low, f_high], btype='bandpass', fs=rate2)
@@ -203,43 +199,16 @@ def compareFiles(path1, path2):
     # filter spectogram to reduce noise
     spectogram_filter2 = np.minimum(dbSpectogram2, librosa.decompose.nn_filter(dbSpectogram2, rec=rec2, aggregate=np.average, metric='cosine'))
 
+    # --------- SIMILARITY SCORING -----------
 
-    # VISUALISATION START --------------------------------------------------------------------------------------------------------------
+    flat_d1 = dbSpectogram1.flatten()
+    flat_d2 = dbSpectogram2.flatten()
 
-    # plot audio1
-    fig, ax = plt.subplots(nrows=2, sharex=True, sharey=True, figsize=(10, 8))
-    img = librosa.display.specshow(spectogram_filter1, y_axis='log', x_axis='time', ax=ax[0])
-    ax[0].set_title('Audio1')
-    fig.colorbar(img, ax=ax[0], format="%+2.0f dB")
+    correlation = np.corrcoef(flat_d1, flat_d2)[0, 1]
 
-    # plot filter
-    img2 = librosa.display.specshow(spectogram_filter2, y_axis='log', x_axis='time', ax=ax[1])
-    ax[1].set_title('Audio2')
-    fig.colorbar(img2, ax=ax[1], format="%+2.0f dB")
-    # plt.show()   
+    # --------- RESULTS -----------
 
-    # VISUALISATION END ----------------------------------------------------------------------------------------------------------------
-
-    # # Apply Gaussian filter to smooth the spectrograms
-    # smoothed_spectrogram1 = spectogram_filter2
-    # smoothed_spectrogram2 = spectogram_filter2
-    # sigma = 1
-    # smoothed_spectrogram1 = gaussian_filter(spectogram_filter1, sigma=sigma)
-    # smoothed_spectrogram2 = gaussian_filter(spectogram_filter2, sigma=sigma)
-
-    # # Apply Laplacian of Gaussian (LoG) to find blobs
-    blobs1 = gaussian_laplace(spectogram_filter1, sigma=1)
-    blobs2 = gaussian_laplace(spectogram_filter2, sigma=1)
-
-    max1 = np.max(np.abs(spectogram_filter1))
-    max2 = np.max(np.abs(spectogram_filter2))
-    min1 = np.min(np.abs(spectogram_filter1))
-    min2 = np.min(np.abs(spectogram_filter2))
-    dataRange = max(max1, max2) - min(min1, min2)
-    
-    similarity_score = ssim(blobs1, blobs2, data_range=dataRange)
-
-    print(f'similarity: {similarity_score}')
+    print(f"Pearson Correlation Coefficient: {correlation}")
 
     similar = np.subtract(spectogram_filter1, spectogram_filter2)
     similar = np.sum(similar)
@@ -252,34 +221,10 @@ def compareFiles(path1, path2):
 
     print("onset1: ", ", ".join(map(str, onset1)), "onset2: ", ", ".join(map(str, onset2)))
 
-    # Calculate DTW distance and path
-    dtw_distance, dtw_path = librosa.sequence.dtw(onset1, onset2)
-
-    # Interpret the results
-    print(f"DTW Distance: {dtw_distance}")
-    print(f"DTW path: {dtw_path}")
-
 
 def main():
 
     compareFiles('./answer.m4a', './static.m4a')
-
-    # graphSpectograms(answerM4A, answerWav)
-
-    # trim files
-    # m4a = convertFileToAudioSegment(staticm4a)
-    # wav = convertFileToAudioSegment(staticWav)
-    # trimM4a = makeTrimmedAudioSegment(staticm4a)
-    # trimWav = makeTrimmedAudioSegment(staticWav)
-
-    # audio1 = {'title': "m4a file", 'segment': m4a}
-    # audio2 = {'title': "m4a trimmed", 'segment': trimM4a}
-    # audio3 = {'title': "wav file", 'segment': wav}
-    # audio4 = {'title': "wav trimmed", 'segment': trimWav}
-
-    # playAudios([audio1, audio2, audio3, audio4])
-    # graph(answerWav)
-
 
 if __name__ == "__main__":
     main()
