@@ -243,15 +243,13 @@ def compareFiles(path1, path2):
     cosine_distance = 1 - distance.cosine(mfcc1.flatten(), mfcc2.flatten())
     mfcc_score = cosine_distance
 
-    # one other factor here maybe...
+    # EITHER: MODIFY MFCC SCORE TO BE STRICTER... OR ONE OTHER FACTOR HERE
 
     # --------- RESULTS -----------
 
     rhythm_score = (pearson_correlation + estimated_iou) / 2
     intonation_score = mfcc_score
     combined_score = (rhythm_score + intonation_score) / 2
-
-    # COMBINE THESE METRICS TO GIVE A FINAL SCORE (?)
 
     print(f"Pearson Correlation Coefficient: {pearson_correlation}")
     print(f"Onset Correlation Factor: {estimated_iou}")
