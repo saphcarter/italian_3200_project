@@ -10,9 +10,12 @@ import scipy.signal as signal
 import math
 from scipy.ndimage import gaussian_laplace, gaussian_filter
 from pydub.playback import play
-from skimage.metrics import structural_similarity as ssim
 from numpy import dot
 from numpy.linalg import norm
+from scipy.stats import pearsonr
+from sklearn.metrics.pairwise import cosine_similarity
+from scipy.spatial.distance import euclidean
+from scipy.spatial import distance
 
 # had to brew install sox and ffmpeg
 # for skiage do python -m pip install -U scikit-image
@@ -146,6 +149,22 @@ def trimFile(path):
         signaltrim, index = librosa.effects.trim(data, top_db=20)
         return signaltrim, rate
     
+def calculate_iou_with_tolerance(set1, set2, threshold):
+    similarity = 0
+
+    for onset1 in set1:
+        for onset2 in set2:
+            if abs(onset1 - onset2) <= threshold:
+                similarity += 1
+                break
+
+    iou = similarity / (len(set1) + len(set2) - similarity)
+    return iou
+
+def get_mfcc(audio, rate):
+    mfcc = librosa.feature.mfcc(y=audio, sr=rate, n_mfcc=13)
+    return mfcc
+
 def compareFiles(path1, path2):
     audio1, rate1 = trimFile(path1)
     audio2, rate2 = trimFile(path2)
@@ -199,27 +218,51 @@ def compareFiles(path1, path2):
     # filter spectogram to reduce noise
     spectogram_filter2 = np.minimum(dbSpectogram2, librosa.decompose.nn_filter(dbSpectogram2, rec=rec2, aggregate=np.average, metric='cosine'))
 
-    # --------- SIMILARITY SCORING -----------
+    # SCORE FACTOR ONE: TIMING & RHYTHM SCORE
+    # subfactor one --------- spectrogram correlation -----------
 
-    flat_d1 = dbSpectogram1.flatten()
-    flat_d2 = dbSpectogram2.flatten()
+    flat_d1 = spectogram_filter1.flatten()
+    flat_d2 = spectogram_filter2.flatten()
 
-    correlation = np.corrcoef(flat_d1, flat_d2)[0, 1]
+    pearson_correlation = np.corrcoef(flat_d1, flat_d2)[0, 1]
 
-    # --------- RESULTS -----------
-
-    print(f"Pearson Correlation Coefficient: {correlation}")
-
-    similar = np.subtract(spectogram_filter1, spectogram_filter2)
-    similar = np.sum(similar)
-    print(f'differences {similar}')
-
-    # graph([{'title': 'normal', 'data': audio1, 'rate': rate1}, {'title': 'filtered', 'data': filt_audio1, 'rate': rate1}])
+    # subfactor two --------- onset detection & analysis -----------
 
     onset1 = librosa.onset.onset_detect(y=filt_audio1, sr=rate1)
     onset2 = librosa.onset.onset_detect(y=filt_audio2, sr=rate2)
+    tolerance_threshold = 4
 
-    print("onset1: ", ", ".join(map(str, onset1)), "onset2: ", ", ".join(map(str, onset2)))
+    estimated_iou = calculate_iou_with_tolerance(onset1, onset2, tolerance_threshold)
+
+    # SCORE FACTOR TWO: TIMING & RHYTHM SCORE
+    # subfactor one --------- mel-frequency cepstral coefficients -----------
+
+    mfcc1 = get_mfcc(audio1, rate1)
+    mfcc2 = get_mfcc(audio2, rate2)
+
+    cosine_distance = 1 - distance.cosine(mfcc1.flatten(), mfcc2.flatten())
+    mfcc_score = cosine_distance
+
+    # one other factor here maybe...
+
+    # --------- RESULTS -----------
+
+    rhythm_score = (pearson_correlation + estimated_iou) / 2
+    intonation_score = mfcc_score
+    combined_score = (rhythm_score + intonation_score) / 2
+
+    # COMBINE THESE METRICS TO GIVE A FINAL SCORE (?)
+
+    print(f"Pearson Correlation Coefficient: {pearson_correlation}")
+    print(f"Onset Correlation Factor: {estimated_iou}")
+    print(f"Mel-frequency Cepstral Coefficients Score: {mfcc_score}")
+    print(f"--------------------------------------------------------------------------")
+    print(f"--------------------------------------------------------------------------")
+    print(f"RHYTHM SCORE: {rhythm_score}")
+    print(f"INTONATION SCORE: {intonation_score}")
+    print(f"--------------------------------------------------------------------------")
+    print(f"--------------------------------------------------------------------------")
+    print(f"OVERALL SCORE: {combined_score*100:.1f}%")
 
 
 def main():
