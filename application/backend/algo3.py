@@ -228,8 +228,8 @@ def compareFiles(path1, path2):
 
     # subfactor two --------- onset detection & analysis -----------
 
-    onset1 = librosa.onset.onset_detect(y=filt_audio1, sr=rate1)
-    onset2 = librosa.onset.onset_detect(y=filt_audio2, sr=rate2)
+    onset1 = librosa.onset.onset_detect(y=audio1, sr=rate1)
+    onset2 = librosa.onset.onset_detect(y=audio2, sr=rate2)
     tolerance_threshold = 4
 
     estimated_iou = calculate_iou_with_tolerance(onset1, onset2, tolerance_threshold)
@@ -263,6 +263,7 @@ def compareFiles(path1, path2):
     print(f"--------------------------------------------------------------------------")
     print(f"--------------------------------------------------------------------------")
     print(f"OVERALL SCORE: {combined_score*100:.1f}%")
+
 
 
 def main():
