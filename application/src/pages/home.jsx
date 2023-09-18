@@ -14,11 +14,7 @@ function Home() {
     );
   }
 
-  return (
-    <div className="home">
-      {isAuthenticated ? <TaskSection /> : <LoginButton />}
-    </div>
-  );
+  return <div className="home">{isAuthenticated ? <TaskSection /> : null}</div>;
 }
 
 export default Home;
