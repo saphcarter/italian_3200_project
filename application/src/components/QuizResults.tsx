@@ -1,5 +1,5 @@
 import React from "react";
-import { QuizResult } from "./quiz";
+import { QuizResult } from "./QuizAttempt";
 import {
   Bar,
   ComposedChart,
@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { Link, useParams } from "react-router-dom";
 
 type ChartData = {
   question: number;
@@ -58,6 +59,8 @@ export default function ResultsView({
 }: {
   results: Array<QuizResult>;
 }) {
+  const { name } = useParams();
+
   var data: Array<ChartData> = [];
   if (results == undefined) {
     //for testing purposes
@@ -89,7 +92,9 @@ export default function ResultsView({
   }
 
   return (
-    <div>
+    <div className="p-4">
+      <h2>{name}</h2>
+      <hr className="border-2"></hr>
       <ResponsiveContainer width={"100%"} height={500}>
         <ComposedChart
           width={700}
@@ -132,6 +137,11 @@ export default function ResultsView({
           />
         </ComposedChart>
       </ResponsiveContainer>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Link to={`/`}>
+          <button className="btn btn-primary">Exit Quiz</button>
+        </Link>
+      </div>
     </div>
   );
 }

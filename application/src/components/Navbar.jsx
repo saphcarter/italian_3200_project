@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
+import { NavLink } from "react-router-dom";
 
 function NavbarComponent() {
   const { isAuthenticated } = useAuth0();
