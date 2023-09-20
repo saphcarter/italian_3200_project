@@ -9,6 +9,11 @@ import Button from "react-bootstrap/esm/Button";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import QuizEndScreen from "./quizEnd";
+import Button from "react-bootstrap/esm/Button";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import ResultsView from "./quizResults";
+import { redirect } from "react-router-dom";
 
 type Question = {
   description: string;
@@ -20,7 +25,7 @@ type Result = {
   selfEvaluationScore: number;
 };
 
-type QuizResult = {
+export type QuizResult = {
   question: number;
   result: Result;
 };
@@ -121,6 +126,8 @@ function QuestionView({
 
   const [isRecordingView, setIsRecordingView] = useState(true);
 
+  const [isRecording, setIsRecording] = useState(false);
+
   function submitAudio() {
     //fake save
     setIsRecordingView(false);
@@ -134,7 +141,8 @@ function QuestionView({
 
     //send result
     const result: Result = {
-      similarityScore: 0,
+      //fake score
+      similarityScore: Math.floor(100 * Math.random()),
       selfEvaluationScore: selfEval,
     };
     submitResult(result);
@@ -162,6 +170,10 @@ function QuestionView({
                   {/* <Record /> */}
                   <AudioRecorder
                     onAudioChange={(audio) => handleAudioChange(audio)}
+                    isRecording={isRecording}
+                    setIsRecording={(value: boolean) => {
+                      setIsRecording(value);
+                    }}
                   />
                 </Stack>
               </Col>
@@ -205,9 +217,10 @@ function QuestionView({
               <Col>
                 {recordedAudio.length > 0 && (
                   <Button
-                    variant="outline-success"
+                    variant="outline-danger"
                     type="button"
                     onClick={submitAudio}
+                    disabled={isRecording == true}
                   >
                     Submit
                   </Button>
@@ -249,20 +262,35 @@ function Quiz() {
     setQuestionNumber(questionNumber + 1);
   }
 
+  function handleClick() {
+    window.location.href = "/";
+  }
+
   return (
     <div className="p-4">
-      <div className="fs-2 fw-medium"> Quiz Name </div>
-      <hr className="border-2"></hr>
       {questionNumber < questions.length ? (
-        <Stack gap={3} className="mx-3">
-          <div className="fs-4">Question {questionNumber + 1}</div>
-          <QuestionView
-            q={questions[questionNumber]}
-            submitResult={submitResult}
-          />
-        </Stack>
+        <>
+          <div className="fs-2 fw-medium"> Quiz Name </div>
+          <hr className="border-2"></hr>
+          <Stack gap={3} className="mx-3">
+            <div className="fs-4">Question {questionNumber + 1}</div>
+            <QuestionView
+              q={questions[questionNumber]}
+              submitResult={submitResult}
+            />
+          </Stack>
+        </>
       ) : (
-        <QuizEndScreen />
+        <>
+          <div className="fs-2 fw-medium"> Quiz Name Results </div>
+          <hr className="border-2"></hr>
+          <ResultsView results={quizResults} />
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button className="btn btn-primary" onClick={handleClick}>
+              Finish Quiz
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
