@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
-from models import User
-from app import app, db
+from models import User, Quiz
+from backend import app, db
+
+app = Flask(__name__)
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -49,3 +51,63 @@ def delete_user(user_id):
 #    POST /api/users: Create a new user.
 #    PUT /api/users/:id: Update an existing user by ID.
 #    DELETE /api/users/:id: Delete a user by ID.
+
+
+@app.route('/quizzes', methods=['GET'])
+def get_tasks():
+    quizzes = Quiz.query.all()
+    quiz_list = [{"id": quizzes.id, "name": quiz.name, "due_date": quiz.due_date} for quiz in quizzes]
+    return jsonify(quiz_list)
+
+
+@app.route('/quizzes/addquiz', methods=['POST'])
+def assign_task():
+    data = request.json
+    new = Quiz(id=data['id'], name=data['name'],due_date=data['due_date'])
+    db.session.add(new)
+    db.session.commit()
+    return jsonify({"message": "Quiz created successfully"}), 201
+
+
+@app.route('/quizzes/<int:id>', methods=['GET'])
+def get_task(id):
+    quiz = Quiz.query.get(id)
+    if quiz:
+        return jsonify({"id": quiz.id, "name": quiz.name, "due_date": quiz.due_date})
+    return jsonify({"message": "Quiz not found"}), 404
+
+
+@app.route('/quizzes/<int:id>', methods=['PUT'])
+def update_task(id):
+    quiz = Quiz.query.get(id)
+    if quiz:
+        data = request.json
+        quiz.id = data['id']
+        quiz.name = data['name']
+        db.session.commit()
+        return jsonify({"message": "Task updated successfully"})
+    return jsonify({"message": "Task not found"}), 404
+
+
+@app.route('/quizzes/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = Quiz.query.get(id)
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+        return jsonify({"message": "Task deleted successfully"})
+    return jsonify({"message": "Task not found"}), 404
+
+
+@app.route('/quizzes/addtest')
+def add_test():
+    new_task = Quiz(name="Quiz",due_date="1-8-2023")
+    db.session.add(new_task)
+    db.session.commit()
+    return jsonify({"message": "Task created successfully"}), 201
+
+ 
+
+# Running app
+if __name__ == '__main__':
+    app.run(debug=True)
