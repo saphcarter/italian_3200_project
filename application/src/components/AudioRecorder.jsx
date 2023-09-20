@@ -74,46 +74,52 @@ function RecordButton({ handleClick, icon, disabled }) {
 }
 
 const AudioRecorder = ({ onAudioChange, isRecording, setIsRecording }) => {
-  const [permission, setPermission] = useState(false);
-  const [stream, setStream] = useState(null);
   const mediaRecorder = useRef(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [recordingCounter, setRecordingCounter] = useState(0);
 
   const getMicrophonePermission = async () => {
-    if ("MediaRecorder" in window) {
-      try {
-        const streamData = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: false,
-        });
-        setPermission(true);
-        setStream(streamData);
-      } catch (err) {
-        alert(err.message);
+    return new Promise(async (resolve, reject) => {
+      if ("MediaRecorder" in window) {
+        try {
+          const streamData = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: false,
+          });
+          resolve(streamData);
+        } catch (err) {
+          reject(err);
+        }
+      } else {
+        reject("The MediaRecorder API is not supported in your browser.");
       }
-    } else {
-      alert("The MediaRecorder API is not supported in your browser.");
-    }
+    });
   };
 
   const startRecording = async () => {
-    if (recordingCounter < 3) {
-      setRecordingCounter(recordingCounter + 1);
-      setIsRecording(true);
-      //create new Media recorder instance using the stream
-      const media = new MediaRecorder(stream, { type: mimeType });
-      //set the MediaRecorder instance to the mediaRecorder ref
-      mediaRecorder.current = media;
-      //invokes the start method to start the recording process
-      mediaRecorder.current.start();
-      let localAudioChunks = [];
-      mediaRecorder.current.ondataavailable = (event) => {
-        if (typeof event.data === "undefined") return;
-        if (event.data.size === 0) return;
-        localAudioChunks.push(event.data);
-      };
-      setAudioChunks(localAudioChunks);
+    try {
+      const stream = await getMicrophonePermission();
+
+      if (recordingCounter < 3) {
+        setRecordingCounter(recordingCounter + 1);
+        setIsRecording(true);
+
+        //create Media recorder instance using the stream
+        const media = new MediaRecorder(stream, { type: mimeType });
+        //set the MediaRecorder instance to the mediaRecorder ref
+        mediaRecorder.current = media;
+        //start recording
+        mediaRecorder.current.start();
+        let localAudioChunks = [];
+        mediaRecorder.current.ondataavailable = (event) => {
+          if (typeof event.data === "undefined") return;
+          if (event.data.size === 0) return;
+          localAudioChunks.push(event.data);
+        };
+        setAudioChunks(localAudioChunks);
+      }
+    } catch (err) {
+      alert(err);
     }
   };
 
@@ -134,16 +140,7 @@ const AudioRecorder = ({ onAudioChange, isRecording, setIsRecording }) => {
   return (
     <div>
       <div className="audio-controls">
-        {!permission ? (
-          <Button
-            variant="outline-success"
-            type="button"
-            onClick={getMicrophonePermission}
-          >
-            Ready to record
-          </Button>
-        ) : null}
-        {permission && isRecording == false ? (
+        {isRecording == false ? (
           <RecordButton
             handleClick={startRecording}
             icon={IconEnum.Mic}

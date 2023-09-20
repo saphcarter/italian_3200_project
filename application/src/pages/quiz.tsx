@@ -241,12 +241,12 @@ function Quiz() {
   const questions: Question[] = [
     {
       description: "placeholder description",
-      audio: "/1-come-ti-chiami-trim.wav",
+      audio: "/1-come-ti-chiami.m4a",
     },
-    { description: "placeholder description", audio: "/2-come-stai-trim.wav" },
+    { description: "placeholder description", audio: "/2-come-stai.m4a" },
     {
       description: "placeholder description",
-      audio: "/3-questo-e-Matteo-trim.wav",
+      audio: "/3-questo-e-Matteo.m4a",
     },
   ];
 
