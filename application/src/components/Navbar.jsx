@@ -16,20 +16,17 @@ function NavbarComponent() {
   }
 
   return (
-    <Navbar
-      expand="lg"
-      className="bg-primary justify-content-between align-items-center"
-      data-bs-theme="dark"
-    >
-      <Container>
-        <Navbar.Brand href="/" className="fw-medium fs-3 pl-10">
+    <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
+      <Container className="align-items-baseline mx-3">
+        <Navbar.Brand href="/" className="fs-1 ">
+          {/* <h1> Learn Italian </h1> */}
           Learn Italian
         </Navbar.Brand>
         {isAuthenticated && (
           <>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls="navigation-links" />
             <Navbar.Collapse>
-              <Nav>
+              <Nav aria-roledescription="navigation-links">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/results">Results</Nav.Link>
                 <NavDropdown title="User">
