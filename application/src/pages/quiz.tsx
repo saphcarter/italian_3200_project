@@ -5,8 +5,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AudioRecorder from "../components/AudioRecorder";
-import Button from "react-bootstrap/esm/Button";
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import QuizEndScreen from "./quizEnd";
 import Button from "react-bootstrap/esm/Button";
