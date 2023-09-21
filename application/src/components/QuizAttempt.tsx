@@ -127,7 +127,22 @@ function QuestionView({
   const [isRecording, setIsRecording] = useState(false);
 
   function submitAudio() {
-    //fake save
+    const formData = new FormData();
+    // need to figure out how to access the audioblob here only for the chosen audio
+    // if you can even do that...
+    // formData.append('audio', audioblob_goes_here, 'recorded_audio.wav');
+  
+    fetch('/upload-audio', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Server response:', data);
+    })
+    .catch(error => console.error('Error:', error));
+    
+    // set variable
     setIsRecordingView(false);
   }
 

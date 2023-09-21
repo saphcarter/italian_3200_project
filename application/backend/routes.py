@@ -52,7 +52,6 @@ def delete_user(user_id):
 #    PUT /api/users/:id: Update an existing user by ID.
 #    DELETE /api/users/:id: Delete a user by ID.
 
-
 @app.route('/quizzes', methods=['GET'])
 def get_tasks():
     quizzes = Quiz.query.all()
@@ -106,7 +105,19 @@ def add_test():
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
- 
+@app.route('/upload-audio', methods=['POST'])
+def upload_audio():
+    # Check if request has audio field
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio provided'}), 400
+
+    audio_file = request.files['audio']
+
+    # Maybe save the audio file to a desired location?
+    # audio_file.save('uploads/recorded_audio.m4a')
+
+    return jsonify({'message': 'Audio received and processed successfully'})
+    
 
 # Running app
 if __name__ == '__main__':
