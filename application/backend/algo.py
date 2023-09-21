@@ -15,10 +15,6 @@ answer_file = "answer.m4a"
 
 print("Loaded Files Done...")
 
-# filter silence from answers
-f_question = question.filter_silence()
-f_answer = answer.filter_silence()
-
 # no filtering
 y1, sr1 = librosa.load(question_file, mono=False, duration=10)
 ytrim, index = librosa.effects.trim(y1)
@@ -45,5 +41,3 @@ correlation = correlate2d(db_spectrogram1, db_spectrogram2)
 similarity = np.max(correlation)
 
 print("Process Files Done...")
-
-print("Similarity Score: " + str(differences))

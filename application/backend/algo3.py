@@ -234,7 +234,7 @@ def compareFiles(path1, path2):
 
     estimated_iou = calculate_iou_with_tolerance(onset1, onset2, tolerance_threshold)
 
-    # SCORE FACTOR TWO: TIMING & RHYTHM SCORE
+    # SCORE FACTOR TWO: FREQUENCY SCORE
     # subfactor one --------- mel-frequency cepstral coefficients -----------
 
     mfcc1 = get_mfcc(audio1, rate1)
@@ -244,6 +244,7 @@ def compareFiles(path1, path2):
     mfcc_score = cosine_distance
 
     # EITHER: MODIFY MFCC SCORE TO BE STRICTER... OR ONE OTHER FACTOR HERE
+    # TEST ON BLANK FILE.... NOISE.... ETC
 
     # --------- RESULTS -----------
 
@@ -265,7 +266,6 @@ def compareFiles(path1, path2):
 
 
 def main():
-
     compareFiles('./answer.m4a', './static.m4a')
 
 if __name__ == "__main__":
