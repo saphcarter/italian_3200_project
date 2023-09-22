@@ -132,7 +132,7 @@ const AudioRecorder = ({ onAudioChange, isRecording, setIsRecording }) => {
       const audioBlob = new Blob(audioChunks, { type: mimeType });
       //creates a playable URL from the blob file.
       const audioUrl = URL.createObjectURL(audioBlob);
-      onAudioChange(audioUrl);
+      onAudioChange(audioUrl, audioBlob);
       setAudioChunks([]);
     };
   };

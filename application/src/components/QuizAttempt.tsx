@@ -115,9 +115,11 @@ function QuestionView({
   const { description, audio } = q;
 
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
+  const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([])
 
-  const handleAudioChange = (newAudio) => {
+  const handleAudioChange = (newAudio, blob) => {
     setRecordedAudio([...recordedAudio, newAudio]);
+    setRecordedBlobs([...recordedBlobs, blob])
   };
 
   const [selected, setSelected] = useState(0);
@@ -127,21 +129,23 @@ function QuestionView({
   const [isRecording, setIsRecording] = useState(false);
 
   function submitAudio() {
-    const formData = new FormData();
-    // need to figure out how to access the audioblob here only for the chosen audio
-    // if you can even do that...
-    // formData.append('audio', audioblob_goes_here, 'recorded_audio.wav');
-  
+    // const formData = new FormData();
+    
+    const audioBlob = recordedBlobs[selected]
+
+    // formData.append('audio', audioBlob, 'recorded_audio.wav');
+
+    // send audio and GET the score from the backend
     fetch('/upload-audio', {
-      method: 'POST',
-      body: formData,
+      method: 'GET',
+      body: audioBlob,
     })
     .then(response => response.json())
     .then(data => {
       console.log('Server response:', data);
     })
     .catch(error => console.error('Error:', error));
-    
+
     // set variable
     setIsRecordingView(false);
   }
@@ -152,7 +156,6 @@ function QuestionView({
     setSelected(0);
     setRecordedAudio([]);
 
-    //send result
     const result: Result = {
       //fake score
       similarityScore: Math.floor(100 * Math.random()),
@@ -183,7 +186,7 @@ function QuestionView({
                     </div>
                     {/* <Record /> */}
                     <AudioRecorder
-                      onAudioChange={(audio) => handleAudioChange(audio)}
+                      onAudioChange={(audio, blob) => handleAudioChange(audio, blob)}
                       isRecording={isRecording}
                       setIsRecording={(value: boolean) => {
                         setIsRecording(value);
