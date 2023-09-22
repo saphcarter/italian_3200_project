@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from models import User, Quizzes
+from models import User, Quizzes, Questions
 from backend import app, db
 
 @app.route('/api/users', methods=['GET'])
