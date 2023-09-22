@@ -104,7 +104,7 @@ def add_test():
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
-
+# Questions Database
 
 @app.route('/questions', methods=['GET'])
 def get_tasks():
@@ -130,9 +130,9 @@ def get_task(id):
     return jsonify({"message": "Question not found"}), 404
 
 
-@app.route('/quizzes/<int:id>', methods=['PUT'])
+@app.route('/questions/<int:id>', methods=['PUT'])
 def update_task(id):
-    question = Quizzes.query.get(id)
+    question = Questions.query.get(id)
     if question:
         data = request.json
         question.id = data['id']
