@@ -104,7 +104,52 @@ def add_test():
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
- 
+
+
+@app.route('/questions', methods=['GET'])
+def get_tasks():
+    questions = Questions.query.all()
+    question_list = [{"id": questions.id, "quiz_id": questions.quiz_id, "quiz": questions.quiz} for question in questions]
+    return jsonify(question_list)
+
+
+@app.route('/questions/addquestion', methods=['POST'])
+def assign_task():
+    data = request.json
+    new = Questions(id=data['id'], quiz_id=data['quiz_id'],quiz=data['quiz'])
+    db.session.add(new)
+    db.session.commit()
+    return jsonify({"message": "Queustion added successfully"}), 201
+
+
+@app.route('/questions/<int:id>', methods=['GET'])
+def get_task(id):
+    question = Questions.query.get(id)
+    if question:
+        return jsonify({"id": question.id, "quiz_id": question.quiz_id, "quiz": question.quiz})
+    return jsonify({"message": "Question not found"}), 404
+
+
+@app.route('/quizzes/<int:id>', methods=['PUT'])
+def update_task(id):
+    question = Quizzes.query.get(id)
+    if question:
+        data = request.json
+        question.id = data['id']
+        question.quiz_id = data['quiz_id']
+        db.session.commit()
+        return jsonify({"message": "Question updated successfully"})
+    return jsonify({"message": "Question not found"}), 404
+
+
+@app.route('/questions/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = Questions.query.get(id)
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+        return jsonify({"message": "Question deleted successfully"})
+    return jsonify({"message": "Question not found"}), 404
 
 # Running app
 if __name__ == '__main__':
