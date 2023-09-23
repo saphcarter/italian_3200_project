@@ -134,7 +134,7 @@ function QuestionView({
     formData.append('audio', audioBlob, 'recorded_audio.wav');
 
     // Make the fetch call
-    fetch('/upload-audio', {
+    fetch('/upload', {
       method: 'POST',
       body: formData
     })

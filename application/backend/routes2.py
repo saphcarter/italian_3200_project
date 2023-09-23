@@ -7,7 +7,7 @@ import os
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-@app.route('/upload-audio', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_audio():
     uploaded_file = request.files['audioBlob']
     
