@@ -16,6 +16,7 @@ def upload_audio():
     #if audio file is present
     if uploaded_file.filename != '':
         #save the file
+        # NOTE: file not properly saved... it is not playable
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         print(uploaded_file.filename)
         uploaded_file.save(file_path)
