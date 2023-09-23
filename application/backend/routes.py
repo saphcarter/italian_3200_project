@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from models import User, Quiz
 from backend import app, db
+import os
 
 app = Flask(__name__)
+
+
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -104,29 +107,6 @@ def add_test():
     db.session.add(new_task)
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
-
-
-@app.route('/upload-audio', methods=['GET'])
-def upload_audio(blob):
-    # Check if request has audio field
-    if 'audio' not in request.files:
-        return jsonify({'error': 'No audio provided'}), 400
-
-    audio_file = request.files['audio']
-
-    # Maybe save the audio file to a desired location?
-    # something like .... audio_file.save('uploads/filename.m4a')
-
-    # then process audio... pass it to a python algorithm file
-    # refactor file from testing command line file
-    # instead should have proper usage as a function
-
-    # calc score
-
-    # GET SCORE FOR FRONTEND
-    # NOT SURE
-
-    return jsonify({'message': 'Audio received and processed successfully'})
 
 
 # Running app

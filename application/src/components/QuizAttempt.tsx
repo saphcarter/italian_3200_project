@@ -129,22 +129,23 @@ function QuestionView({
   const [isRecording, setIsRecording] = useState(false);
 
   function submitAudio() {
-    // const formData = new FormData();
-    
+    const formData = new FormData();
     const audioBlob = recordedBlobs[selected]
+    formData.append('audio', audioBlob, 'recorded_audio.wav');
 
-    // formData.append('audio', audioBlob, 'recorded_audio.wav');
-
-    // send audio and GET the score from the backend
+    // Make the fetch call
     fetch('/upload-audio', {
-      method: 'GET',
-      body: audioBlob,
+      method: 'POST',
+      body: formData
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Server response:', data);
+      // Handle the numeric score received from the backend
+      console.log('Received score:', data.score);
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+      console.error('Error:', error);
+    });
 
     // set variable
     setIsRecordingView(false);
