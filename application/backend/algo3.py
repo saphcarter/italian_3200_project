@@ -249,7 +249,7 @@ def compareFiles(path1, path2):
 
     # sub-factor two --------- dynamic time warping -----------
     
-    #distance, path = fastdtw(audio1, audio2, dist=euclidean)
+    #distance, path = fastdtw(flat_d1, flat_d2, dist=euclidean)
     #dtw_score = 100
 
     # --------- RESULTS -----------
