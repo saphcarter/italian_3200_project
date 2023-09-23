@@ -16,6 +16,8 @@ from scipy.stats import pearsonr
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.spatial.distance import euclidean
 from scipy.spatial import distance
+from scipy.spatial.distance import euclidean
+from fastdtw import fastdtw
 
 def trimFile(path):
     ext = path.split(".")
@@ -48,6 +50,9 @@ def normalise_mfcc(mfcc):
     mfcc -= 0.7 if (mfcc-0.7) > 0 else 0
     mfcc /= 0.25 if (mfcc-0.7) <= 1 else 1
     return mfcc
+
+def dtw_to_percent(dtw_distance):
+    return (1 / (1 + dtw_distance)) * 100
 
 def compareFiles(path1, path2):
     audio1, rate1 = trimFile(path1)
@@ -119,14 +124,17 @@ def compareFiles(path1, path2):
     mfcc2 = get_mfcc(audio2, rate2)
 
     cosine_distance = 1 - distance.cosine(mfcc1.flatten(), mfcc2.flatten())
-    mfcc_score = cosine_distance
+    mfcc_score = normalise_mfcc(cosine_distance)
 
-    # TEST ON BLANK FILE.... NOISES.... ETC
+    # sub-factor two --------- dynamic time warping -----------
+    
+    distance, path = fastdtw(audio1, audio2, dist=euclidean)
+    dtw_score = (1 / (1 + distance)) * 100
 
     # --------- RESULTS -----------
 
     rhythm_score = (pearson_correlation + estimated_iou) / 2
-    intonation_score = mfcc_score
+    intonation_score = (mfcc_score + dtw_score) / 2 
     combined_score = (rhythm_score + intonation_score) / 2
 
     return rhythm_score, intonation_score, combined_score
