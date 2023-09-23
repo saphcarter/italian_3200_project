@@ -24,7 +24,6 @@ def trimFile(path):
         signaltrim, index = librosa.effects.trim(data, top_db=20)
         return signaltrim, rate
     else :
-        # rate, signal = read(path)
         data, rate = librosa.load(path, mono=False, duration=10)
         signaltrim, index = librosa.effects.trim(data, top_db=20)
         return signaltrim, rate
