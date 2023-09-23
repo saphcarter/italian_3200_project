@@ -17,11 +17,12 @@ def upload_audio():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         uploaded_file.save(file_path)
 
-        # placeholder score
+        # generate (placeholder) score
         import random
         score = random.randint(0, 100)
 
-        # then should delete the file 
+        # delete the file 
+        os.remove(file_path)
 
         return jsonify({'score': score})
 

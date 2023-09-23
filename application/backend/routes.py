@@ -6,7 +6,6 @@ import os
 app = Flask(__name__)
 
 
-
 @app.route('/api/users', methods=['GET'])
 def get_users():
     users = User.query.all()

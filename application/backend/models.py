@@ -1,4 +1,4 @@
-from server import db
+from backend import db
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, DECIMAL, Text, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
