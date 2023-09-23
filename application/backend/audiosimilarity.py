@@ -17,6 +17,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 from scipy.spatial.distance import euclidean
 from scipy.spatial import distance
 
+def trimFile(path):
+    ext = path.split(".")
+    if ext[-1] == "m4a":
+        data, rate = librosa.load(path, mono=False, duration=10)
+        signaltrim, index = librosa.effects.trim(data, top_db=20)
+        return signaltrim, rate
+    else :
+        # rate, signal = read(path)
+        data, rate = librosa.load(path, mono=False, duration=10)
+        signaltrim, index = librosa.effects.trim(data, top_db=20)
+        return signaltrim, rate
+
 def calculate_iou_with_tolerance(set1, set2, threshold):
     similarity = 0
 
@@ -39,6 +51,8 @@ def normalise_mfcc(mfcc):
     return mfcc
 
 def compareFiles(path1, path2):
+    audio1, rate1 = trimFile(path1)
+    audio2, rate2 = trimFile(path2)
 
     # get ratio length
     duration1 = librosa.get_duration(y=audio1)

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from server import app
 import os
-import time
+from audiosimilarity import compareFiles
 
 # Set the directory for storing uploaded files
 # not sure if this should go somewhere else...
@@ -12,6 +12,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def upload_audio():
 
     uploaded_file = request.files['audio']
+    answer_file = 'filler.wav'
     
     #if audio file is present
     if uploaded_file.filename != '':
@@ -24,6 +25,7 @@ def upload_audio():
         # generate (placeholder) score
         import random
         score = random.randint(0, 100)
+        # score_array = compareFiles(file_path, answer_file)
 
         # delete the file 
         # os.remove(file_path)
