@@ -137,4 +137,4 @@ def compareFiles(path1, path2):
     intonation_score = (mfcc_score + dtw_score) / 2 
     combined_score = (rhythm_score + intonation_score) / 2
 
-    return rhythm_score, intonation_score, combined_score
+    return combined_score
