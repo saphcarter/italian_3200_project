@@ -2,8 +2,7 @@ from flask import Flask, request, jsonify
 from server import app
 import os
 from audiosimilarity import compareFiles
-import wave
-import io
+import subprocess
 
 # Set the directory for storing uploaded files
 # not sure if this should go somewhere else...
@@ -14,14 +13,18 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def upload_audio():
 
     audio_blob = request.files['audio']
-    answer_file = 'filler.wav'
+    #answer_file = 'filler.wav'
     
     #if audio file is present
     if audio_blob.filename != '':
         
         #save the file
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], audio_blob.filename)
-        audio_blob.save(file_path)
+        old_file_path = os.path.join(app.config['UPLOAD_FOLDER'], audio_blob.filename)
+        audio_blob.save(old_file_path)
+
+        # convert webm to wav
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], "output.wav")
+        subprocess.run(['ffmpeg', '-i', old_file_path, file_path])
 
         # generate (placeholder) score
         import random
@@ -29,7 +32,8 @@ def upload_audio():
         # score = compareFiles(file_path, answer_file)
 
         # delete the file 
-        # os.remove(file_path)
+        os.remove(old_file_path)
+        os.remove(file_path)
 
         return jsonify({'score': score})
 

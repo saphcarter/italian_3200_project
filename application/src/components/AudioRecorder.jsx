@@ -134,8 +134,6 @@ const AudioRecorder = ({ onAudioChange, isRecording, setIsRecording }) => {
       const audioUrl = URL.createObjectURL(audioBlob);
       onAudioChange(audioUrl, audioBlob);
       setAudioChunks([]);
-      console.log(audioUrl)
-      console.log(audioBlob)
     };
   };
 

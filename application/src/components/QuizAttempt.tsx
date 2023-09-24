@@ -131,7 +131,9 @@ function QuestionView({
   function submitAudio() {
     const formData = new FormData();
     const audioBlob = recordedBlobs[selected]
-    formData.append('audio', audioBlob, 'recorded_audio.wav');
+    const audioUrl = recordedAudio[selected]
+    
+    formData.append('audio', audioBlob, "recorded_audio.webm");
 
     // Make the fetch call
     fetch('/audio', {
