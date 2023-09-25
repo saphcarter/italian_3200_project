@@ -9,11 +9,11 @@ class Quiz(db.Model):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String(64), nullable = False)
-    due_date = Column(DateTime, nullable = True)
+    due_date = Column(String(20), nullable = True)
 
     def __repr__(self):
         return '<Quiz-Id %r>' % self.id
-    
+   
 class Question(db.Model):
     __tablename__ = 'questions'
 
@@ -53,25 +53,4 @@ class QuestionResults(db.Model):
     def __repr__(self):
         return '<Question-Result-Id %r>' % self.id
 
-# Need to set this up properly with auth0
-class User(db.Model):
-    id = Column(Integer, primary_key=True)
-    username = Column(String(80), unique=True, nullable=False)
-    email = Column(String(120), unique=True, nullable=False)
-    password_hash = Column(String(128), nullable=False)
-    last_seen = Column(DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'<User {self.username}>'
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def get_last_seen(self):
-        local_tz = pytz.timezone('Australia/Perth')
-        local_dt = self.last_seen.replace(tzinfo=pytz.utc).astimezone(local_tz)
-        return local_tz.normalize(local_dt)
 
