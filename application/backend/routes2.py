@@ -13,7 +13,15 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def upload_audio():
 
     audio_blob = request.files['audio']
-    #answer_file = 'filler.wav'
+    question = request.form['question']
+
+    question_path = '../public/' + question
+    print("question path: " + question_path)
+    # TODO: NEED TO SORT OUT QUESTION FILE FULL PATH.
+    # ALSO NEED TO CONFIRM WHERE SERVER SHOULD START FROM (directory)... and desired path for upload folder.
+    # FROM HERE SHOULD BE EASY TO APPEND FULL QUESTION PATH AND GET DESIRED AUDIO PATH
+    # THEN PLUG INTO COMPARE FILES METHOD
+    # THEN TWEAK COMPARE FILES A LITTLE BIT MORE WITH SOME TESTING
     
     #if audio file is present
     if audio_blob.filename != '':
@@ -27,11 +35,11 @@ def upload_audio():
         subprocess.run(['ffmpeg', '-i', old_file_path, file_path])
 
         # generate (placeholder) score
-        import random
-        score = random.randint(0, 100)
-        # score = compareFiles(file_path, answer_file)
+        #import random
+        #score = random.randint(0, 100)
+        score = compareFiles(file_path, question_path)
 
-        # delete the file 
+        # delete the created files
         os.remove(old_file_path)
         os.remove(file_path)
 
