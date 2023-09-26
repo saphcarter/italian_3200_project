@@ -129,11 +129,18 @@ function QuestionView({
   const [isRecording, setIsRecording] = useState(false);
 
   function submitAudio() {
+    // set variable
+    setIsRecordingView(false);
+  }
+
+  function submit(selfEval: number) {
     const formData = new FormData();
     const audioBlob = recordedBlobs[selected]
     
     formData.append('audio', audioBlob, "recorded_audio.webm");
     formData.append('question', audio);
+
+    let sim_score;
 
     // Make the fetch call
     fetch('/audio', {
@@ -144,16 +151,12 @@ function QuestionView({
     .then(data => {
       // Handle the numeric score received from the backend
       console.log('Received score:', data.score);
+      sim_score = data.score;
     })
     .catch(error => {
       console.error('Error:', error);
-    });
-
-    // set variable
-    setIsRecordingView(false);
-  }
-
-  function submit(selfEval: number) {
+    }); 
+    
     //reset variables
     setIsRecordingView(true);
     setSelected(0);
@@ -161,9 +164,10 @@ function QuestionView({
 
     const result: Result = {
       //fake score
-      similarityScore: Math.floor(100 * Math.random()),
+      similarityScore: sim_score,
       selfEvaluationScore: selfEval,
     };
+
     submitResult(result);
   }
 
