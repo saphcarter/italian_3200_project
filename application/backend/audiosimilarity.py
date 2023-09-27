@@ -41,16 +41,20 @@ def calculate_iou_with_tolerance(set1, set2, threshold):
     return iou
 
 def get_mfcc(audio, rate):
-    mfcc = librosa.feature.mfcc(y=audio, sr=rate, n_mfcc=13)
+    mfcc = librosa.feature.mfcc(y=audio, sr=rate, n_mfcc=6)
     return mfcc
 
-def normalise_mfcc(mfcc):
-    mfcc -= 0.7 if (mfcc-0.7) > 0 else 0
-    mfcc /= 0.25 if (mfcc-0.7) <= 1 else 1
+def scale_mfcc(mfcc):
+    mfcc -= 0.75 if (mfcc-0.75) > 0 else 0
+    mfcc /= 0.2 if (mfcc/0.2) <= 1 else 1
     return mfcc
 
 def dtw_to_percent(dtw_distance):
     return (1 / (1 + dtw_distance)) * 100
+
+def compare_chroma(chroma1, chroma2):
+    chroma_distance = np.linalg.norm(chroma1 - chroma2)
+    return chroma_distance
 
 def compareFiles(path1, path2):
     audio1, rate1 = trimFile(path1)
@@ -111,7 +115,7 @@ def compareFiles(path1, path2):
 
     onset1 = librosa.onset.onset_detect(y=audio1, sr=rate1)
     onset2 = librosa.onset.onset_detect(y=audio2, sr=rate2)
-    tolerance_threshold = 4
+    tolerance_threshold = 5
 
     estimated_iou = calculate_iou_with_tolerance(onset1, onset2, tolerance_threshold)
 
@@ -122,15 +126,32 @@ def compareFiles(path1, path2):
     mfcc2 = get_mfcc(audio2, rate2)
 
     cosine_distance = 1 - cosine(mfcc1.flatten(), mfcc2.flatten())
-    mfcc_score = normalise_mfcc(cosine_distance)
+    mfcc_score = scale_mfcc(cosine_distance)
 
-    # sub-factor two --------- dynamic time warping -----------
+    # sub-factor two ---------  -----------
 
-
+    
     # --------- RESULTS -----------
 
     rhythm_score = (pearson_correlation + estimated_iou) / 2
     intonation_score = (mfcc_score) 
     combined_score = (rhythm_score + intonation_score) / 2
+
+    print("----------------------------------------")
+    print("----------------------------------------")
+    print("----------------------------------------")
+    print("correlation: " + str(pearson_correlation))
+    print("onset score: " + str(estimated_iou))
+    print("mfcc dist: " + str(cosine_distance))
+    print("mfcc: " + str(mfcc_score))
+    print("----------------------------------------")
+    print("----------------------------------------")
+    print("----------------------------------------")
+    print("rhythm score: " + str(rhythm_score))
+    print("intonation score: " + str(intonation_score))
+    print("combined: " + str(combined_score))
+    print("----------------------------------------")
+    print("----------------------------------------")
+    print("----------------------------------------")
 
     return combined_score
