@@ -17,11 +17,7 @@ def upload_audio():
 
     question_path = '../public/' + question
     print("question path: " + question_path)
-    # TODO: NEED TO SORT OUT QUESTION FILE FULL PATH.
-    # ALSO NEED TO CONFIRM WHERE SERVER SHOULD START FROM (directory)... and desired path for upload folder.
-    # FROM HERE SHOULD BE EASY TO APPEND FULL QUESTION PATH AND GET DESIRED AUDIO PATH
-    # THEN PLUG INTO COMPARE FILES METHOD
-    # THEN TWEAK COMPARE FILES A LITTLE BIT MORE WITH SOME TESTING
+    # TODO: confirm desired directories + paths
     
     #if audio file is present
     if audio_blob.filename != '':
