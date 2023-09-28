@@ -1,6 +1,9 @@
+
 from flask import Flask, request, jsonify
-from models import User, Quizzes, Questions
+from models import User, Quiz, Question
 from backend import app, db
+
+app = Flask(__name__)
 
 @app.route('/api/users', methods=['GET'])
 def get_users():
@@ -50,10 +53,9 @@ def delete_user(user_id):
 #    PUT /api/users/:id: Update an existing user by ID.
 #    DELETE /api/users/:id: Delete a user by ID.
 
-
 @app.route('/quizzes', methods=['GET'])
 def get_tasks():
-    quizzes = Quizzes.query.all()
+    quizzes = Quiz.query.all()
     quiz_list = [{"id": quizzes.id, "name": quiz.name, "due_date": quiz.due_date} for quiz in quizzes]
     return jsonify(quiz_list)
 
@@ -61,7 +63,7 @@ def get_tasks():
 @app.route('/quizzes/addquiz', methods=['POST'])
 def assign_task():
     data = request.json
-    new = Quizzes(id=data['id'], name=data['name'],due_date=data['due_date'])
+    new = Quiz(id=data['id'], name=data['name'],due_date=data['due_date'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Quiz created successfully"}), 201
@@ -69,7 +71,7 @@ def assign_task():
 
 @app.route('/quizzes/<int:id>', methods=['GET'])
 def get_task(id):
-    quiz = Quizzes.query.get(id)
+    quiz = Quiz.query.get(id)
     if quiz:
         return jsonify({"id": quiz.id, "name": quiz.name, "due_date": quiz.due_date})
     return jsonify({"message": "Quiz not found"}), 404
@@ -77,7 +79,7 @@ def get_task(id):
 
 @app.route('/quizzes/<int:id>', methods=['PUT'])
 def update_task(id):
-    quiz = Quizzes.query.get(id)
+    quiz = Quiz.query.get(id)
     if quiz:
         data = request.json
         quiz.id = data['id']
@@ -89,7 +91,7 @@ def update_task(id):
 
 @app.route('/quizzes/<int:id>', methods=['DELETE'])
 def delete_task(id):
-    task = Quizzes.query.get(id)
+    task = Quiz.query.get(id)
     if task:
         db.session.delete(task)
         db.session.commit()
@@ -99,43 +101,49 @@ def delete_task(id):
 
 @app.route('/quizzes/addtest')
 def add_test():
-    new_task = Quizzes(id=1, questions="test",audio_paths="test2",due_date="1-8-2023")
+    new_task = Quiz(name="Quiz",due_date="1-8-2023")
     db.session.add(new_task)
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
-# Questions Database
+
+#    GET /questions: Retrieve a list of questions.
+#    POST /questions/addquestion: Add a question.
+#    GET /questions/:id: Retrieve a specific question.
+#    PUT /questions/:id: Update an existing question.
+#    DELETE /questions/:id: Delete a specific question.
 
 @app.route('/questions', methods=['GET'])
-def get_tasks():
-    questions = Questions.query.all()
-    question_list = [{"id": questions.id, "quiz_id": questions.quiz_id, "quiz": questions.quiz} for question in questions]
+def get_question():
+    questions = Question.query.all()
+    question_list = [{"id": questions.id, "quiz_id": questions.quiz_id, "audio": question.audio, "quiz": questions.quiz} for question in questions]
     return jsonify(question_list)
 
 
 @app.route('/questions/addquestion', methods=['POST'])
-def assign_task():
+def add_question():
     data = request.json
-    new = Questions(id=data['id'], quiz_id=data['quiz_id'],quiz=data['quiz'])
+    new = Question(id = data['id'], quiz_id = data['quiz_id'], question = data['audio'], quiz = data['quiz'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Queustion added successfully"}), 201
 
 
 @app.route('/questions/<int:id>', methods=['GET'])
-def get_task(id):
-    question = Questions.query.get(id)
+def get_question(id):
+    question = Question.query.get(id)
     if question:
-        return jsonify({"id": question.id, "quiz_id": question.quiz_id, "quiz": question.quiz})
+        return jsonify({"id": question.id, "quiz_id": question.quiz_id, "audio": question.audio, "quiz":  question.quiz})
     return jsonify({"message": "Question not found"}), 404
 
 
 @app.route('/questions/<int:id>', methods=['PUT'])
-def update_task(id):
-    question = Questions.query.get(id)
+def update_question(id):
+    question = Question.query.get(id)
     if question:
         data = request.json
         question.id = data['id']
+        question.audio = data['audio']
         question.quiz_id = data['quiz_id']
         db.session.commit()
         return jsonify({"message": "Question updated successfully"})
@@ -143,8 +151,8 @@ def update_task(id):
 
 
 @app.route('/questions/<int:id>', methods=['DELETE'])
-def delete_task(id):
-    task = Questions.query.get(id)
+def delete_question(id):
+    task = Question.query.get(id)
     if task:
         db.session.delete(task)
         db.session.commit()
@@ -154,3 +162,6 @@ def delete_task(id):
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
