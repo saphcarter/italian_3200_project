@@ -1,6 +1,6 @@
 
 from flask import Flask, request, jsonify
-from models import User, Quiz, Question, QuizResults
+from models import User, Quiz, Question, QuizResults, QuestionResults
 from backend import app, db
 
 app = Flask(__name__)
@@ -52,6 +52,8 @@ def delete_user(user_id):
 #    POST /api/users: Create a new user.
 #    PUT /api/users/:id: Update an existing user by ID.
 #    DELETE /api/users/:id: Delete a user by ID.
+
+## Quizzes Database
 
 # Get all Quizzes
 @app.route('/quizzes', methods=['GET'])
@@ -183,7 +185,7 @@ def get_quiz_results(id):
 @app.route('/quiz_results/addquizresult', methods=['POST'])
 def add_quiz_results():
     data = request.json
-    new = Quiz(id = data['id'], userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'], user = data['user'])
+    new = QuizResults(id = data['id'], userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'], user = data['user'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Quiz Result added successfully"}), 201
@@ -212,6 +214,50 @@ def delete_quiz_result(id):
         db.session.commit()
         return jsonify({"message": "Quiz Result deleted successfully"})
     return jsonify({"message": "Quiz Result not found"}), 404
+
+## Question Results Database
+
+# Get All Question Results
+@app.route('/question_results', methods=['GET'])
+def get_all_question_results():
+    question_results_list = QuestionResults.query.all()
+    return jsonify(question_results_list)
+
+# Get Specific Question Result
+@app.route('/question_results/<int:id>', methods=['GET'])
+def get_question_result(id):
+    question_result = QuestionResults.query.get(id)
+    if question_result:
+        return jsonify({"id": question_result.id, "quizResultId": question_result.quizResultId, "questionId": question_result.questionId, "answerAudio":  question_result.answerAudio, "similarityScore":  question_result.similaritScore, "selfEvalScore": question_result.selfEvalScore, "quiz_result": question_result.quiz_result, "question": question_result.question})
+    return jsonify({"message": "Question Result not found"}), 404
+
+# Add Quiz Result
+@app.route('/question_results/addquestionresult', methods=['POST'])
+def add_question_results():
+    data = request.json
+    new = QuestionResults(id = data['id'], quizResultId = data['quizResultId'], questionId = data['questionId'], answerAudio = data['answerAudio'], similarityScore = data['similarityScore'], selfEvalScore = data['selfEvalScore'], quiz_result = data['quiz_result'], question = data['question'])
+    db.session.add(new)
+    db.session.commit()
+    return jsonify({"message": "Question Result added successfully"}), 201
+
+# Update Quiz Result
+@app.route('/question_results/<int:id>', methods=['PUT'])
+def update_question_result(id):
+    question_result = QuestionResults.query.get(id)
+    if question_result:
+        data = request.json
+        question_result.id = data['id']
+        question_result.quizResultId = data['quizResultId']
+        question_result.questionId = data['questionId']
+        question_result.answerAudio = data['answerAudio']
+        question_result.similarityScore = data['similarityScore']
+        question_result.selfEvalScore = data['selfEvalScore']
+        question_result.quiz_result = data['quiz_result']
+        question_result.question = data['question']
+        db.session.commit()
+        return jsonify({"message": "Question Result updated successfully"})
+    return jsonify({"message": "Question Result not found"}), 404
+
 
 # Running app
 if __name__ == '__main__':
