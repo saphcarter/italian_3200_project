@@ -20,7 +20,6 @@ class Question(db.Model):
     id = Column(Integer, primary_key = True, autoincrement = True)
     audio = Column(String(500))
     quiz_id = Column(Integer, ForeignKey('Quizz.id'))
-    quiz = relationship("Quiz")
 
     def __repr__(self):
         return '<Question-Id %r>' % self.id
