@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from backend import app, db
-from backend.models import Quiz
+from backend.models import Quiz, Question
 
 
 @app.route('/quizzes')
@@ -131,3 +131,10 @@ def delete_task(id):
         return jsonify({"message": "Question deleted successfully"})
     return jsonify({"message": "Question not found"}), 404
 
+
+@app.route('/questions/addtest')
+def add_q_test():
+    new_q = Question(id=0,,audio="testpath")
+    db.session.add(new_q)
+    db.session.commit()
+    return jsonify({"message": "Task created successfully"}), 201
