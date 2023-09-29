@@ -189,10 +189,20 @@ def delete_question(id):
 ## Question Results
 
 # Get All Quiz Results
-@app.route('/quiz_results', methods=['GET'])
+@app.route('/quiz_results')
 def get_quiz_results():
     quiz_results_list = QuizResults.query.all()
-    return jsonify(quiz_results_list)
+    all_quiz_results = []
+    for quiz_result in quiz_results_list:
+        details = []
+        details.append(quiz_result.id)
+        details.append(quiz_result.userId)
+        details.append(quiz_result.quizId)
+        details.append(quiz_result.dateCompleted)
+        details.append(quiz_result.user)
+        all_quiz_results.append(details)
+    
+    return jsonify(all_quiz_results)
 
 # Get Specific Quiz Result
 @app.route('/quiz_results/<int:id>', methods=['GET'])
