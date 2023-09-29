@@ -231,7 +231,7 @@ def get_question_result(id):
         return jsonify({"id": question_result.id, "quizResultId": question_result.quizResultId, "questionId": question_result.questionId, "answerAudio":  question_result.answerAudio, "similarityScore":  question_result.similaritScore, "selfEvalScore": question_result.selfEvalScore, "quiz_result": question_result.quiz_result, "question": question_result.question})
     return jsonify({"message": "Question Result not found"}), 404
 
-# Add Quiz Result
+# Add Question Result
 @app.route('/question_results/addquestionresult', methods=['POST'])
 def add_question_results():
     data = request.json
@@ -240,7 +240,7 @@ def add_question_results():
     db.session.commit()
     return jsonify({"message": "Question Result added successfully"}), 201
 
-# Update Quiz Result
+# Update Question Result
 @app.route('/question_results/<int:id>', methods=['PUT'])
 def update_question_result(id):
     question_result = QuestionResults.query.get(id)
@@ -258,6 +258,15 @@ def update_question_result(id):
         return jsonify({"message": "Question Result updated successfully"})
     return jsonify({"message": "Question Result not found"}), 404
 
+# Delete Question Result
+@app.route('/question_results/<int:id>', methods=['DELETE'])
+def delete_question_result(id):
+    question_result = QuestionResults.query.get(id)
+    if question_result:
+        db.session.delete(question_result)
+        db.session.commit()
+        return jsonify({"message": "Question Result deleted successfully"})
+    return jsonify({"message": "Question Result not found"}), 404
 
 # Running app
 if __name__ == '__main__':
