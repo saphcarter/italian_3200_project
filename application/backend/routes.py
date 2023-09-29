@@ -56,11 +56,18 @@ def delete_user(user_id):
 ## Quizzes Database
 
 # Get all Quizzes
-@app.route('/quizzes', methods=['GET'])
-def get_tasks():
+@app.route('/quizzes')
+def get_quizes():
     quizzes = Quiz.query.all()
-    quiz_list = [{"id": quizzes.id, "name": quiz.name, "due_date": quiz.due_date} for quiz in quizzes]
-    return jsonify(quiz_list)
+    quiz_names = []
+    for quiz in quizzes:
+        quiz_details = []
+        quiz_details.append(quiz.id)
+        quiz_details.append(quiz.name)
+        quiz_details.append(quiz.due_date)
+        quiz_names.append(quiz_details)
+
+    return jsonify(quiz_names)
 
 # Add Quiz
 @app.route('/quizzes/addquiz', methods=['POST'])
@@ -108,6 +115,20 @@ def add_test():
     db.session.add(new_task)
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
+
+# Get All Questions for a Quiz
+@app.route('/quizzes/questions')
+def questions_from_quiz(id):
+    questions = Question.query.filter_by(Question.quiz_id == id).all()
+    q_names = []
+    for question in questions:
+        q_details = []
+        q_details.append(question.id)
+        q_details.append(question.quiz_id)
+        q_details.append(question.audio)
+        q_names.append(q_details)
+
+    return jsonify(q_names)
 
 
 ## Questions Database
