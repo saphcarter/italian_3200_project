@@ -19,11 +19,12 @@ class Question(db.Model):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     audio = Column(String(500))
-    quiz_id = Column(Integer, ForeignKey('quizzes.id'))
-    quiz = relationship("Quiz", back_populates="questions")
+    quiz_id = Column(Integer, ForeignKey('Quizz.id'))
+    quiz = relationship("Quiz")
 
     def __repr__(self):
         return '<Question-Id %r>' % self.id
+"""        
 
 # Define a QuizResults model
 class QuizResults(db.Model):
@@ -31,7 +32,7 @@ class QuizResults(db.Model):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     userId = Column(String(255), ForeignKey('Users.id'))
-    quizId = Column(String(255), ForeignKey('Quizzes.id'))
+    quizId = Column(String(255), ForeignKey('Quizz.id'))
     dateCompleted = Column(DateTime)
     user = relationship("User", back_populates="user")
 
@@ -52,5 +53,5 @@ class QuestionResults(db.Model):
 
     def __repr__(self):
         return '<Question-Result-Id %r>' % self.id
-
+"""
 

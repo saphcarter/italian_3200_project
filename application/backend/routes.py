@@ -80,7 +80,7 @@ def questions_from_quiz(id):
 #Questions routes
 @app.route('/questions', methods=['GET'])
 def get_all_qs():
-    questions = Questions.query.all()
+    questions = Question.query.all()
     q_names = []
     for question in questions:
         q_details = []
@@ -95,7 +95,7 @@ def get_all_qs():
 @app.route('/questions/addquestion', methods=['POST'])
 def add_question():
     data = request.json
-    new = Questions(id=data['id'], audio=data['audio'],quiz_id=data['quiz_id'])
+    new = Question(id=data['id'], audio=data['audio'],quiz_id=data['quiz_id'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Queustion added successfully"}), 201
@@ -103,7 +103,7 @@ def add_question():
 
 @app.route('/questions/<int:id>', methods=['GET'])
 def get_question(id):
-    question = Questions.query.get(id)
+    question = Question.query.get(id)
     if question:
         return jsonify({"id": question.id, "audio_id": question.quiz_id, "quiz_id": question.quiz})
     return jsonify({"message": "Question not found"}), 404
@@ -111,7 +111,7 @@ def get_question(id):
 
 @app.route('/questions/<int:id>', methods=['PUT'])
 def update_question(id):
-    question = Questions.query.get(id)
+    question = Question.query.get(id)
     if question:
         data = request.json
         question.id = data['id']
@@ -124,7 +124,7 @@ def update_question(id):
 
 @app.route('/questions/<int:id>', methods=['DELETE'])
 def delete_task(id):
-    task = Questions.query.get(id)
+    task = Question.query.get(id)
     if task:
         db.session.delete(task)
         db.session.commit()
