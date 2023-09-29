@@ -18,6 +18,7 @@ def upload_audio():
     question_path = '../public/' + question
     print("question path: " + question_path)
     # TODO: confirm desired directories + paths
+    # run from application
     
     #if audio file is present
     if audio_blob.filename != '':
@@ -31,8 +32,6 @@ def upload_audio():
         subprocess.run(['ffmpeg', '-i', old_file_path, file_path])
 
         # generate (placeholder) score
-        #import random
-        #score = random.randint(0, 100)
         score = compareFiles(file_path, question_path)
 
         # delete the created files
