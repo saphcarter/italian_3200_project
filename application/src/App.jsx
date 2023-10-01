@@ -14,6 +14,7 @@ import Loader from "./components/Loader";
 import { AuthenticationGuard } from "./components/AuthenticationGuard";
 import { ProfilePage } from "./pages/profile";
 import ResultsView from "./pages/quizResults";
+import AdminPanel from "./components/AdminPanel";
 
 function App() {
   const { isLoading } = useAuth0();
