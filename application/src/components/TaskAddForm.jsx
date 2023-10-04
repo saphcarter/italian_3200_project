@@ -24,19 +24,15 @@ const TaskAddForm = () => {
             return;
         }
 
-        // Process the form data (e.g., send it to a server, update state, etc.)
+        // Process the form data (send it to our server, update state, etc.)
+        // Reset the form inputs if needed
 
-        // Reset the form inputs (if needed)
-
-        // Close the popup
         setIsPopupOpen(false);
 
-        // Show the success pop-up
         setShowSuccessPopup(true);
 
-        // Hide the success pop-up after a delay (e.g., 3 seconds)
         setTimeout(() => {
-        setShowSuccessPopup(false);
+            setShowSuccessPopup(false);
         }, 3000);
 
     };

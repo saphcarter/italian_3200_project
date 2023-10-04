@@ -55,7 +55,7 @@ export default function QuizIntroScreen() {
               width={50}
               height={50}
               style={{ margin: "25px" }}
-            />
+        />
         </div>
         <p style={{ marginLeft: '10px' }}>This is the record button. In the quiz, click this button to begin your speaking attempt. Do your best to copy the original speaker's pronounciation and timing.</p>
       </div>
@@ -66,7 +66,7 @@ export default function QuizIntroScreen() {
               width={50}
               height={50}
               style={{ margin: "25px" }}
-            />
+        />
         </div>
         <p style={{ marginLeft: '10px' }}>This is the stop button. In the quiz, click this button to end the recording.</p>
       </div>
