@@ -177,3 +177,7 @@
   height: 100%;
   stroke-width: 3;
 }
+
+.form-group{
+  margin-bottom: 10px;
+}
