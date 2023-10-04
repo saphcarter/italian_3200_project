@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from models import User, Quiz
 from backend import app, db
+import os
 
 app = Flask(__name__)
 
@@ -51,7 +52,6 @@ def delete_user(user_id):
 #    POST /api/users: Create a new user.
 #    PUT /api/users/:id: Update an existing user by ID.
 #    DELETE /api/users/:id: Delete a user by ID.
-
 
 @app.route('/quizzes', methods=['GET'])
 def get_tasks():
@@ -106,7 +106,6 @@ def add_test():
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
- 
 
 # Running app
 if __name__ == '__main__':
