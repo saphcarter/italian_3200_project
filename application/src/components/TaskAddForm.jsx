@@ -4,6 +4,7 @@ const TaskAddForm = () => {
     const [dueDateTime, setDueDateTime] = useState('');
     const [warning, setWarning] = useState('');
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [numOfQuestions, setNumOfQuestions] = useState(1);
     const [questions, setQuestions] = useState([]);
 
@@ -29,6 +30,15 @@ const TaskAddForm = () => {
 
         // Close the popup
         setIsPopupOpen(false);
+
+        // Show the success pop-up
+        setShowSuccessPopup(true);
+
+        // Hide the success pop-up after a delay (e.g., 3 seconds)
+        setTimeout(() => {
+        setShowSuccessPopup(false);
+        }, 3000);
+
     };
 
     const QuestionChange = (index, e) => {
@@ -66,63 +76,69 @@ const TaskAddForm = () => {
                             Cancel Task &times;
                         </button>
 
-                    <form onSubmit={Submit}>
-                        <div className="form-group">
-                            <label style={{ marginRight: '8px' }} htmlFor="taskName">Task Name: </label>
-                            <input
-                                type="text"
-                                id="taskName"
-                                placeholder="e.g. Week 1 Quiz"
-                                required />
-                        </div>
-
-                        <div className="form-group">
-                            <label style={{ marginRight: '8px' }} htmlFor="dueDateTime">Due Date and Time:</label>
+                        <form onSubmit={Submit}>
+                            <div className="form-group">
+                                <label style={{ marginRight: '8px' }} htmlFor="taskName">Task Name: </label>
                                 <input
-                                    type="datetime-local"
-                                    id="dueDateTime"
-                                    name="dueDateTime"
-                                    onChange={handleDateChange}
-                                    defaultValue={`${new Date().toISOString().slice(0,10)}T23:59`}
-                                    required
-                                />
-                                {warning && <div className="warning">{warning}</div>}
-                        </div>
-
-                        <div className="form-group">
-                            <label style={{ marginRight: '8px' }} htmlFor="numOfQuestions">Number of Questions: </label>
-                            <select
-                                id="numOfQuestions"
-                                value={numOfQuestions}
-                                onChange={(e) => setNumOfQuestions(e.target.value)}
-                                required
-                            >
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
-                            </select>
-                        </div>
-
-                        {Array.from({ length: numOfQuestions }).map((_, index) => (
-                            <div className="form-group" key={index}>
-                                <label style={{ marginRight: '8px' }}>Question {index + 1}:</label>
-                                <input
-                                    type="file"
-                                    name="questionFile"
-                                    accept="audio/*"
-                                    onChange={(e) => QuestionChange(index, e)}
-                                    required
-                                />
+                                    type="text"
+                                    id="taskName"
+                                    placeholder="e.g. Week 1 Quiz"
+                                    required />
                             </div>
-                        ))}
 
-                        <button className="form-group" type="submit">Add Task</button>
-                    </form>
+                            <div className="form-group">
+                                <label style={{ marginRight: '8px' }} htmlFor="dueDateTime">Due Date and Time:</label>
+                                    <input
+                                        type="datetime-local"
+                                        id="dueDateTime"
+                                        name="dueDateTime"
+                                        onChange={handleDateChange}
+                                        defaultValue={`${new Date().toISOString().slice(0,10)}T23:59`}
+                                        required
+                                    />
+                                    {warning && <div className="warning">{warning}</div>}
+                            </div>
+
+                            <div className="form-group">
+                                <label style={{ marginRight: '8px' }} htmlFor="numOfQuestions">Number of Questions: </label>
+                                <select
+                                    id="numOfQuestions"
+                                    value={numOfQuestions}
+                                    onChange={(e) => setNumOfQuestions(e.target.value)}
+                                    required
+                                >
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
+                                </select>
+                            </div>
+
+                            {Array.from({ length: numOfQuestions }).map((_, index) => (
+                                <div className="form-group" key={index}>
+                                    <label style={{ marginRight: '8px' }}>Question {index + 1}:</label>
+                                    <input
+                                        type="file"
+                                        name="questionFile"
+                                        accept="audio/*"
+                                        onChange={(e) => QuestionChange(index, e)}
+                                        required
+                                    />
+                                </div>
+                            ))}
+
+                            <button className="form-group" type="submit">Add Task</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
             )}
+
+            {showSuccessPopup && (
+                    <div className="success-popup">
+                        <div className="tick-icon">&#10004; Task Added Successfully</div>
+                    </div>
+                )}
         </div>
     );
 };
