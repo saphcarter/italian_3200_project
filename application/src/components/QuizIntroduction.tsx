@@ -71,7 +71,7 @@ export default function QuizIntroScreen() {
         <p style={{ marginLeft: '10px' }}>This is the stop button. In the quiz, click this button to end the recording.</p>
       </div>
       <p>You will have 3 attempts to record. After this, you will have the option to listen to all of your recordings, and submit the best one.</p>
-      <p>Then, you will score yourself based on how well you think you did. At the end of the quiz you will also receive a score based on an audio similarity algorithm.</p>
+      <p>Then, you will score yourself based on how well you think you did using a slider. The default score is shown 70%, but you should change this to what you think best reflects your attempt. At the end of the quiz you will also receive a score based on an audio similarity algorithm.</p>
       <p>The intention of this application is to help you practice and improve your italian speaking and pronounciation, so don't stress, just relax, and have fun!</p>
       <Link to={`/quiz/attempt/${name}`}>
         <button>Start Quiz</button>
