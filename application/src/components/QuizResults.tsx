@@ -4,13 +4,48 @@ import {
   Bar,
   ComposedChart,
   Label,
-  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { Link, useParams } from "react-router-dom";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
+
+const InfoPopOver = ({
+  name,
+  children,
+}: {
+  name: string;
+  children: React.ReactNode;
+}) => {
+  const popoverContent = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">{name}</Popover.Header>
+      <Popover.Body>{children}</Popover.Body>
+    </Popover>
+  );
+  return (
+    <>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      ></link>
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={popoverContent}
+      >
+        <i
+          className="bi bi-info-circle fs-5"
+          role="img"
+          aria-label="click-for-info"
+        ></i>
+      </OverlayTrigger>
+    </>
+  );
+};
 
 type ChartData = {
   question: number;
@@ -22,7 +57,7 @@ const renderLegendText = (value: string) => {
   return <span style={{ color: "#333333" }}>{value}</span>;
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="chart-tooltip">
@@ -53,6 +88,40 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   }
   return null;
 };
+
+function Legend() {
+  return (
+    <div className="d-flex justify-content-center gap-4">
+      <div className="d-flex gap-2 align-items-center">
+        <svg width="14" height="14" viewBox="0 0 32 32">
+          <path stroke="none" fill="#034758" d="M0,4h32v24h-32z"></path>
+        </svg>
+        <span style={{ color: "#333333" }}>Self-evaluation Score</span>
+        <InfoPopOver name="Self-evaluation Score">
+          <p>
+            This score is what you rated your pronounciation as after recording
+            your attempt.
+          </p>
+        </InfoPopOver>
+      </div>
+      <div>
+        <div className="d-flex gap-2 align-items-center">
+          <svg width="14" height="14" viewBox="0 0 32 32">
+            <path stroke="none" fill="#62E0C0" d="M0,4h32v24h-32z"></path>
+          </svg>
+          <span style={{ color: "#333333" }}>Similarity Score</span>
+          <InfoPopOver name="Similarity Score">
+            <p>
+              This score is a mathmatical analysis of your audio attempt. It
+              considers elements of speech such as intonation and onset duration
+              to evaluate pronounciation.
+            </p>
+          </InfoPopOver>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ResultsView({
   results,
@@ -93,8 +162,9 @@ export default function ResultsView({
 
   return (
     <div className="p-4">
-      <h2>{name}</h2>
+      <h2>{name} Results</h2>
       <hr className="border-2"></hr>
+      <Legend />
       <ResponsiveContainer width={"100%"} height={500}>
         <ComposedChart
           width={700}
@@ -128,7 +198,7 @@ export default function ResultsView({
             allowEscapeViewBox={{ x: true }}
             cursor={{ stroke: "rgba(203, 249, 229, 0.3)", strokeWidth: 100 }}
           />
-          <Legend verticalAlign="top" formatter={renderLegendText} />
+
           <Bar name="Similarity Score" dataKey="simScore" fill="#034758" />
           <Bar
             name="Self Evaluation Score"
@@ -139,7 +209,7 @@ export default function ResultsView({
       </ResponsiveContainer>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Link to={`/`}>
-          <button className="btn btn-primary">Exit Quiz</button>
+          <button className="btn btn-primary">Go Home</button>
         </Link>
       </div>
     </div>

@@ -49,13 +49,15 @@ function SelfEvaluation({
 
   return (
     <>
-      <div className="mt-4 fs-5">Self-evaluation score</div>
-      <Stack gap={4}>
-        <div>
-          Give a score between 0 and 100% rating how similar you think your
-          submission is to the original audio.
-        </div>
-        <Container className="mt-4 mx-0 d-flex align-items-start gap-5 px-0 flex-wrap container-fluid">
+      <h4>Self-Evaluation Score</h4>
+      <Stack gap={3}>
+        <p style={{ maxWidth: "750px" }}>
+          Rate how similar you think your attempt is to the original audio using
+          the slider. 0% is not similar at all and 100% is as similar as
+          possible. You can move the slider by dragging the circle or clicking
+          the circle and then using the keyboard arrows.
+        </p>
+        <Container className="d-flex align-items-start gap-5 px-0 flex-wrap container-fluid">
           <div>
             <div className="mb-3">Your audio:</div>
             <audio
@@ -66,7 +68,7 @@ function SelfEvaluation({
           </div>
           <Stack gap={1} style={{ maxWidth: "400px", minWidth: "200px" }}>
             <div className="d-flex align-items-baseline justify-content-between">
-              <div>Self Evaluation Score</div>
+              <div>Self-evaluation score:</div>
               <h1
                 className="mb-0"
                 style={{ fontSize: "60px", textAlign: "right" }}
@@ -173,24 +175,28 @@ function QuestionView({
 
   return (
     <Stack gap={4}>
-      <div>{description}</div>
+      <p>
+        {isRecordingView
+          ? "Listen to the recording below and then record yourself repeating the audio."
+          : "Compare the original recording below to your speaking attempt."}
+      </p>
       <audio
         controls
         controlsList="nodownload noplaybackrate"
         src={audio}
       ></audio>
-      <div className="pt-2">
+      <div className="pt-4">
         {isRecordingView ? (
           <>
             <h4>Record your answer</h4>
             <Container>
               <Row>
-                <Col>
+                <Col className="ps-0">
                   <Stack gap={5}>
-                    <div>
+                    <p>
                       You can only record your attempt a maximum of three times.
                       After that select your best try.
-                    </div>
+                    </p>
                     {/* <Record /> */}
                     <AudioRecorder
                       onAudioChange={(audio, blob) => handleAudioChange(audio, blob)}
@@ -267,7 +273,23 @@ function QuestionView({
   );
 }
 
-function FinalScreen() {}
+function FinalScreen() {
+  const { name } = useParams();
+
+  return (
+    <div>
+      <p>
+        You've completed all the questions for this quiz. Press submit to finish
+        the quiz and be taken to the results page.
+      </p>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Link to={`/quiz/result/${name}`}>
+          <button className="btn btn-primary">Submit</button>
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function QuizAttemptView() {
   const { name } = useParams();
@@ -313,14 +335,7 @@ function QuizAttemptView() {
           </Stack>
         </>
       ) : (
-        <>
-          <div>This is the final screen</div>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Link to={`/quiz/result/${name}`}>
-              <button className="btn btn-primary">Finish Quiz</button>
-            </Link>
-          </div>
-        </>
+        <FinalScreen />
       )}
     </div>
   );
