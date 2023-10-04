@@ -16,6 +16,7 @@ import { ProfilePage } from "./pages/profile";
 import ResultsView from "./components/QuizResults";
 import Quiz from "./pages/quiz";
 import TaskManager from "./pages/taskmanager";
+import ResultsManager from "./pages/resultsmanager";
 
 function App() {
   const { isLoading } = useAuth0();
@@ -45,8 +46,12 @@ function App() {
               element={<AuthenticationGuard component={ProfilePage} />}
             />
             <Route
-              path="/manager"
+              path="/taskmanager"
               element={<AuthenticationGuard component={TaskManager} />}
+            />
+            <Route
+              path="/resultsmanager"
+              element={<AuthenticationGuard component={ResultsManager} />}
             />
             {/* testing route remove at end */}
             {/* <Route
