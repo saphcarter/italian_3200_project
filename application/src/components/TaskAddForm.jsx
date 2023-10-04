@@ -53,7 +53,7 @@ const TaskAddForm = () => {
 
     return (
         <div className="section">
-            <h2>Task Manager</h2>
+            <h2>Task Creator</h2>
 
             {!isPopupOpen && (
                 <button onClick={OpenPopup}>Add New Task </button>
