@@ -7,6 +7,9 @@
       "use": "@vercel/node"
     }
   ],
+  "buildCommand": "vite build",
+  "devCommand": "vite",
+  "framework": "vite",
   "routes": [
     {
       "src": "/(.*)",
