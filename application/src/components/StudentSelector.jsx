@@ -43,7 +43,7 @@ function StudentSelector() {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        // Handle the search logic here, e.g., make an API call
+        // search logic here, e.g., make an API call
         console.log('Search term:', searchTerm);
     };
 
@@ -59,6 +59,8 @@ function StudentSelector() {
                 />
                 <button type="submit">Search</button>
             </form>
+
+            <p style= {{marginTop: "16px"}}>Click on a student's name to see their results.</p>
 
             <div style = {{ marginTop : "16px" }} className = "score-card-section">
                 <StudentCard full_name="Jane Doe" student_number = "123" />
