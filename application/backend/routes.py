@@ -1,13 +1,9 @@
 from flask import Flask, request, jsonify
 from backend import app, db
 from backend.models import Quiz, Question, QuizResults, QuestionResults
-
+import os
 
 ## Quizzes Database
-
-# Get all Quizzes
-@app.route('/quizzes')
-def get_quizes():
     quizzes = Quiz.query.all()
     quiz_names = []
     for quiz in quizzes:

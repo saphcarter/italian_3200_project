@@ -12,6 +12,17 @@
   padding: 2rem;
 }
 
+.nav a:hover,
+.nav a:focus {
+  color: white;
+}
+
+.nav a {
+  color: #c9e8e8;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
 /* TASKS STYLING */
 
 .task-card-section {
@@ -98,14 +109,15 @@
 .auth0-button {
   background-color: transparent;
   color: white;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 1.25rem;
   border: 0px;
   width: 10rem;
   transition: transform 2 ease-in;
 }
 
 .auth0-button:hover {
-  color: lightblue;
+  color: #c9e8e8;
   border: 0px;
 }
 
@@ -165,3 +177,40 @@
   height: 100%;
   stroke-width: 3;
 }
+
+.form-group{
+  margin-bottom: 10px;
+}
+
+.warning{
+  color: red;
+}
+
+.success-popup {
+  background-color: #4caf50;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  width: 25rem;
+  animation: scale-in 0.5s ease-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+p {
+  font-size: large;
+}
+
