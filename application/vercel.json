@@ -7,7 +7,7 @@
       "use": "@vercel/node"
     }
   ],
-  "buildCommand": ["vite build", "npm run build"],
+  "buildCommand": ["`vite build`", "npm run build"],
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "devCommand": "vite",
