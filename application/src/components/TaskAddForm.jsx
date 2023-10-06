@@ -13,6 +13,7 @@ const TaskAddForm = () => {
     };
 
     const ClosePopup = () => {
+        setWarning('');
         setIsPopupOpen(false);
     };
 
@@ -49,9 +50,9 @@ const TaskAddForm = () => {
         const currentDateTime = new Date();
     
         if (selectedDateTime < currentDateTime) {
-          setWarning('Warning: This date and time has already passed. Please select a date and time in the future.');
+            setWarning('Warning: This date and time has already passed. Please select a date and time in the future.');
         } else {
-          setWarning('');
+            setWarning('');
         }
     
         setDueDateTime(e.target.value);

@@ -5,7 +5,6 @@ from audiosimilarity import compareFiles
 import subprocess
 
 # Set the directory for storing uploaded files
-# not sure if this should go somewhere else...
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -18,7 +17,8 @@ def upload_audio():
     question_path = '../public/' + question
     print("question path: " + question_path)
     # TODO: confirm desired directories + paths
-    # run from application
+    # ... run from application?
+    # ... more error handling
     
     #if audio file is present
     if audio_blob.filename != '':

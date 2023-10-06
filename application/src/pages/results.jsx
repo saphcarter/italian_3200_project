@@ -4,7 +4,7 @@ import ScoreSection from "../components/Results";
 function Results() {
   return (
     <div className="results">
-      <ScoreSection />
+      <ScoreSection name="self" />
     </div>
   );
 }

@@ -10,11 +10,13 @@ function ScoreCard({ taskName, SelfScore, GivenScore }) {
 }
 
 // container for all available task entry points
-function ScoreSection() {
+function ScoreSection({name}) {
+  const sectionTitle = name === 'self' ? "Your Results" : `${name}'s Results`;
+
   return (
     <>
       <div className="section">
-        <h2 className="section-header">Your Results</h2>
+        <h2 className="section-header">{sectionTitle}</h2>
         <div className="score-card-section">
           <ScoreCard taskName="Example Quiz" SelfScore="100" GivenScore="100" />
           <ScoreCard taskName="Week 0 Quiz" SelfScore="75" GivenScore="90" />
