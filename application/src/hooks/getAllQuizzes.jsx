@@ -1,5 +1,6 @@
 function getAllQuizzes() {
-  const quizzes = fetch("/quizzes")
+  let quizzes = [];
+  quizzes = fetch("/quizzes")
     .then((res) => res.json())
     .then((data) => {
       return data;

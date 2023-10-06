@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import getAllQuizzes from "../hooks/getAllQuizzes";
 
 // individual task entry point, will take you to quiz page
 function TaskCard({ taskName, dueDate }) {
@@ -12,11 +15,27 @@ function TaskCard({ taskName, dueDate }) {
 
 // container for all available task entry points
 function TaskSection() {
+  const [quizzes, setQuizzes] = useState([]);
+
+  useEffect(() => {
+    getAllQuizzes()
+      .then((data) => {
+        setQuizzes(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching quizzes:", error);
+      });
+  }, []);
+
+  console.log(quizzes);
   return (
     <>
       <div className="section">
         <h2 className="section-header">Your Tasks</h2>
         <div className="task-card-section">
+          {quizzes.map((quiz) => {
+            <TaskCard taskName={quiz.name} dueDate={quiz.dueDate} />;
+          })}
           <TaskCard taskName="Week 1 Quiz" dueDate="dueDate" />
           <TaskCard taskName="Week 2 Quiz" dueDate="dueDate" />
           <TaskCard taskName="Week 3 Quiz" dueDate="dueDate" />
