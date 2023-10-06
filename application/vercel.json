@@ -8,7 +8,7 @@
     }
   ],
   "buildCommand": ["`vite build`", "npm run build"],
-  "outputDirectory": "dist",
+  "outputDirectory": "vite --port $PORT",
   "installCommand": "npm install",
   "devCommand": "vite",
   "framework": "vite",
