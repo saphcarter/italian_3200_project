@@ -7,11 +7,6 @@
       "use": "@vercel/node"
     }
   ],
-  "buildCommand": ["`vite build`", "npm run build"],
-  "outputDirectory": "vite --port $PORT",
-  "installCommand": "npm install",
-  "devCommand": "vite",
-  "framework": "vite",
   "routes": [
     {
       "src": "/(.*)",
