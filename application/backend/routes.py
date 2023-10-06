@@ -262,7 +262,7 @@ def get_question_result(id):
 @app.route('/question_results/addquestionresult', methods=['POST'])
 def add_question_results():
     data = request.json
-    new = QuestionResults(quizResultId = data['quizResultId'], questionId = data['questionId'], answerAudio = data['answerAudio'], similarityScore = data['similarityScore'], selfEvalScore = data['selfEvalScore'])
+    new = QuestionResults(quizResultId = data['quizResultId'], questionId = data['questionId'], similarityScore = data['similarityScore'], selfEvalScore = data['selfEvalScore'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Question Result added successfully"}), 201
@@ -275,7 +275,6 @@ def update_question_result(id):
         data = request.json
         question_result.quizResultId = data['quizResultId']
         question_result.questionId = data['questionId']
-        question_result.answerAudio = data['answerAudio']
         question_result.similarityScore = data['similarityScore']
         question_result.selfEvalScore = data['selfEvalScore']
         question_result.quiz_result = data['quiz_result']
@@ -300,7 +299,7 @@ def delete_question_result(id):
 def add_question_result_test():
     quiz_res = QuizResults.query.first()
     question = Question.query.first()
-    new_r = QuestionResults(quizResultId=quiz_res.id,questionId=question.id,answerAudio="testpath",similarityScore=3,selfEvalScore=4)
+    new_r = QuestionResults(quizResultId=quiz_res.id,questionId=question.id,similarityScore=3,selfEvalScore=4)
     db.session.add(new_r)
     db.session.commit()
     return jsonify({"message": "Question created successfully"}), 201
@@ -315,7 +314,6 @@ def q_results_from_results(id):
         q_details.append(question.id)
         q_details.append(question.quizResultId)
         q_details.append(question.questionId)
-        q_details.append(question.answerAudio)
         q_details.append(question.similarityScore)
         q_details.append(question.selfEvalScore)
         q_names.append(q_details)
@@ -331,7 +329,6 @@ def q_results_from_results_test():
         q_details.append(question.id)
         q_details.append(question.quizResultId)
         q_details.append(question.questionId)
-        q_details.append(question.answerAudio)
         q_details.append(question.similarityScore)
         q_details.append(question.selfEvalScore)
         q_names.append(q_details)
