@@ -44,7 +44,6 @@ class QuestionResults(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     quizResultId = Column(Integer, ForeignKey('quiz_results.id'))
     questionId = Column(Integer, ForeignKey('questions.id'))
-    answerAudio = Column(String(200))
     similarityScore = Column(DECIMAL(5, 2))
     selfEvalScore = Column(DECIMAL(5, 2))
     quiz_result = relationship("QuizResults", backref="question_results")
