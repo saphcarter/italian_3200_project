@@ -19,20 +19,21 @@ class Question(db.Model):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     audio = Column(String(500))
-    quiz_id = Column(Integer, ForeignKey('Quiz.id'))
+    quiz_id = Column(Integer, ForeignKey('quizzes.id'))
+    quiz = relationship("Quiz", backref='questions')
     def __repr__(self):
         return '<Question-Id %r>' % self.id
-"""        
+       
 
 # Define a QuizResults model
 class QuizResults(db.Model):
     __tablename__ = 'quiz_results'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    userId = Column(String(255), ForeignKey('Users.id'))
-    quizId = Column(String(255), ForeignKey('Quizz.id'))
-    dateCompleted = Column(DateTime)
-    user = relationship("User", back_populates="user")
+    userId = Column(String(60))
+    quizId = Column(Integer, ForeignKey('quizzes.id'))
+    dateCompleted = Column(String(20), nullable = True)
+    quiz = relationship("Quiz", backref='quiz_results')
 
     def __repr__(self):
         return '<Quiz-Result-Id %r>' % self.id
@@ -43,13 +44,13 @@ class QuestionResults(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     quizResultId = Column(Integer, ForeignKey('quiz_results.id'))
     questionId = Column(Integer, ForeignKey('questions.id'))
-    answerAudio = Column(String(500))
+    answerAudio = Column(String(200))
     similarityScore = Column(DECIMAL(5, 2))
     selfEvalScore = Column(DECIMAL(5, 2))
-    quiz_result = relationship("QuizResults", back_populates="question_results")
-    question = relationship("Question", back_populates="question_results")
+    quiz_result = relationship("QuizResults", backref="question_results")
+    question = relationship("Question", backref="question_results")
 
     def __repr__(self):
         return '<Question-Result-Id %r>' % self.id
-"""
+
 
