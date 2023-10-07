@@ -1,5 +1,9 @@
-import "./styles/App.css";
+import "./src/styles/App.css";
+import TaskSection from "./components/Tasks";
 import { useAuth0 } from "@auth0/auth0-react";
+import { LoginButton } from "./components/LoginButton";
+import TaskAddForm from "./components/TaskAddForm";
+import TaskRemoveForm from "./components/TaskRemoveForm";
 
 function ResultsManager() {
   const { isLoading, isAuthenticated } = useAuth0();
