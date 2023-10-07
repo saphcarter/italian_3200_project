@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/App.css";
+import "./src/styles/App.css";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -117,11 +117,11 @@ function QuestionView({
   const { description, audio } = q;
 
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
-  const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([])
+  const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([]);
 
   const handleAudioChange = (newAudio, blob) => {
     setRecordedAudio([...recordedAudio, newAudio]);
-    setRecordedBlobs([...recordedBlobs, blob])
+    setRecordedBlobs([...recordedBlobs, blob]);
   };
 
   const [selected, setSelected] = useState(0);
@@ -137,28 +137,28 @@ function QuestionView({
 
   function submit(selfEval: number) {
     const formData = new FormData();
-    const audioBlob = recordedBlobs[selected]
-    
-    formData.append('audio', audioBlob, "recorded_audio.webm");
-    formData.append('question', audio);
+    const audioBlob = recordedBlobs[selected];
+
+    formData.append("audio", audioBlob, "recorded_audio.webm");
+    formData.append("question", audio);
 
     let sim_score;
 
     // Make the fetch call
-    fetch('/audio', {
-      method: 'POST',
-      body: formData
+    fetch("/audio", {
+      method: "POST",
+      body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-      // Handle the numeric score received from the backend
-      console.log('Received score:', data.score);
-      sim_score = data.score;
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    }); 
-    
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the numeric score received from the backend
+        console.log("Received score:", data.score);
+        sim_score = data.score;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     //reset variables
     setIsRecordingView(true);
     setSelected(0);
@@ -199,7 +199,9 @@ function QuestionView({
                     </p>
                     {/* <Record /> */}
                     <AudioRecorder
-                      onAudioChange={(audio, blob) => handleAudioChange(audio, blob)}
+                      onAudioChange={(audio, blob) =>
+                        handleAudioChange(audio, blob)
+                      }
                       isRecording={isRecording}
                       setIsRecording={(value: boolean) => {
                         setIsRecording(value);
