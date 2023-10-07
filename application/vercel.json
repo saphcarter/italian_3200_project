@@ -1,12 +1,7 @@
 {
   "name": "italian-3200-project",
   "version": 2,
-  "builds": [
-    {
-      "src": "src/main.jsx",
-      "use": "@vercel/node"
-    }
-  ],
+
   "routes": [
     {
       "src": "/(.*)",
