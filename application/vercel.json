@@ -14,14 +14,11 @@
     },
     {
       "src": "/results",
-      "dest": "/src/results.jsx"
+      "dest": "/results.jsx"
     },
     {
       "src": "/profile",
-      "dest": "/src/profile.jsx"
+      "dest": "/profile.jsx"
     }
-  ],
-  "env": {
-    "MY_ENV_VARIABLE": "my-value"
-  }
+  ]
 }
