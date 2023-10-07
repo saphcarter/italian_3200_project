@@ -1,9 +1,9 @@
 import "../styles/App.css";
-import TaskSection from "../components/Tasks";
+import TaskSection from "./src/components/Tasks";
 import { useAuth0 } from "@auth0/auth0-react";
-import { LoginButton } from "../components/LoginButton";
-import TaskAddForm from "../components/TaskAddForm";
-import TaskRemoveForm from "../components/TaskRemoveForm";
+import { LoginButton } from "./src/components/LoginButton";
+import TaskAddForm from "./src/components/TaskAddForm";
+import TaskRemoveForm from "./src/components/TaskRemoveForm";
 
 function TaskManager() {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -20,10 +20,9 @@ function TaskManager() {
     <div className="taskmanager">
       {isAuthenticated ? (
         <>
-            <TaskAddForm />
-            <TaskRemoveForm />
-            <TaskSection />
-            
+          <TaskAddForm />
+          <TaskRemoveForm />
+          <TaskSection />
         </>
       ) : null}
     </div>
