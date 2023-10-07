@@ -4,19 +4,19 @@ import { useEffect } from "react";
 import NavbarComponent from "./components/Navbar";
 import TaskSection from "./components/Tasks";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "../home";
+import Home from "./home";
 import QuizAttemptView from "./components/QuizAttempt";
-import Results from "../results";
+import Results from "./results";
 //import RegistrationForm from './components/RegistrationForm';
 import LoginButton from "./components/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from "./components/Loader";
 import { AuthenticationGuard } from "./components/AuthenticationGuard";
-import { ProfilePage } from "../profile";
+import { ProfilePage } from "./profile";
 import ResultsView from "./components/QuizResults";
-import Quiz from "../quiz";
-import TaskManager from "../taskmanager";
-import ResultsManager from "../resultsmanager";
+import Quiz from "./quiz";
+import TaskManager from "./taskmanager";
+import ResultsManager from "./resultsmanager";
 import {
   Route,
   createBrowserRouter,

@@ -1,7 +1,7 @@
 import "./src/styles/App.css";
-import TaskSection from "./src/components/Tasks";
+import TaskSection from "./components/Tasks";
 import { useAuth0 } from "@auth0/auth0-react";
-import { LoginButton } from "./src/components/LoginButton";
+import { LoginButton } from "./components/LoginButton";
 
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();

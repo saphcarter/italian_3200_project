@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import QuizIntroScreen from "./src/components/QuizIntroduction";
-import QuizAttemptView from "./src/components/QuizAttempt";
-import ResultsView from "./src/components/QuizResults";
-import { AuthenticationGuard } from "./src/components/AuthenticationGuard";
+import QuizIntroScreen from "./components/QuizIntroduction";
+import QuizAttemptView from "./components/QuizAttempt";
+import ResultsView from "./components/QuizResults";
+import { AuthenticationGuard } from "./components/AuthenticationGuard";
 
 export default function Quiz() {
   return (
