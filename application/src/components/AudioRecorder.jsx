@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
-import Button from "react-bootstrap/Button";
+import { PropTypes } from "prop-types";
 
 const MicIcon = (props) =>
   React.createElement(
@@ -20,6 +20,13 @@ const MicIcon = (props) =>
       d: "M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z",
     })
   );
+
+MicIcon.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  fill: PropTypes.string,
+  style: PropTypes.object,
+};
 
 const StopIcon = (props) =>
   React.createElement(
