@@ -5,34 +5,44 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavbarComponent() {
   const { isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
 
-  function handleLogout() {
+  const handleLogout = () => {
     logout({
-      returnTo: window.location.origin,
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
     });
-  }
+  };
 
   return (
     <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
       <Container className="align-items-baseline mx-3">
-        <Navbar.Brand href="/" className="fs-1 ">
-          {/* <h1> Learn Italian </h1> */}
-          Learn Italian
-        </Navbar.Brand>
+        <Link to="/" className="nav-link">
+          <Navbar.Brand className="fs-1 ">Learn Italian</Navbar.Brand>
+        </Link>
         {isAuthenticated && (
           <>
             <Navbar.Toggle aria-controls="navigation-links" />
             <Navbar.Collapse>
               <Nav aria-roledescription="navigation-links">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/results">Results</Nav.Link>
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
+                {/* <Nav.Link> */}
+                <Link to="/results" className="nav-link">
+                  Results
+                </Link>
+                {/* </Nav.Link> */}
                 <NavDropdown title="User">
-                  <NavDropdown.Item href="/profile">
-                    View Profile
+                  <NavDropdown.Item>
+                    <Link to="/profile" className="nav-link">
+                      View Profile
+                    </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
