@@ -121,7 +121,6 @@ const TaskAddForm = () => {
         // using ISO8601 format
         const isoDate = selectedDateTime.toISOString();
 
-        console.log("ISODATE: " + isoDate)
         setDueDateTime(isoDate);
     };
 

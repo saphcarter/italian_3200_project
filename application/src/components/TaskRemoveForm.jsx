@@ -4,6 +4,7 @@ const TaskRemoveForm = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [quizzes, setQuizzes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState('');
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const fetchQuizzes = async () => {
     try {
@@ -62,6 +63,11 @@ const TaskRemoveForm = () => {
     }
 
     setSelectedQuiz('');
+    setShowSuccessPopup(true);
+    
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 3000);
   
   };
 
@@ -93,6 +99,13 @@ const TaskRemoveForm = () => {
           </div>
         </div>
       )}
+
+      {showSuccessPopup && (
+          <div className="success-popup">
+            <div className="tick-icon">&#10004; Task Removed Successfully</div>
+          </div>
+      )}
+
     </div>
   );
 };
