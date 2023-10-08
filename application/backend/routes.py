@@ -24,7 +24,7 @@ def assign_task():
     new = Quiz(name=data['name'],due_date=data['due_date'])
     db.session.add(new)
     db.session.commit()
-    return jsonify({"message": "Quiz created successfully"}), 201
+    return jsonify({"message": "Quiz created successfully", "id": new.id}), 201
 
 # Get Specific Quiz
 @app.route('/quizzes/<int:id>', methods=['GET'])
@@ -109,12 +109,14 @@ def get_all_questions():
 
     return jsonify(q_names)
 
-# Add Question
+#add a question
 @app.route('/questions/addquestion', methods=['POST'])
 def add_question():
-    data = request.json
-    new = Question(quiz_id = data['quiz_id'], question = data['audio'])
-    db.session.add(new)
+    data = request.get_json()
+    audio_path = data['audio']['audioPath']
+
+    question = Question(audio=audio_path, quiz_id=data['quiz_id'])
+    db.session.add(question)
     db.session.commit()
     return jsonify({"message": "Question added successfully"}), 201
 

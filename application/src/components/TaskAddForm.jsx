@@ -6,7 +6,8 @@ const TaskAddForm = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [numOfQuestions, setNumOfQuestions] = useState(1);
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState(Array.from({ length: numOfQuestions }, () => ({ questionFile: '' })));
+
 
     const OpenPopup = () => {
         setIsPopupOpen(true);
@@ -17,7 +18,7 @@ const TaskAddForm = () => {
         setIsPopupOpen(false);
     };
 
-    const Submit = (e) => {
+    const Submit = async (e) => {
         e.preventDefault();
 
         if (warning) {
@@ -25,26 +26,88 @@ const TaskAddForm = () => {
             return;
         }
 
-        // Process the form data (send it to our server, update state, etc.)
-        // Reset the form inputs if needed
+        const taskName = document.getElementById('taskName').value;
+        const quizResponse = await fetch('/quizzes/addquiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: taskName,
+                due_date: dueDateTime,
+            }),
+        });
+    
+        if (quizResponse.ok) {
+            const responseData = await quizResponse.json();
 
-        setIsPopupOpen(false);
+            for (let i = 0; i < numOfQuestions; i++) {
+                const questionFile = questions[i].questionFile;
+                const formData = new FormData();
+                formData.append('questionFile', questionFile);
 
-        setShowSuccessPopup(true);
+                for (const entry of formData.entries()) {
+                    console.log(entry);
+                }
+    
+                const uploadResponse = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-        setTimeout(() => {
-            setShowSuccessPopup(false);
-        }, 3000);
+                if (uploadResponse.ok) {
+                    const audioPath = await uploadResponse.json();
 
+                    const questionResponse = await fetch('/questions/addquestion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            quiz_id: responseData.id,
+                            audio: audioPath,
+                        }),
+                    });
+        
+                    if (!questionResponse.ok) {
+                        alert('Error adding question');
+                        return;
+                    }
+                    
+                }
+                else {
+                    alert('Error uploading audio file');
+                    return;
+                }
+            }
+
+            setIsPopupOpen(false);
+            setShowSuccessPopup(true);
+    
+            setTimeout(() => {
+                setShowSuccessPopup(false);
+            }, 3000);
+        } else {
+            alert('Error adding quiz');
+        }
+
+    };
+
+    const handleNumOfQuestionsChange = (e) => {
+        const newNumOfQuestions = parseInt(e.target.value, 10);
+
+        setNumOfQuestions(newNumOfQuestions);
+
+        setQuestions(Array.from({ length: newNumOfQuestions }, () => ({ questionFile: '' })));
     };
 
     const QuestionChange = (index, e) => {
-        const { name, value } = e.target;
+        const file = e.target.files[0];
         const updatedQuestions = [...questions];
-        updatedQuestions[index][name] = value;
+        updatedQuestions[index].questionFile = file;
         setQuestions(updatedQuestions);
     };
-
+    
     const handleDateChange = (e) => {
         const selectedDateTime = new Date(e.target.value);
         const currentDateTime = new Date();
@@ -73,7 +136,7 @@ const TaskAddForm = () => {
                             Cancel Task &times;
                         </button>
 
-                        <form onSubmit={Submit}>
+                        <form onSubmit={Submit} encType="multipart/form-data" method="post">
                             <div className="form-group">
                                 <label style={{ marginRight: '8px' }} htmlFor="taskName">Task Name: </label>
                                 <input
@@ -101,7 +164,7 @@ const TaskAddForm = () => {
                                 <select
                                     id="numOfQuestions"
                                     value={numOfQuestions}
-                                    onChange={(e) => setNumOfQuestions(e.target.value)}
+                                    onChange={handleNumOfQuestionsChange}
                                     required
                                 >
                                     <option value={1}>1</option>
