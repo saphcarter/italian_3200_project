@@ -11,11 +11,13 @@ function NavbarComponent() {
   const { isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
 
-  function handleLogout() {
+  const handleLogout = () => {
     logout({
-      returnTo: window.location.origin,
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
     });
-  }
+  };
 
   return (
     <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
