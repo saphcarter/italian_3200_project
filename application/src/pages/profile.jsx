@@ -20,6 +20,8 @@ export const ProfilePage = () => {
           />
           <div>
             <h3>Name: {user.nickname}</h3>
+            <div>First Name: {user.given_name}</div>
+            <div>User ID: {user.sub}</div>
             <div>Email: {user.email}</div>
           </div>
         </div>
