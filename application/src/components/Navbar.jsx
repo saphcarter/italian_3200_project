@@ -5,6 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavbarComponent() {
   const { isAuthenticated } = useAuth0();
@@ -29,7 +30,12 @@ function NavbarComponent() {
             <Navbar.Collapse>
               <Nav aria-roledescription="navigation-links">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/results">Results</Nav.Link>
+
+                {/* <Nav.Link> */}
+                <Link to="/results" className="nav-link">
+                  Results
+                </Link>
+                {/* </Nav.Link> */}
                 <NavDropdown title="User">
                   <NavDropdown.Item href="/profile">
                     View Profile

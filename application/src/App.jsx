@@ -11,7 +11,12 @@ import { ProfilePage } from "./profile";
 import Quiz from "./quiz";
 import TaskManager from "./taskmanager";
 import ResultsManager from "./resultsmanager";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 //Old routes
 // <Routes>
@@ -48,20 +53,26 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // </Routes>
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "quiz/*", element: <AuthenticationGuard component={Quiz} /> },
-  { path: "results", element: <AuthenticationGuard component={Results} /> },
   {
-    path: "profile",
-    element: <AuthenticationGuard component={ProfilePage} />,
-  },
-  {
-    path: "taskmanager",
-    element: <AuthenticationGuard component={TaskManager} />,
-  },
-  {
-    path: "resultsmanager",
-    element: <AuthenticationGuard component={ResultsManager} />,
+    path: "/",
+    element: <NavbarComponent />,
+    children: [
+      { path: "home", element: <Home /> },
+      { path: "quiz/*", element: <AuthenticationGuard component={Quiz} /> },
+      { path: "results", element: <AuthenticationGuard component={Results} /> },
+      {
+        path: "profile",
+        element: <AuthenticationGuard component={ProfilePage} />,
+      },
+      {
+        path: "taskmanager",
+        element: <AuthenticationGuard component={TaskManager} />,
+      },
+      {
+        path: "resultsmanager",
+        element: <AuthenticationGuard component={ResultsManager} />,
+      },
+    ],
   },
 ]);
 
@@ -73,10 +84,45 @@ function App() {
   }
   // the basic logic of our application
   return (
-    <div>
-      <NavbarComponent />
-      <RouterProvider router={router} />
-    </div>
+    // {/* <NavbarComponent /> */}
+    <BrowserRouter>
+      <div className="App container-xl">
+        <NavbarComponent />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route
+            path="quiz/*"
+            element={<AuthenticationGuard component={Quiz} />}
+          />
+          <Route
+            path="results"
+            element={<AuthenticationGuard component={Results} />}
+          />
+          <Route
+            path="profile"
+            element={<AuthenticationGuard component={ProfilePage} />}
+          />
+          <Route
+            path="taskmanager"
+            element={<AuthenticationGuard component={TaskManager} />}
+          />
+          <Route
+            path="resultsmanager"
+            element={<AuthenticationGuard component={ResultsManager} />}
+          />
+          {/* testing route remove at end
+  <Route
+    path="/quizEnd"
+    element={<AuthenticationGuard component={ResultsView} />}
+  />
+  for quiz database
+  <Route
+    path="/quiz/:id"
+    element={<AuthenticationGuard component={QuizAttemptView} />}
+  /> */}
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
