@@ -20,25 +20,27 @@ function NavbarComponent() {
   return (
     <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
       <Container className="align-items-baseline mx-3">
-        <Navbar.Brand href="/" className="fs-1 ">
-          {/* <h1> Learn Italian </h1> */}
-          Learn Italian
-        </Navbar.Brand>
+        <Link to="/" className="nav-link">
+          <Navbar.Brand className="fs-1 ">Learn Italian</Navbar.Brand>
+        </Link>
         {isAuthenticated && (
           <>
             <Navbar.Toggle aria-controls="navigation-links" />
             <Navbar.Collapse>
               <Nav aria-roledescription="navigation-links">
-                <Nav.Link href="/">Home</Nav.Link>
-
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
                 {/* <Nav.Link> */}
                 <Link to="/results" className="nav-link">
                   Results
                 </Link>
                 {/* </Nav.Link> */}
                 <NavDropdown title="User">
-                  <NavDropdown.Item href="/profile">
-                    View Profile
+                  <NavDropdown.Item>
+                    <Link to="/profile" className="nav-link">
+                      View Profile
+                    </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
