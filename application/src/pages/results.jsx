@@ -1,5 +1,4 @@
-import "./styles/App.css";
-import ScoreSection from "./components/Results";
+import ScoreSection from "../components/Results";
 
 function Results() {
   return (

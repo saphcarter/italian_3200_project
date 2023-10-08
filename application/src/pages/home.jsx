@@ -1,5 +1,4 @@
-import "./styles/App.css";
-import TaskSection from "./components/Tasks";
+import TaskSection from "../components/Tasks";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Home() {

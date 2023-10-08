@@ -1,16 +1,18 @@
 import "./styles/App.css";
 import NavbarComponent from "./components/Navbar";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./home";
-import Results from "./results";
+import Home from "./pages/home";
+import QuizAttemptView from "./components/QuizAttempt";
+import Results from "./pages/results";
 //import RegistrationForm from './components/RegistrationForm';
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from "./components/Loader";
 import { AuthenticationGuard } from "./components/AuthenticationGuard";
-import { ProfilePage } from "./profile";
-import Quiz from "./quiz";
-import TaskManager from "./taskmanager";
-import ResultsManager from "./resultsmanager";
+import { ProfilePage } from "./pages/profile";
+import ResultsView from "./components/QuizResults";
+import Quiz from "./pages/quiz";
+import TaskManager from "./pages/taskmanager";
+import ResultsManager from "./pages/resultsmanager";
 import {
   BrowserRouter,
   createBrowserRouter,
