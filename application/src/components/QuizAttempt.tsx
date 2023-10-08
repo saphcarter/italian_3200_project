@@ -275,7 +275,7 @@ function QuestionView({
 }
 
 function FinalScreen() {
-  const { name } = useParams();
+  const { id, name } = useParams();
 
   return (
     <div>
@@ -284,7 +284,7 @@ function FinalScreen() {
         the quiz and be taken to the results page.
       </p>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to={`/quiz/result/${name}`}>
+        <Link to={`/quiz/result/${id}/${name}`}>
           <button className="btn btn-primary">Submit</button>
         </Link>
       </div>
