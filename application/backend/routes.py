@@ -46,15 +46,36 @@ def update_task(id):
         return jsonify({"message": "Task updated successfully"})
     return jsonify({"message": "Task not found"}), 404
 
-# Delete Quiz
-@app.route('/quizzes/<int:id>', methods=['DELETE'])
-def delete_task(id):
-    task = Quiz.query.get(id)
-    if task:
-        db.session.delete(task)
+# delete a quiz & associated questions
+@app.route('/quizzes/<int:quiz_id>', methods=['DELETE'])
+def delete_quiz(quiz_id):
+    try:
+        # Retrieve the quiz or return a 404 if not found
+        quiz = Quiz.query.get_or_404(quiz_id)
+
+        base_directory = os.path.dirname(os.path.abspath(__file__))
+        print(f"Base directory: {base_directory}")
+
+        # Retrieve and delete associated questions
+        questions = Question.query.filter_by(quiz_id=quiz_id).all()
+        for question in questions:
+            
+            audio_path = os.path.join(base_directory, question.audio.lstrip('/'))
+
+            # delete audio file if it exists
+            if os.path.exists(audio_path):
+                os.remove(audio_path)
+
+            db.session.delete(question)
+
+        db.session.delete(quiz)
         db.session.commit()
-        return jsonify({"message": "Task deleted successfully"})
-    return jsonify({"message": "Task not found"}), 404
+
+        return jsonify({"message": "Quiz deleted successfully"})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": f"Error deleting quiz: {str(e)}"}), 500
 
 # Add Test Quiz
 @app.route('/quizzes/addtest')
