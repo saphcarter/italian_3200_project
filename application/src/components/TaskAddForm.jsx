@@ -111,14 +111,18 @@ const TaskAddForm = () => {
     const handleDateChange = (e) => {
         const selectedDateTime = new Date(e.target.value);
         const currentDateTime = new Date();
-    
+
         if (selectedDateTime < currentDateTime) {
             setWarning('Warning: This date and time has already passed. Please select a date and time in the future.');
         } else {
             setWarning('');
         }
-    
-        setDueDateTime(e.target.value);
+
+        // using ISO8601 format
+        const isoDate = selectedDateTime.toISOString();
+
+        console.log("ISODATE: " + isoDate)
+        setDueDateTime(isoDate);
     };
 
     return (
@@ -153,7 +157,6 @@ const TaskAddForm = () => {
                                         id="dueDateTime"
                                         name="dueDateTime"
                                         onChange={handleDateChange}
-                                        defaultValue={`${new Date().toISOString().slice(0,10)}T23:59`}
                                         required
                                     />
                                     {warning && <div className="warning">{warning}</div>}

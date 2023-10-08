@@ -22,6 +22,7 @@ def get_quizzes():
 def assign_task():
     data = request.json
     new = Quiz(name=data['name'],due_date=data['due_date'])
+    print("THE DUE DATE IS: " + data['due_date'])
     db.session.add(new)
     db.session.commit()
     return jsonify({"message": "Quiz created successfully", "id": new.id}), 201

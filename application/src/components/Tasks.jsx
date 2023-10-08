@@ -21,6 +21,19 @@ function TaskSection() {
       .then(data => setQuizzes(data))
       .catch(error => console.error("Error fetching quizzes:", error));
   }, []);
+
+  function formatDateTime(isoDate) {
+    const date = new Date(isoDate);
+  
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JS
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${day}/${month}/${year} at ${hours}:${minutes}`;
+  }
+  
   
   return (
     <>
@@ -28,7 +41,7 @@ function TaskSection() {
         <h2 className="section-header">Your Tasks</h2>
         <div className="task-card-section">
           {quizzes.map(quiz => (
-            <TaskCard key={quiz[0]} taskName={quiz[1]} dueDate={quiz[2]} />
+            <TaskCard key={quiz[0]} taskName={quiz[1]} dueDate={formatDateTime(quiz[2])} />
           ))}
         </div>
       </div>
