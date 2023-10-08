@@ -86,8 +86,8 @@ def add_test():
     db.session.commit()
     return jsonify({"message": "Task created successfully"}), 201
 
-# Get All Questions for a Quiz
-@app.route('/quizzes/questions')
+# get all questions for a specific quiz
+@app.route('/quizzes/questions/<int:id>')
 def questions_from_quiz(id):
     questions = Question.query.filter(Question.quiz_id == id).all()
     q_names = []

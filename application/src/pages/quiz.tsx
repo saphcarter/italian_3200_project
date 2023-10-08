@@ -9,15 +9,15 @@ export default function Quiz() {
   return (
     <Routes>
       <Route
-        path="/intro/:name"
+        path="/intro/:id/:name"
         element={<AuthenticationGuard component={QuizIntroScreen} />}
       />
       <Route
-        path={`/attempt/:name`}
+        path={`/attempt/:id/:name`}
         element={<AuthenticationGuard component={QuizAttemptView} />}
       />
       <Route
-        path={`/result/:name`}
+        path={`/result/:id/:name`}
         element={<AuthenticationGuard component={ResultsView} />}
       ></Route>
     </Routes>

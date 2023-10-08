@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 
 export default function QuizIntroScreen() {
-  const { name } = useParams();
+  const { id, name } = useParams();
   
   // possibly remove and make as separate component?
   const MicIcon = (props) =>
@@ -73,7 +73,7 @@ export default function QuizIntroScreen() {
       <p>You will have 3 attempts to record. After this, you will have the option to listen to all of your recordings, and submit the best one.</p>
       <p>Then, you will score yourself based on how well you think you did using a slider. The default score is shown 70%, but you should change this to what you think best reflects your attempt. At the end of the quiz you will also receive a score based on an audio similarity algorithm.</p>
       <p>The intention of this application is to help you practice and improve your italian speaking and pronounciation, so don't stress, just relax, and have fun!</p>
-      <Link to={`/quiz/attempt/${name}`}>
+      <Link to={`/quiz/attempt/${id}/${name}`}>
         <button>Start Quiz</button>
       </Link>
     </div>

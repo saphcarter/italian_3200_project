@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 // individual task entry point, will take you to quiz page
-function TaskCard({ taskName, dueDate }) {
+function TaskCard({ taskName, dueDate, quizId }) {
   return (
-    <Link to={`quiz/intro/${taskName}`} className="task-card">
+    <Link to={`quiz/intro/${quizId}/${taskName}`} className="task-card">
       <div className="task-card-name">{taskName}</div>
       <div className="task-card-date">Due date: {dueDate}</div>
     </Link>
@@ -41,7 +41,7 @@ function TaskSection() {
         <h2 className="section-header">Your Tasks</h2>
         <div className="task-card-section">
           {quizzes.map(quiz => (
-            <TaskCard key={quiz[0]} taskName={quiz[1]} dueDate={formatDateTime(quiz[2])} />
+            <TaskCard key={quiz[0]} taskName={quiz[1]} dueDate={formatDateTime(quiz[2])} quizId={quiz[0]} />
           ))}
         </div>
       </div>

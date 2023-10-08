@@ -7,7 +7,7 @@ import subprocess
 # Set the directory for storing uploaded files
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-app.config['QUESTIONS_FOLDER'] = 'questions'
+app.config['QUESTIONS_FOLDER'] = 'public'
 os.makedirs(app.config['QUESTIONS_FOLDER'], exist_ok=True)
 
 @app.route('/audio', methods=['POST'])
@@ -57,8 +57,8 @@ def upload_question():
         return jsonify({'error': 'No selected file'}), 400
 
     if file:
-        file.save('questions/' + file.filename)
-        audio_path = f'/questions/{file.filename}'
+        file.save('public/' + file.filename)
+        audio_path = f'/{file.filename}'
         return jsonify({'audioPath': audio_path}), 200
 
     return jsonify({'error': 'Error uploading file'}), 500

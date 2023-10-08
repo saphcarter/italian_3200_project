@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/App.css";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
@@ -14,7 +14,6 @@ import { Link, redirect, useParams } from "react-router-dom";
 import QuizIntroScreen from "./QuizIntroduction";
 
 type Question = {
-  description: string;
   audio: string;
 };
 
@@ -114,7 +113,9 @@ function QuestionView({
   q: Question;
   submitResult: (result: Result) => void;
 }) {
-  const { description, audio } = q;
+  const { audio } = q;
+
+  console.log("audio: " + audio)
 
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
   const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([])
@@ -292,19 +293,36 @@ function FinalScreen() {
 }
 
 function QuizAttemptView() {
-  const { name } = useParams();
+  const { id, name } = useParams();
+  const [questions, setQuestions] = useState([]);
 
+  useEffect(() => {
+    fetch(`/quizzes/questions/${id}`) 
+        .then(response => response.json())
+        .then(data => {
+            const newQuestions = data.map(q => ({ audio: q[2] }));
+            setQuestions(newQuestions);
+        })
+        .catch(error => {
+            console.error('Error fetching questions:', error);
+        });
+  }, []);
+
+  /*
+  
   const questions: Question[] = [
     {
-      description: "placeholder description",
-      audio: "/1-come-ti-chiami.m4a",
+      audio: "/1-come-ti-chiami.m4a"
     },
-    { description: "placeholder description", audio: "/2-come-stai.m4a" },
     {
-      description: "placeholder description",
+      audio: "/2-come-stai.m4a"
+    },
+    {
       audio: "/3-questo-e-Matteo.m4a",
     },
   ];
+
+  */
 
   const [questionNumber, setQuestionNumber] = useState(0);
 
