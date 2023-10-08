@@ -274,8 +274,12 @@ function QuestionView({
   );
 }
 
-function FinalScreen() {
+function FinalScreen({ results }) {
   const { id, name } = useParams();
+
+  function handleQuizSubmit() {
+    // upload question & quiz results
+  }
 
   return (
     <div>
@@ -285,7 +289,7 @@ function FinalScreen() {
       </p>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Link to={`/quiz/result/${id}/${name}`}>
-          <button className="btn btn-primary">Submit</button>
+          <button onClick = {handleQuizSubmit} className="btn btn-primary">Submit</button>
         </Link>
       </div>
     </div>
@@ -308,22 +312,6 @@ function QuizAttemptView() {
         });
   }, []);
 
-  /*
-  
-  const questions: Question[] = [
-    {
-      audio: "/1-come-ti-chiami.m4a"
-    },
-    {
-      audio: "/2-come-stai.m4a"
-    },
-    {
-      audio: "/3-questo-e-Matteo.m4a",
-    },
-  ];
-
-  */
-
   const [questionNumber, setQuestionNumber] = useState(0);
 
   const [quizResults, setQuizResults] = useState<Array<QuizResult>>([]);
@@ -332,10 +320,6 @@ function QuizAttemptView() {
     const quizResult: QuizResult = { question: questionNumber, result: result };
     setQuizResults([...quizResults, quizResult]);
     setQuestionNumber(questionNumber + 1);
-  }
-
-  function handleQuizSubmit() {
-    window.location.href = "/";
   }
 
   return (
@@ -353,7 +337,7 @@ function QuizAttemptView() {
           </Stack>
         </>
       ) : (
-        <FinalScreen />
+        <FinalScreen results={quizResults} />
       )}
     </div>
   );
