@@ -47,8 +47,6 @@ function QuestionCard({questionNumber, SelfScore, GivenScore }) {
 // container for all available result cards
 function ScoreSection({name, user_id}) {
 
-  console.log(user_id);
-
   const [quizResults, setQuizResults] = useState([]);
   const sectionTitle = name === 'self' ? "Your Results" : `${name}'s Results`;
 
@@ -73,6 +71,7 @@ function ScoreSection({name, user_id}) {
     .then(response => response.json())
     .then(data => setQuizResults(data))
     .catch(error => console.error('Error fetching quiz results:', error));
+    
   }, [user_id]);
 
   console.log(quizResults);
@@ -86,7 +85,7 @@ function ScoreSection({name, user_id}) {
             <QuizCard
               key={result[0]}
               quizResultId={result[0]}
-              taskName= "Quiz XYZ"
+              taskName= {result[4]}
               dateCompleted={formatDateTime(result[3])}
             />
           ))}
