@@ -63,10 +63,17 @@ def delete_quiz(quiz_id):
             
             audio_path = os.path.join(base_directory, question.audio.lstrip('/'))
 
-            # delete audio file if it exists
-            if os.path.exists(audio_path):
+            # is audio file used by any other questions
+            other_questions_with_same_audio = Question.query.filter(
+                Question.audio == question.audio, 
+                Question.id != question.id
+            ).count()
+
+            # if no other questions use this audio file, delete it
+            if not other_questions_with_same_audio and os.path.exists(audio_path):
                 os.remove(audio_path)
 
+            # delete question entry from database
             db.session.delete(question)
 
         db.session.delete(quiz)
