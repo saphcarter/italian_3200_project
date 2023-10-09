@@ -23,7 +23,7 @@ function StudentCard({full_name, student_number}) {
     
     return (
         <>
-            <div className="score-card" onClick={openPopup}>
+            <div className="score-justified" onClick={openPopup}>
                 <h4 className="score-text">{full_name}</h4>
                 <p className="score-text">Student Number: {student_number}</p>
             </div>
