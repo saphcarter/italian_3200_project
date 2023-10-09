@@ -191,6 +191,24 @@ def get_all_results():
     
     return jsonify(all_quiz_results)
 
+# Get All Quiz Results for a specific user
+@app.route('/quiz_results/user', methods=['POST'])
+def get_user_results():
+    data = request.json
+    user_id = data.get('user_id')
+    quiz_results_list = QuizResults.query.filter_by(userId=user_id).all()
+    all_quiz_results = []
+    for quiz_result in quiz_results_list:
+        details = [
+            quiz_result.id,
+            quiz_result.userId,
+            quiz_result.quizId,
+            quiz_result.dateCompleted
+        ]
+        all_quiz_results.append(details)
+    
+    return jsonify(all_quiz_results)
+
 # Get Specific Quiz Result
 @app.route('/quiz_results/<int:id>', methods=['GET'])
 def get_quiz_results(id):
@@ -211,19 +229,6 @@ def add_quiz_results():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
-
-# Update Quiz Result
-@app.route('/quiz_results/<int:id>', methods=['PUT'])
-def update_quiz_result(id):
-    quiz_result = QuizResults.query.get(id)
-    if quiz_result:
-        data = request.json
-        quiz_result.userId = data['userId']
-        quiz_result.quizId = data['quizId']
-        quiz_result.dateCompleted = data['dateCompleted']
-        db.session.commit()
-        return jsonify({"message": "Quiz Result updated successfully"})
-    return jsonify({"message": "Quiz Result not found"}), 404
 
 # Delete Quiz Result
 @app.route('/quiz_results/<int:id>', methods=['DELETE'])
@@ -277,22 +282,6 @@ def add_question_results():
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
 
-# Update Question Result
-@app.route('/question_results/<int:id>', methods=['PUT'])
-def update_question_result(id):
-    question_result = QuestionResults.query.get(id)
-    if question_result:
-        data = request.json
-        question_result.quizResultId = data['quizResultId']
-        question_result.questionNumber = data['questionNumber']
-        question_result.similarityScore = data['similarityScore']
-        question_result.selfEvalScore = data['selfEvalScore']
-        question_result.quiz_result = data['quiz_result']
-        question_result.question = data['question']
-        db.session.commit()
-        return jsonify({"message": "Question Result updated successfully"})
-    return jsonify({"message": "Question Result not found"}), 404
-
 # Delete Question Result
 @app.route('/question_results/<int:id>', methods=['DELETE'])
 def delete_question_result(id):
@@ -303,21 +292,10 @@ def delete_question_result(id):
         return jsonify({"message": "Question Result deleted successfully"})
     return jsonify({"message": "Question Result not found"}), 404
 
-
-#Add Test Quiz result
-@app.route('/question_results/addtest')
-def add_question_result_test():
-    quiz_res = QuizResults.query.first()
-    question = Question.query.first()
-    new_r = QuestionResults(quizResultId=quiz_res.id,questionId=question.id,similarityScore=3,selfEvalScore=4)
-    db.session.add(new_r)
-    db.session.commit()
-    return jsonify({"message": "Question created successfully"}), 201
-
-# Get All QuestionResults for a QuizResults
-@app.route('/question_results/questions/<int:id>', methods=['GET'])
-def q_results_from_results(id):
-    questions = QuestionResults.query.filter(QuestionResults.quizResultId == id).all()
+# Get All QuestionResults for a QuizResult
+@app.route('/question_results/questions/<int:qr_id>', methods=['GET'])
+def q_results_from_results(qr_id):
+    questions = QuestionResults.query.filter(QuestionResults.quizResultId == qr_id).all()
     q_names = []
     for question in questions:
         q_details = []
@@ -329,19 +307,3 @@ def q_results_from_results(id):
         q_names.append(q_details)
 
     return jsonify(q_names)
-
-@app.route('/question_results/questions/test')
-def q_results_from_results_test():
-    questions = QuestionResults.query.filter(QuestionResults.quizResultId == 0).all()
-    q_names = []
-    for question in questions:
-        q_details = []
-        q_details.append(question.id)
-        q_details.append(question.quizResultId)
-        q_details.append(question.questionNumber)
-        q_details.append(question.similarityScore)
-        q_details.append(question.selfEvalScore)
-        q_names.append(q_details)
-
-    return jsonify(q_names)
-
