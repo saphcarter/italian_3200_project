@@ -315,7 +315,7 @@ def add_question_result_test():
     return jsonify({"message": "Question created successfully"}), 201
 
 # Get All QuestionResults for a QuizResults
-@app.route('/question_results/questions')
+@app.route('/question_results/questions/<int:id>', methods=['GET'])
 def q_results_from_results(id):
     questions = QuestionResults.query.filter(QuestionResults.quizResultId == id).all()
     q_names = []

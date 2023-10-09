@@ -278,10 +278,6 @@ function FinalScreen({ results }) {
   const currentDate = new Date();
   const isoDate = currentDate.toISOString();
 
-  for (const a_result of results){
-    console.log(a_result)
-  }
-
   async function handleQuizSubmit() {
     // submit the quiz result
     try {
@@ -331,7 +327,7 @@ function FinalScreen({ results }) {
 
       console.log('Successfully submitted quiz and question results.');
 
-      window.location.href = `/quiz/result/${id}/${name}`;
+      window.location.href = `/quiz/result/${quizResultId}/${name}`;
     } 
     catch (error) {
       console.error('Error during quiz submission:', error);
@@ -373,10 +369,14 @@ function QuizAttemptView() {
   const [quizResults, setQuizResults] = useState<Array<QuizResult>>([]);
 
   function submitResult(result: Result) {
-    const quizResult: QuizResult = { question: questionNumber, result: result };
-    setQuizResults([...quizResults, quizResult]);
-    setQuestionNumber(questionNumber + 1);
+    setQuizResults(prevQuizResults => {
+        const newQuizResult: QuizResult = { question: questionNumber, result: result };
+        return [...prevQuizResults, newQuizResult];
+    });
+    setQuestionNumber(prevQuestionNumber => prevQuestionNumber + 1);
   }
+
+  console.log(quizResults)
 
   return (
     <div className="p-4">
@@ -387,6 +387,7 @@ function QuizAttemptView() {
           <Stack gap={3} className="mx-3">
             <h4>Question {questionNumber + 1}</h4>
             <QuestionView
+              key={questionNumber}
               q={questions[questionNumber]}
               submitResult={submitResult}
             />
