@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 
 // individual task entry point, will take you to quiz page
 function ScoreCard({ taskName, SelfScore, GivenScore }) {
@@ -13,9 +12,6 @@ function ScoreCard({ taskName, SelfScore, GivenScore }) {
 
 // container for all available task entry points
 function ScoreSection({name}) {
-  // get auth0 userid
-  const {user} = useAuth0();
-  const user_id = user.sub;
   
   const sectionTitle = name === 'self' ? "Your Results" : `${name}'s Results`;
 

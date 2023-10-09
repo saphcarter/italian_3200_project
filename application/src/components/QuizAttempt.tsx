@@ -12,6 +12,7 @@ import "rc-slider/assets/index.css";
 import ResultsView from "./QuizResults";
 import { Link, redirect, useParams } from "react-router-dom";
 import QuizIntroScreen from "./QuizIntroduction";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Question = {
   audio: string;
@@ -115,8 +116,6 @@ function QuestionView({
 }) {
   const { audio } = q;
 
-  console.log("audio: " + audio)
-
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
   const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([])
 
@@ -136,7 +135,7 @@ function QuestionView({
     setIsRecordingView(false);
   }
 
-  function submit(selfEval: number) {
+  async function submit(selfEval: number) {
     const formData = new FormData();
     const audioBlob = recordedBlobs[selected]
     
@@ -145,20 +144,19 @@ function QuestionView({
 
     let sim_score;
 
-    // Make the fetch call
-    fetch('/audio', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Handle the numeric score received from the backend
-      console.log('Received score:', data.score);
+    // make the fetch call
+    try {
+      const response = await fetch('/audio', {
+          method: 'POST',
+          body: formData
+      });
+      const data = await response.json();
       sim_score = data.score;
-    })
-    .catch(error => {
+      console.log("received score: " + data.score)
+    } catch (error) {
       console.error('Error:', error);
-    }); 
+      return;
+    }
     
     //reset variables
     setIsRecordingView(true);
@@ -166,7 +164,6 @@ function QuestionView({
     setRecordedAudio([]);
 
     const result: Result = {
-      //fake score
       similarityScore: sim_score,
       selfEvaluationScore: selfEval,
     };
@@ -276,9 +273,70 @@ function QuestionView({
 
 function FinalScreen({ results }) {
   const { id, name } = useParams();
+  const { user } = useAuth0();
+  const user_id = user?.sub;
+  const currentDate = new Date();
+  const isoDate = currentDate.toISOString();
 
-  function handleQuizSubmit() {
-    // upload question & quiz results
+  for (const a_result of results){
+    console.log(a_result)
+  }
+
+  async function handleQuizSubmit() {
+    // submit the quiz result
+    try {
+      const response = await fetch('/quiz_results/addquizresult', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: user_id,
+            quizId: id,
+            dateCompleted: isoDate
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit quiz result');
+      }
+
+      const responseData = await response.json();
+      const quizResultId = responseData.id;
+
+      console.log("quizresultid: " + quizResultId)
+
+      // submit each question result
+      for (const q_result of results) {
+        console.log("qn number: " + q_result.question)
+        console.log(q_result.result.similarityScore)
+        console.log(q_result.result.selfEvaluationScore)
+        const questionResponse = await fetch('/question_results/addquestionresult', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quizResultId: quizResultId,
+                questionNumber: q_result.question,
+                similarityScore: q_result.result.similarityScore,
+                selfEvaluationScore: q_result.result.selfEvaluationScore
+            })
+        });
+
+        if (!questionResponse.ok) {
+            throw new Error(`Failed to submit result for question ${q_result.question}`);
+        }
+      }
+
+      console.log('Successfully submitted quiz and question results.');
+
+      window.location.href = `/quiz/result/${id}/${name}`;
+    } 
+    catch (error) {
+      console.error('Error during quiz submission:', error);
+    }
+
   }
 
   return (
@@ -288,9 +346,7 @@ function FinalScreen({ results }) {
         the quiz and be taken to the results page.
       </p>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to={`/quiz/result/${id}/${name}`}>
-          <button onClick = {handleQuizSubmit} className="btn btn-primary">Submit</button>
-        </Link>
+        <button onClick = {handleQuizSubmit} className="btn btn-primary">Submit</button>
       </div>
     </div>
   );

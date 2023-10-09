@@ -154,4 +154,4 @@ def compareFiles(path1, path2):
     print("----------------------------------------")
     print("----------------------------------------")
 
-    return combined_score
+    return 100 * combined_score

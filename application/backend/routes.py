@@ -4,6 +4,8 @@ from models import Quiz, Question, QuizResults, QuestionResults
 import os
 
 ## Quizzes Database
+
+# get all quizzes
 @app.route('/quizzes')
 def get_quizzes():    
     quizzes = Quiz.query.all()
@@ -85,32 +87,10 @@ def delete_quiz(quiz_id):
         db.session.rollback()
         return jsonify({"message": f"Error deleting quiz: {str(e)}"}), 500
 
-# Add Test Quiz
-@app.route('/quizzes/addtest')
-def add_test():
-    new_task = Quiz(name="Quiz",due_date="1-8-2023")
-    db.session.add(new_task)
-    db.session.commit()
-    return jsonify({"message": "Task created successfully"}), 201
-
 # get all questions for a specific quiz
 @app.route('/quizzes/questions/<int:id>')
 def questions_from_quiz(id):
     questions = Question.query.filter(Question.quiz_id == id).all()
-    q_names = []
-    for question in questions:
-        q_details = []
-        q_details.append(question.id)
-        q_details.append(question.quiz_id)
-        q_details.append(question.audio)
-        q_names.append(q_details)
-
-    return jsonify(q_names)
-
-#Get All Questions for quiz 0
-@app.route('/quizzes/questionstest')
-def questions_from_quiz_test():
-    questions = Question.query.filter(Question.quiz_id == 0).all()
     q_names = []
     for question in questions:
         q_details = []
@@ -138,7 +118,7 @@ def get_all_questions():
 
     return jsonify(q_names)
 
-#add a question
+# add a question
 @app.route('/questions/addquestion', methods=['POST'])
 def add_question():
     data = request.get_json()
@@ -223,10 +203,14 @@ def get_quiz_results(id):
 @app.route('/quiz_results/addquizresult', methods=['POST'])
 def add_quiz_results():
     data = request.json
-    new = QuizResults(userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'])
-    db.session.add(new)
-    db.session.commit()
-    return jsonify({"message": "Quiz Result added successfully"}), 201
+    try:
+        new = QuizResults(userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'])
+        db.session.add(new)
+        db.session.commit()
+        return jsonify({"message": "Quiz Result added successfully", "id": new.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
 
 # Update Quiz Result
 @app.route('/quiz_results/<int:id>', methods=['PUT'])
@@ -251,16 +235,6 @@ def delete_quiz_result(id):
         return jsonify({"message": "Quiz Result deleted successfully"})
     return jsonify({"message": "Quiz Result not found"}), 404
 
-#Add Test Quiz result
-@app.route('/quiz_results/addtest')
-def add_result_test():
-    quiz = Quiz.query.first()
-    new_r = QuizResults(userId="testuser",quizId=quiz.id,dateCompleted="17-10-23")
-    db.session.add(new_r)
-    db.session.commit()
-    return jsonify({"message": "Question created successfully"}), 201
-
-
 ## Question Results Database
 
 # Get All Question Results
@@ -272,8 +246,7 @@ def get_all_question_results():
         q_details = []
         q_details.append(question.id)
         q_details.append(question.quizResultId)
-        q_details.append(question.questionId)
-        q_details.append(question.answerAudio)
+        q_details.append(question.questionNumber)
         q_details.append(question.similarityScore)
         q_details.append(question.selfEvalScore)
         q_names.append(q_details)
@@ -291,10 +264,18 @@ def get_question_result(id):
 @app.route('/question_results/addquestionresult', methods=['POST'])
 def add_question_results():
     data = request.json
-    new = QuestionResults(quizResultId = data['quizResultId'], questionId = data['questionId'], similarityScore = data['similarityScore'], selfEvalScore = data['selfEvalScore'])
-    db.session.add(new)
-    db.session.commit()
-    return jsonify({"message": "Question Result added successfully"}), 201
+    print("quizId: " + str(data['quizResultId']))
+    print("questionNumber: " + str(data['questionNumber']))
+    print("similarityScore: " + str(data['similarityScore']))
+    print("selfEvalScore: " + str(data['selfEvaluationScore']))
+    try:
+        new = QuestionResults(quizResultId = data['quizResultId'], questionNumber = data['questionNumber'], similarityScore = data['similarityScore'], selfEvalScore = data['selfEvaluationScore'])
+        db.session.add(new)
+        db.session.commit()
+        return jsonify({"message": "Question Result added successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
 
 # Update Question Result
 @app.route('/question_results/<int:id>', methods=['PUT'])
@@ -303,7 +284,7 @@ def update_question_result(id):
     if question_result:
         data = request.json
         question_result.quizResultId = data['quizResultId']
-        question_result.questionId = data['questionId']
+        question_result.questionNumber = data['questionNumber']
         question_result.similarityScore = data['similarityScore']
         question_result.selfEvalScore = data['selfEvalScore']
         question_result.quiz_result = data['quiz_result']
@@ -342,7 +323,7 @@ def q_results_from_results(id):
         q_details = []
         q_details.append(question.id)
         q_details.append(question.quizResultId)
-        q_details.append(question.questionId)
+        q_details.append(question.questionNumber)
         q_details.append(question.similarityScore)
         q_details.append(question.selfEvalScore)
         q_names.append(q_details)
@@ -357,7 +338,7 @@ def q_results_from_results_test():
         q_details = []
         q_details.append(question.id)
         q_details.append(question.quizResultId)
-        q_details.append(question.questionId)
+        q_details.append(question.questionNumber)
         q_details.append(question.similarityScore)
         q_details.append(question.selfEvalScore)
         q_names.append(q_details)
