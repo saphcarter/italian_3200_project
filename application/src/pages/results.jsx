@@ -8,6 +8,7 @@ function Results() {
   const user_id = user?.sub;
   const [isAdmin, setIsAdmin] = useState(false);
 
+  
   useEffect(() => {
     const fetchClaims = async () => {
       const claims = await getIdTokenClaims();
@@ -18,6 +19,7 @@ function Results() {
     fetchClaims();
   }, [getIdTokenClaims]);
   
+  // for student selector component, admin will need read:users permission
   return (
     <div className="results">
       {isAdmin ? <StudentSelector /> : <ScoreSection name="self" user_id={user_id} />}

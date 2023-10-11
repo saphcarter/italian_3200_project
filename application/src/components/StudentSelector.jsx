@@ -1,5 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import ScoreSection from './Results';
+
+function StudentList({ users }) {
+    return (
+        <div>
+            {users.map(user => (
+                <StudentCard key={user.user_id} full_name={user.name} student_number={user.nickname} />
+            ))}
+        </div>
+    );
+}
 
 function ScorePopup({ onClose, student_full_name }) {
     return (
@@ -34,40 +44,70 @@ function StudentCard({full_name, student_number}) {
     );
   }
 
-function StudentSelector() {
+  function StudentSelector() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [allUsers, setAllUsers] = useState([]);
+    const [displayedUsers, setDisplayedUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                // replace YOUR_AUTH0_DOMAIN and YOUR_ACCESS_TOKEN for our app specific values
+                const response = await fetch('https://YOUR_AUTH0_DOMAIN/api/v2/users', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer YOUR_ACCESS_TOKEN`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                setAllUsers(data);
+                setDisplayedUsers(data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    useEffect(() => {
+        if (searchTerm) {
+            const filteredUsers = allUsers.filter(user => user.nickname.includes(searchTerm));
+            setDisplayedUsers(filteredUsers);
+        } else {
+            setDisplayedUsers(allUsers);
+        }
+    }, [searchTerm, allUsers]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        // search logic here, e.g., make an API call
-        console.log('Search term:', searchTerm);
-    };
-
     return (
         <div className="section">
-            <form  onSubmit={handleSearchSubmit}>
+            <form onSubmit={(e) => e.preventDefault()}>
                 <input 
-                    style= {{ marginRight: '8px' }}
+                    style={{ marginRight: '8px' }}
                     type="text"
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    placeholder="Search for a student..."
+                    placeholder="Search by student number..."
                 />
-                <button type="submit">Search</button>
             </form>
 
-            <p style= {{marginTop: "16px"}}>Click on a student's name to see their results.</p>
+            <p style={{ marginTop: "16px" }}>Click on a student's name to see their results.</p>
 
-            <div style = {{ marginTop : "16px" }} className = "score-card-section">
-                <StudentCard full_name="Jane Doe" student_number = "123" />
-                <StudentCard full_name="John Doe" student_number = "456" />
+            <div style={{ marginTop: "16px" }} className="score-card-section">
+                <StudentList users={displayedUsers} />
             </div>
         </div>
     );
 }
+
 
 export default StudentSelector;
