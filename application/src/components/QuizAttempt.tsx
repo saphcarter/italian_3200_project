@@ -304,9 +304,6 @@ function FinalScreen({ results }) {
 
       // submit each question result
       for (const q_result of results) {
-        console.log("qn number: " + q_result.question)
-        console.log(q_result.result.similarityScore)
-        console.log(q_result.result.selfEvaluationScore)
         const questionResponse = await fetch('/question_results/addquestionresult', {
             method: 'POST',
             headers: {

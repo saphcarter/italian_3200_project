@@ -3,6 +3,8 @@ import TaskSection from "../components/Tasks";
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import TaskManager from "../components/TaskAddForm"
+import TaskAddForm from "../components/TaskAddForm";
+import TaskRemoveForm from "../components/TaskRemoveForm";
 
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -38,7 +40,8 @@ function Home() {
     <div className="home">
       {isAdmin ?
       <>
-      <TaskManager />
+      <TaskAddForm />
+      <TaskRemoveForm />
       <TaskSection />
       </> : <TaskSection />}
     </div>
