@@ -6,6 +6,19 @@ import { LoginButton } from "../components/LoginButton";
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();
 
+  const { getIdTokenClaims } = useAuth0();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const fetchClaims = async () => {
+      const claims = await getIdTokenClaims();
+      const roles = claims['https://localhost:5173/roles'];
+      setIsAdmin(roles && roles.includes('admin'));
+    };
+    
+    fetchClaims();
+  }, [getIdTokenClaims]);
+
   if (isLoading) {
     return (
       <div className="page-layout">
@@ -14,7 +27,15 @@ function Home() {
     );
   }
 
-  return <div className="home">{isAuthenticated ? <TaskSection /> : null}</div>;
+  if (!isAuthenticated) {
+    return null; 
+  }
+
+  return (
+    <div className="home">
+      {isAdmin ? <TaskManager /> : <TaskSection />}
+    </div>
+  );
 }
 
 export default Home;

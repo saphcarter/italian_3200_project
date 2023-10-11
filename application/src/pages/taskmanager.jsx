@@ -23,7 +23,6 @@ function TaskManager() {
             <TaskAddForm />
             <TaskRemoveForm />
             <TaskSection />
-            
         </>
       ) : null}
     </div>
