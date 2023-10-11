@@ -5,7 +5,6 @@ import { LoginButton } from "../components/LoginButton";
 
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();
-
   const { getIdTokenClaims } = useAuth0();
   const [isAdmin, setIsAdmin] = useState(false);
 
