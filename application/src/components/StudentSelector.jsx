@@ -92,7 +92,7 @@ function StudentCard({full_name, student_number}) {
         <div className="section">
             <form onSubmit={(e) => e.preventDefault()}>
                 <input 
-                    style={{ marginRight: '8px' }}
+                    style={{ width: '20rem', marginRight: '8px' }}
                     type="text"
                     value={searchTerm}
                     onChange={handleSearchChange}
@@ -108,6 +108,5 @@ function StudentCard({full_name, student_number}) {
         </div>
     );
 }
-
 
 export default StudentSelector;
