@@ -7,22 +7,22 @@ function StudentList({ users }) {
     return (
         <div>
             {users.map(user => (
-                <StudentCard key={user.user_id} full_name={user.name} student_number={user.nickname} />
+                <StudentCard key={user.user_id} full_name={user.name} student_number={user.nickname} user_id={user.user_id}/>
             ))}
         </div>
     );
 }
 
-function ScorePopup({ onClose, student_full_name }) {
+function ScorePopup({ onClose, student_full_name, user_id}) {
     return (
         <div className="score-popup">
             <button className="close-button" onClick={onClose}>Close</button>
-            <ScoreSection name={student_full_name} />
+            <ScoreSection name={student_full_name} user_id={user_id} />
         </div>
     );
 }
 
-function StudentCard({full_name, student_number}) {
+function StudentCard({full_name, student_number, user_id}) {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const openPopup = () => {
@@ -40,7 +40,7 @@ function StudentCard({full_name, student_number}) {
                 <p className="score-text">Student Number: {student_number}</p>
             </div>
             {isPopupOpen && (
-                <ScorePopup onClose={closePopup} student_full_name={full_name} />
+                <ScorePopup onClose={closePopup} student_full_name={full_name} user_id={user_id}/>
             )}
         </>
     );

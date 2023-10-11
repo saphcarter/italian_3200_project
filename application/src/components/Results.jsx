@@ -50,6 +50,8 @@ function ScoreSection({name, user_id}) {
   const [quizResults, setQuizResults] = useState([]);
   const sectionTitle = name === 'self' ? "Your Results" : `${name}'s Results`;
 
+  console.log(`results for ${user_id}`)
+
   function formatDateTime(isoDate) {
     const date = new Date(isoDate);
   
