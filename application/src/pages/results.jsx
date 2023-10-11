@@ -18,6 +18,8 @@ function Results() {
     
     fetchClaims();
   }, [getIdTokenClaims]);
+
+  console.log(isAdmin)
   
   // for student selector component, admin will need read:users permission
   return (

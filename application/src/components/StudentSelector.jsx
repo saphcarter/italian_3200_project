@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ScoreSection from './Results';
 
 function StudentList({ users }) {
+    console.log("HELLO");
+    console.log(users);
     return (
         <div>
             {users.map(user => (
@@ -42,36 +44,32 @@ function StudentCard({full_name, student_number}) {
             )}
         </>
     );
-  }
+}
 
-  function StudentSelector() {
+function StudentSelector() {
     const [searchTerm, setSearchTerm] = useState('');
     const [allUsers, setAllUsers] = useState([]);
     const [displayedUsers, setDisplayedUsers] = useState([]);
 
+    // fetch users from the backend route
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                // replace YOUR_AUTH0_DOMAIN and YOUR_ACCESS_TOKEN for our app specific values
-                const response = await fetch('https://YOUR_AUTH0_DOMAIN/api/v2/users', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer YOUR_ACCESS_TOKEN`,
-                    },
-                });
+                const response = await fetch('/get-users');
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
                 setAllUsers(data);
                 setDisplayedUsers(data);
+
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
         };
-
+        
         fetchUsers();
     }, []);
 
