@@ -27,7 +27,7 @@ function Home() {
     );
   }
 
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return null; 
   }
 
