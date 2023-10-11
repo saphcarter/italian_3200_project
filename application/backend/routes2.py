@@ -82,6 +82,8 @@ def get_auth0_token():
 
 @app.route('/get-users', methods=['GET'])
 def get_users():
+    # TODO: need to restrict to administrators
+    
     token = get_auth0_token()
 
     try:
