@@ -2,7 +2,6 @@ import "../styles/App.css";
 import TaskSection from "../components/Tasks";
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { LoginButton } from "../components/LoginButton";
 
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();
