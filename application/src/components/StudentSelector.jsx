@@ -7,7 +7,12 @@ function StudentList({ users }) {
     return (
         <div>
             {users.map(user => (
-                <StudentCard key={user.user_id} full_name={user.name} student_number={user.nickname} user_id={user.user_id}/>
+                <StudentCard 
+                key={user.user_id} 
+                full_name={user.user_metadata ? user.user_metadata.name : user.name} 
+                student_number={user.nickname} 
+                user_id={user.user_id}
+            />
             ))}
         </div>
     );
@@ -73,6 +78,8 @@ function StudentSelector() {
         fetchUsers();
     }, []);
 
+    console.log(allUsers);
+    
     useEffect(() => {
         if (searchTerm) {
             const filteredUsers = allUsers.filter(user => user.nickname.includes(searchTerm));
