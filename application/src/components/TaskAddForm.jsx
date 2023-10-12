@@ -86,7 +86,7 @@ const TaskAddForm = () => {
     
             setTimeout(() => {
                 setShowSuccessPopup(false);
-            }, 3000);
+            }, 5000);
         } else {
             alert('Error adding quiz');
         }
@@ -198,7 +198,7 @@ const TaskAddForm = () => {
 
             {showSuccessPopup && (
                     <div className="success-popup">
-                        <div className="tick-icon">&#10004; Task Added Successfully</div>
+                        <div className="tick-icon">&#10004; Task added successfully. Please refresh the page.</div>
                     </div>
                 )}
         </div>

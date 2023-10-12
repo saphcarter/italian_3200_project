@@ -202,7 +202,7 @@
   display: flex;
   align-items: center;
   margin-top: 10px;
-  width: 25rem;
+  width: 30rem;
   animation: scale-in 0.5s ease-out;
   transition: opacity 0.5s ease-in-out;
 }

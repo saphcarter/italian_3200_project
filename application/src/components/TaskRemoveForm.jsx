@@ -67,7 +67,7 @@ const TaskRemoveForm = () => {
     
     setTimeout(() => {
       setShowSuccessPopup(false);
-    }, 3000);
+    }, 5000);
   
   };
 
@@ -102,7 +102,7 @@ const TaskRemoveForm = () => {
 
       {showSuccessPopup && (
           <div className="success-popup">
-            <div className="tick-icon">&#10004; Task Removed Successfully</div>
+            <div className="tick-icon">&#10004; Task removed successfully. Please refresh the page.</div>
           </div>
       )}
 
