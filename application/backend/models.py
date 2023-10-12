@@ -33,6 +33,7 @@ class QuizResults(db.Model):
     userId = Column(String(60))
     quizId = Column(Integer, ForeignKey('quizzes.id'))
     dateCompleted = Column(String(20), nullable = True)
+    quizName = Column(String(64), nullable = False)
     quiz = relationship("Quiz", backref='quiz_results')
 
     def __repr__(self):

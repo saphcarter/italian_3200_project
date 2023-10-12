@@ -289,7 +289,8 @@ function FinalScreen({ results }) {
         body: JSON.stringify({
             userId: user_id,
             quizId: id,
-            dateCompleted: isoDate
+            dateCompleted: isoDate,
+            quizName: name
         })
       });
 

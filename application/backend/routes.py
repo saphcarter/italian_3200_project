@@ -132,6 +132,7 @@ def get_all_results():
         details.append(quiz_result.userId)
         details.append(quiz_result.quizId)
         details.append(quiz_result.dateCompleted)
+        details.append(quiz_result.quizName)
         all_quiz_results.append(details)
     
     return jsonify(all_quiz_results)
@@ -154,7 +155,7 @@ def get_user_results():
             quiz_result.userId,
             quiz_result.quizId,
             quiz_result.dateCompleted,
-            quiz_result.quiz.name
+            quiz_result.quizName
         ]
         all_quiz_results.append(details)
     
@@ -173,7 +174,7 @@ def get_quiz_results(id):
 def add_quiz_results():
     data = request.json
     try:
-        new = QuizResults(userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'])
+        new = QuizResults(userId = data['userId'], quizId = data['quizId'], dateCompleted = data['dateCompleted'], quizName = data['quizName'])
         db.session.add(new)
         db.session.commit()
         return jsonify({"message": "Quiz Result added successfully", "id": new.id}), 201
