@@ -19,7 +19,7 @@ export default defineConfig({
         ws: true,
       },
       "/quizzes": {
-        target: "ws://127.0.0.1:5000/",
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
         ws: true,
       },
       "/questions": {
