@@ -27,34 +27,39 @@ function App() {
     <Router>
       <div className="App container-xl">
         <NavbarComponent />
-
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route
-              path="/quiz/*"
-              element={<AuthenticationGuard component={Quiz} />}
-            />
-            <Route
-              path="/results"
-              element={<AuthenticationGuard component={Results} />}
-            />
-            <Route
-              path="/profile"
-              element={<AuthenticationGuard component={ProfilePage} />}
-            />
-            {/* testing route remove at end */}
-            {/* <Route
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route
+            path="/quiz/*"
+            element={<AuthenticationGuard component={Quiz} />}
+          />
+          <Route
+            path="/results"
+            element={<AuthenticationGuard component={Results} />}
+          />
+          <Route
+            path="/profile"
+            element={<AuthenticationGuard component={ProfilePage} />}
+          />
+          <Route
+            path="/taskmanager"
+            element={<AuthenticationGuard component={TaskManager} />}
+          />
+          <Route
+            path="/resultsmanager"
+            element={<AuthenticationGuard component={ResultsManager} />}
+          />
+          {/* testing route remove at end */}
+          {/* <Route
               path="/quizEnd"
               element={<AuthenticationGuard component={ResultsView} />}
             /> */}
-            {/* for quiz database */}
-            {/* <Route
+          {/* for quiz database */}
+          {/* <Route
               path="/quiz/:id"
               element={<AuthenticationGuard component={QuizAttemptView} />}
             /> */}
-          </Routes>
-        </div>
+        </Routes>
       </div>
     </Router>
   );

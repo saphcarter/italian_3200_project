@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 
-const MicIcon = (props) =>
+export const MicIcon = (props) =>
   React.createElement(
     "svg",
     {
@@ -21,7 +21,7 @@ const MicIcon = (props) =>
     })
   );
 
-const StopIcon = (props) =>
+export const StopIcon = (props) =>
   React.createElement(
     "svg",
     {
