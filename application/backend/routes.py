@@ -18,6 +18,14 @@ def get_quizzes():
 
     return jsonify(quiz_names)
 
+#add fake quiz
+@app.route('/quizzes/addquiztest', methods=['POST'])
+def assign_task_test():
+    new = Quiz(name="Test quiz",due_date="2023-010-14T19:00:52Z")
+    db.session.add(new)
+    db.session.commit()
+    return jsonify({"message": "Quiz created successfully", "id": new.id}), 201
+
 # add a quiz
 @app.route('/quizzes/addquiz', methods=['POST'])
 def assign_task():
