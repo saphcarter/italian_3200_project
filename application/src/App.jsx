@@ -41,14 +41,6 @@ function App() {
             path="/profile"
             element={<AuthenticationGuard component={ProfilePage} />}
           />
-          <Route
-            path="/taskmanager"
-            element={<AuthenticationGuard component={TaskManager} />}
-          />
-          <Route
-            path="/resultsmanager"
-            element={<AuthenticationGuard component={ResultsManager} />}
-          />
           {/* testing route remove at end */}
           {/* <Route
               path="/quizEnd"
