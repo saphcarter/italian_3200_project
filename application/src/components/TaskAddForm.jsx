@@ -127,9 +127,9 @@ const TaskAddForm = () => {
   };
 
   return (
-    <div>
+    <div className="my-2">
       {!isPopupOpen && (
-        <button className="btn btn-success" onClick={OpenPopup}>
+        <button className="btn btn-primary" onClick={OpenPopup}>
           Add New Quiz
         </button>
       )}
@@ -137,8 +137,11 @@ const TaskAddForm = () => {
       {isPopupOpen && (
         <div className="popup">
           <div className="popup-content">
-            <button className="form-group close" onClick={ClosePopup}>
-              Cancel Task &times;
+            <button
+              className="btn btn-dark form-group close"
+              onClick={ClosePopup}
+            >
+              Cancel Add Quiz &times;
             </button>
 
             <form onSubmit={Submit} encType="multipart/form-data" method="post">
@@ -201,8 +204,8 @@ const TaskAddForm = () => {
                 </div>
               ))}
 
-              <button className="form-group" type="submit">
-                Add Task
+              <button className="btn btn-primary form-group" type="submit">
+                Add New Quiz
               </button>
             </form>
           </div>

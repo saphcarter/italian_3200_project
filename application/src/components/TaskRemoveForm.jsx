@@ -69,7 +69,7 @@ const TaskRemoveForm = () => {
   };
 
   return (
-    <div>
+    <div className="my-2">
       {!isPopupOpen && (
         <button className="btn btn-danger" onClick={OpenPopup}>
           Remove a Quiz
@@ -79,7 +79,9 @@ const TaskRemoveForm = () => {
       {isPopupOpen && (
         <div className="popup">
           <div className="popup-content">
-            <button onClick={ClosePopup}>Cancel Remove &times;</button>
+            <button className="btn btn-dark" onClick={ClosePopup}>
+              Cancel Remove &times;
+            </button>
             <form onSubmit={handleSubmit}>
               <div>
                 <label
@@ -96,14 +98,18 @@ const TaskRemoveForm = () => {
                   required
                 >
                   <option value="">-- Select a Quiz --</option>
-                  {quizzes.map((quiz) => (
+                  {/* {quizzes.map((quiz) => (
                     <option key={quiz[0]} value={quiz[0]}>
                       {quiz[1]}
                     </option>
-                  ))}
+                  ))} */}
                 </select>
               </div>
-              <button style={{ marginTop: "16px" }} type="submit">
+              <button
+                className="btn btn-danger"
+                style={{ marginTop: "16px" }}
+                type="submit"
+              >
                 Remove Selected Quiz
               </button>
             </form>
