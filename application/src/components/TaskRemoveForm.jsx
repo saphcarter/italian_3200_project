@@ -71,7 +71,7 @@ const TaskRemoveForm = () => {
   return (
     <div>
       {!isPopupOpen && (
-        <button className="btn btn-primary" onClick={OpenPopup}>
+        <button className="btn btn-danger" onClick={OpenPopup}>
           Remove a Quiz
         </button>
       )}
