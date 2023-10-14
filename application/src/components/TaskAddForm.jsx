@@ -129,7 +129,9 @@ const TaskAddForm = () => {
   return (
     <div>
       {!isPopupOpen && (
-        <button onClick={OpenPopup}>Click Here to Add New Task </button>
+        <button className="btn btn-primary" onClick={OpenPopup}>
+          Add New Quiz
+        </button>
       )}
 
       {isPopupOpen && (
