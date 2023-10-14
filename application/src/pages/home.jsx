@@ -40,7 +40,7 @@ function Home() {
     <div className="home">
       {isAdmin && (
         <>
-          <H2>Admin Tools</H2>
+          <h2>Admin Tools</h2>
           <TaskAddForm />
           <TaskRemoveForm />
         </>
