@@ -22,8 +22,6 @@ function Home() {
     fetchClaims();
   }, [getIdTokenClaims]);
 
-  console.log(isAdmin);
-
   if (isLoading) {
     return (
       <div className="page-layout">
@@ -38,14 +36,16 @@ function Home() {
 
   return (
     <div className="home">
-      {isAdmin && (
-        <>
-          <h2>Admin Tools</h2>
-          <TaskAddForm />
-          <TaskRemoveForm />
-        </>
-      )}
-      <TaskSection />
+      <div className="section">
+        {isAdmin && (
+          <>
+            <h2>Admin Tools</h2>
+            <TaskAddForm />
+            <TaskRemoveForm />
+          </>
+        )}
+      </div>
+      <TaskSection isAdmin={isAdmin} />
     </div>
   );
 }
