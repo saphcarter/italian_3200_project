@@ -1,8 +1,8 @@
 import "../styles/App.css";
 import TaskSection from "../components/Tasks";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import TaskManager from "../components/TaskAddForm"
+import TaskManager from "../components/TaskAddForm";
 import TaskAddForm from "../components/TaskAddForm";
 import TaskRemoveForm from "../components/TaskRemoveForm";
 
@@ -15,14 +15,14 @@ function Home() {
   useEffect(() => {
     const fetchClaims = async () => {
       const claims = await getIdTokenClaims();
-      const roles = claims['https://learnitalianpronunciation.com/roles'];
-      setIsAdmin(roles && roles.includes('admin'));
+      const roles = claims["https://learnitalianpronunciation.com/roles"];
+      setIsAdmin(roles && roles.includes("admin"));
     };
-    
+
     fetchClaims();
   }, [getIdTokenClaims]);
 
-  console.log(isAdmin)
+  console.log(isAdmin);
 
   if (isLoading) {
     return (
@@ -33,17 +33,19 @@ function Home() {
   }
 
   if (!isAuthenticated) {
-    return null; 
+    return null;
   }
 
   return (
     <div className="home">
-      {isAdmin ?
-      <>
-      <TaskAddForm />
-      <TaskRemoveForm />
+      {isAdmin && (
+        <>
+          <H2>Admin Tools</H2>
+          <TaskAddForm />
+          <TaskRemoveForm />
+        </>
+      )}
       <TaskSection />
-      </> : <TaskSection />}
     </div>
   );
 }
