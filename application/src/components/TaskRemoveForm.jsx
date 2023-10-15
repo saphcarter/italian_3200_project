@@ -8,8 +8,7 @@ const TaskRemoveForm = () => {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await fetch("/quizzes");
-      const response = await fetch('/api/quizzes');
+      const response = await fetch("/api/quizzes");
       const data = await response.json();
       setQuizzes(data);
     } catch (error) {
@@ -43,7 +42,7 @@ const TaskRemoveForm = () => {
 
     try {
       const response = await fetch(`/api/deletequiz?id=${selectedQuiz}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,14 +51,12 @@ const TaskRemoveForm = () => {
       if (response.ok) {
         await fetchQuizzes();
         console.log(`Quiz ${selectedQuiz} removed successfully`);
-      }
-      else if (response.status === 404) {
-        console.error('Quiz not found');
-      }
-      else {
+      } else if (response.status === 404) {
+        console.error("Quiz not found");
+      } else {
         const responseData = await response.json();
         console.log(responseData);
-        console.error('Failed to remove quiz');
+        console.error("Failed to remove quiz");
       }
     } catch (error) {
       console.error("Error removing quiz:", error);
