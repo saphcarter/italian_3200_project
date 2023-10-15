@@ -56,14 +56,14 @@ function TaskSection(isAdmin) {
           {isAdmin ? "All Quizzes" : "Your Quizzes"}
         </h2>
         <div className="task-card-section">
-          {/* {quizzes.map((quiz) => (
+          {quizzes.map((quiz) => (
             <TaskCard
               key={quiz[0]}
               taskName={quiz[1]}
               dueDate={formatDateTime(quiz[2])}
               quizId={quiz[0]}
             />
-          ))} */}
+          ))}
         </div>
       </div>
     </>

@@ -100,11 +100,11 @@ const TaskRemoveForm = () => {
                   required
                 >
                   <option value="">-- Select a Quiz --</option>
-                  {/* {quizzes.map((quiz) => (
+                  {quizzes.map((quiz) => (
                     <option key={quiz[0]} value={quiz[0]}>
                       {quiz[1]}
                     </option>
-                  ))} */}
+                  ))}
                 </select>
               </div>
               <button
