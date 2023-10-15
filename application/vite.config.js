@@ -11,7 +11,55 @@ export default defineConfig({
         ws: true,
       },
       "/audio": {
-        target: "ws://127.0.0.1:5000/",
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/upload": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/quizzes": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/deletequiz": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/questions": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/getquestions": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/audiosubmit": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/addquizresult": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/addquestionresult": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/quiz_results": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/question_results": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/compare": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/getusers": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
         ws: true,
       },
       "/api": {

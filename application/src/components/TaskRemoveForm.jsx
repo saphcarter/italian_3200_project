@@ -1,25 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const TaskRemoveForm = () => {
-  // State to hold the task ID to be removed
-  const [taskId, setTaskId] = useState('');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [quizzes, setQuizzes] = useState([]);
+  const [selectedQuiz, setSelectedQuiz] = useState('');
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
+  const fetchQuizzes = async () => {
+    try {
+      const response = await fetch('/api/quizzes');
+      const data = await response.json();
+      setQuizzes(data);
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuizzes();
+  }, []);
+
+  const handleQuizChange = (e) => {
+    setSelectedQuiz(e.target.value);
+  };
+
+  const OpenPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const ClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate taskId (optional)
+    if (!selectedQuiz) {
+      alert("Please select a quiz to remove.");
+      return;
+    }
 
-    // Process the form data (e.g., send it to a server, update state, etc.)
+    try {
+      const response = await fetch(`/api/deletequiz?id=${selectedQuiz}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    // Reset the form inputs (if needed)
-    setTaskId('');
+      if (response.ok) {
+        await fetchQuizzes();
+        console.log(`Quiz ${selectedQuiz} removed successfully`);
+      }
+      else if (response.status === 404) {
+        console.error('Quiz not found');
+      }
+      else {
+        const responseData = await response.json();
+        console.log(responseData);
+        console.error('Failed to remove quiz');
+      }
+    } catch (error) {
+      console.error('Error removing quiz:', error);
+    }
+
+    setSelectedQuiz('');
+    setShowSuccessPopup(true);
+    
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 5000);
+  
   };
 
   return (
     <div className="section">
       <h2>Task Remover</h2>
-      
+      {!isPopupOpen && <button onClick={OpenPopup}>Click Here to Remove a Task</button>}
+
+      {isPopupOpen && (
+        <div className="popup">
+          <div className="popup-content">
+            <button onClick={ClosePopup}>
+              Cancel Remove &times;
+            </button>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label style={{marginRight:"8px", marginTop:"16px"}} htmlFor="quizDropdown">Select Quiz: </label>
+                <select onClick = {fetchQuizzes} id="quizDropdown" value={selectedQuiz} onChange={handleQuizChange} required>
+                  <option value="">-- Select a Quiz --</option>
+                  {quizzes.map((quiz) => (
+                    <option key={quiz[0]} value={quiz[0]}>{quiz[1]}</option>
+                  ))}
+                </select> 
+              </div>
+              <button style= {{marginTop:"16px"}} type="submit">
+                Remove Selected Quiz
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showSuccessPopup && (
+          <div className="success-popup">
+            <div className="tick-icon">&#10004; Task removed successfully. Please refresh the page.</div>
+          </div>
+      )}
+
     </div>
   );
 };

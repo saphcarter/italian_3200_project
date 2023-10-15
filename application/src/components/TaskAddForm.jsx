@@ -6,7 +6,8 @@ const TaskAddForm = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [numOfQuestions, setNumOfQuestions] = useState(1);
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState(Array.from({ length: numOfQuestions }, () => ({ questionFile: '' })));
+
 
     const OpenPopup = () => {
         setIsPopupOpen(true);
@@ -17,7 +18,7 @@ const TaskAddForm = () => {
         setIsPopupOpen(false);
     };
 
-    const Submit = (e) => {
+    const Submit = async (e) => {
         e.preventDefault();
 
         if (warning) {
@@ -25,37 +26,110 @@ const TaskAddForm = () => {
             return;
         }
 
-        // Process the form data (send it to our server, update state, etc.)
-        // Reset the form inputs if needed
+        const taskName = document.getElementById('taskName').value;
+        const quizResponse = await fetch('/api/addquiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: taskName,
+                due_date: dueDateTime,
+            }),
+        });
+    
+        if (quizResponse.ok) {
+            const responseData = await quizResponse.json();
 
-        setIsPopupOpen(false);
+            for (let i = 0; i < numOfQuestions; i++) {
+                const questionFile = questions[i].questionFile;
 
-        setShowSuccessPopup(true);
+                const uploadResponse = await fetch(`/api/upload?filename=${questionFile.name}`, {
+                    method: 'POST',
+                    body: questionFile,
+                    headers: {
+                        'Content-Type': questionFile.type
+                    }
+                });
 
-        setTimeout(() => {
-            setShowSuccessPopup(false);
-        }, 3000);
+                const blobInfo = await uploadResponse.json();
+                if (uploadResponse.ok) {
+                    console.log("Blob URL:", blobInfo.url);
+                } else {
+                    console.error("Error uploading file:", blobInfo.error);
+                }
 
+                if (uploadResponse.ok) {
+                    const audioPath = questionFile.name;
+
+                    const questionResponse = await fetch('/api/addquestion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            quizId: responseData.id,
+                            audio: audioPath,
+                            blob_url: blobInfo.url
+                        }),
+                    });
+        
+                    if (!questionResponse.ok) {
+                        alert('Error adding question');
+                        return;
+                    }
+
+                    const questionInfo = await questionResponse.json();
+                    console.log(questionInfo);
+                    
+                }
+                else {
+                    alert('Error uploading audio file');
+                    return;
+                }
+            }
+
+            setIsPopupOpen(false);
+            setShowSuccessPopup(true);
+    
+            setTimeout(() => {
+                setShowSuccessPopup(false);
+            }, 5000);
+        } else {
+            alert('Error adding quiz');
+        }
+
+    };
+
+    const handleNumOfQuestionsChange = (e) => {
+        const newNumOfQuestions = parseInt(e.target.value, 10);
+
+        setNumOfQuestions(newNumOfQuestions);
+
+        setQuestions(Array.from({ length: newNumOfQuestions }, () => ({ questionFile: '' })));
     };
 
     const QuestionChange = (index, e) => {
-        const { name, value } = e.target;
+        const file = e.target.files[0];
         const updatedQuestions = [...questions];
-        updatedQuestions[index][name] = value;
+        updatedQuestions[index].questionFile = file;
         setQuestions(updatedQuestions);
     };
-
+    
     const handleDateChange = (e) => {
         const selectedDateTime = new Date(e.target.value);
         const currentDateTime = new Date();
-    
+
         if (selectedDateTime < currentDateTime) {
             setWarning('Warning: This date and time has already passed. Please select a date and time in the future.');
         } else {
             setWarning('');
         }
-    
-        setDueDateTime(e.target.value);
+
+        // using ISO8601 format
+        const isoDate = selectedDateTime.toISOString();
+
+        setDueDateTime(isoDate);
     };
 
     return (
@@ -63,7 +137,7 @@ const TaskAddForm = () => {
             <h2>Task Creator</h2>
 
             {!isPopupOpen && (
-                <button onClick={OpenPopup}>Add New Task </button>
+                <button onClick={OpenPopup}>Click Here to Add New Task </button>
             )}
 
             {isPopupOpen && (
@@ -73,7 +147,7 @@ const TaskAddForm = () => {
                             Cancel Task &times;
                         </button>
 
-                        <form onSubmit={Submit}>
+                        <form onSubmit={Submit} encType="multipart/form-data" method="post">
                             <div className="form-group">
                                 <label style={{ marginRight: '8px' }} htmlFor="taskName">Task Name: </label>
                                 <input
@@ -90,7 +164,6 @@ const TaskAddForm = () => {
                                         id="dueDateTime"
                                         name="dueDateTime"
                                         onChange={handleDateChange}
-                                        defaultValue={`${new Date().toISOString().slice(0,10)}T23:59`}
                                         required
                                     />
                                     {warning && <div className="warning">{warning}</div>}
@@ -101,7 +174,7 @@ const TaskAddForm = () => {
                                 <select
                                     id="numOfQuestions"
                                     value={numOfQuestions}
-                                    onChange={(e) => setNumOfQuestions(e.target.value)}
+                                    onChange={handleNumOfQuestionsChange}
                                     required
                                 >
                                     <option value={1}>1</option>
@@ -133,7 +206,7 @@ const TaskAddForm = () => {
 
             {showSuccessPopup && (
                     <div className="success-popup">
-                        <div className="tick-icon">&#10004; Task Added Successfully</div>
+                        <div className="tick-icon">&#10004; Task added successfully. Please refresh the page.</div>
                     </div>
                 )}
         </div>

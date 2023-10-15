@@ -23,7 +23,9 @@
   font-size: 1.25rem;
 }
 
-/* TASKS STYLING */
+.cardtitle {
+  margin: 1rem;
+}
 
 .task-card-section {
   display: flex;
@@ -73,14 +75,20 @@
 
 /* TASKS STYLING */
 
-.score-card {
-  margin-bottom: 1rem;
-  width: 90%;
-  border: 0.05rem solid black;
-  border-radius: 0.5rem;
+.score-justified {
+  margin: 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-radius: 0.5rem;
+  border: 0.05px solid #333333;
+}
+
+.score-card {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 0.05rem solid black;
+  border-radius: 0.5rem;
 }
 
 .score-card-section {
@@ -194,7 +202,7 @@
   display: flex;
   align-items: center;
   margin-top: 10px;
-  width: 25rem;
+  width: 30rem;
   animation: scale-in 0.5s ease-out;
   transition: opacity 0.5s ease-in-out;
 }

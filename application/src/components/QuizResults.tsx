@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { QuizResult } from "./QuizAttempt";
 import {
   Bar,
@@ -123,42 +123,29 @@ function Legend() {
   );
 }
 
-export default function ResultsView({
-  results,
-}: {
-  results: Array<QuizResult>;
-}) {
-  const { name } = useParams();
+export default function ResultsView() {
+  const { id, name } = useParams();
+  const [results, setResults] = useState([]);
 
-  var data: Array<ChartData> = [];
-  if (results == undefined) {
-    //for testing purposes
-    data = [
-      {
-        question: 1,
-        simScore: 60,
-        selfScore: 70,
-      },
-      {
-        question: 2,
-        simScore: 80,
-        selfScore: 55,
-      },
-      {
-        question: 3,
-        simScore: 40,
-        selfScore: 50,
-      },
-    ];
-  } else {
-    results.forEach((result) => {
-      data.push({
-        question: result.question + 1,
-        simScore: result.result.similarityScore,
-        selfScore: result.result.selfEvaluationScore,
-      });
-    });
-  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`/api/getresultsfromquiz?qrid=${id}`);
+        const data = await response.json();
+        console.log(data)
+        const transformedData = data.map((item) => ({
+          question: item[2] + 1,
+          simScore: item[3],
+          selfScore: item[4],
+        }));
+        console.log(transformedData)
+        setResults(transformedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, [id]);
 
   return (
     <div className="p-4">
@@ -169,7 +156,7 @@ export default function ResultsView({
         <ComposedChart
           width={700}
           height={300}
-          data={data}
+          data={results}
           barSize={20}
           margin={{ top: 0, right: 0, left: 10, bottom: 20 }}
         >

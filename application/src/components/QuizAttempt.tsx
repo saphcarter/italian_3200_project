@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/App.css";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
@@ -10,11 +10,11 @@ import Button from "react-bootstrap/esm/Button";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import ResultsView from "./QuizResults";
-import { Link, redirect, useParams } from "react-router-dom";
+import { Link, redirect, useParams, useNavigate } from "react-router-dom";
 import QuizIntroScreen from "./QuizIntroduction";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Question = {
-  description: string;
   audio: string;
 };
 
@@ -114,7 +114,7 @@ function QuestionView({
   q: Question;
   submitResult: (result: Result) => void;
 }) {
-  const { description, audio } = q;
+  const { audio } = q;
 
   const [recordedAudio, setRecordedAudio] = useState<Array<string>>([]);
   const [recordedBlobs, setRecordedBlobs] = useState<Array<Blob>>([])
@@ -135,29 +135,53 @@ function QuestionView({
     setIsRecordingView(false);
   }
 
-  function submit(selfEval: number) {
+  async function submit(selfEval: number) {
     const formData = new FormData();
     const audioBlob = recordedBlobs[selected]
     
     formData.append('audio', audioBlob, "recorded_audio.webm");
-    formData.append('question', audio);
 
     let sim_score;
+    let submitted_url;
 
-    // Make the fetch call
-    fetch('/audio', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Handle the numeric score received from the backend
-      console.log('Received score:', data.score);
-      sim_score = data.score;
-    })
-    .catch(error => {
+    // make the fetch call
+    try {
+      const response = await fetch('/api/audiosubmit', {
+          method: 'POST',
+          body: formData
+      });
+      const upload_data = await response.json();
+      submitted_url = upload_data.url;
+      console.log("External API Response:", submitted_url);
+  } catch (error) {
       console.error('Error:', error);
-    }); 
+      return;
+  }
+
+  try {
+    
+    const compare = {
+      question: audio,
+      answer: submitted_url
+    };
+    
+    const compareResponse = await fetch('/api/compare', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(compare)
+  });
+  const compareData = await compareResponse.json();
+
+  // Assuming compareData has a property 'similarityScore'
+  sim_score = compareData.similarityScore;
+  console.log("Second API Response - Similarity Score:", sim_score);
+
+  } catch (error) {
+    console.error('Error in second API call:', error);
+  return;
+  }
     
     //reset variables
     setIsRecordingView(true);
@@ -165,10 +189,11 @@ function QuestionView({
     setRecordedAudio([]);
 
     const result: Result = {
-      //fake score
       similarityScore: sim_score,
       selfEvaluationScore: selfEval,
     };
+
+    console.log(result);
 
     submitResult(result);
   }
@@ -273,8 +298,80 @@ function QuestionView({
   );
 }
 
-function FinalScreen() {
-  const { name } = useParams();
+function FinalScreen({ results }) {
+  const { id, name } = useParams();
+  const { user } = useAuth0();
+  const user_id = user?.sub;
+  const currentDate = new Date();
+  const isoDate = currentDate.toISOString();
+  let quizResultId;
+  const navigate = useNavigate();
+
+  async function handleQuizSubmit() {
+    // submit the quiz result
+    try {
+      const response = await fetch('/api/addquizresult', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: user_id,
+            quizId: id,
+            dateCompleted: isoDate,
+            quizName: name
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+
+        const errorMsg = `Failed to submit quiz results. Server error: ${errorData.error}. Data sent: userId: ${errorData.userId}, quizId: ${errorData.quizId}, dateCompleted: ${errorData.dateCompleted}, quizName: ${errorData.quizName}`;    
+        
+        throw new Error('Failed to submit quiz result');
+      }
+
+      const responseData = await response.json();
+      quizResultId = responseData.id;
+
+      console.log(`quizresultid: ${quizResultId}`);
+
+      // submit each question result
+      for (const q_result of results) {
+        const questionResponse = await fetch('/api/addquestionresult', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quizResultId: quizResultId,
+                questionNumber: q_result.question,
+                similarityScore: q_result.result.similarityScore,
+                selfEvaluationScore: q_result.result.selfEvaluationScore
+            })
+        });
+
+        if (!questionResponse.ok) {
+          const errorData = await questionResponse.json();
+          
+          const errorMsg = `Failed to submit result for question ${q_result.question}. Server error: ${errorData.error}. Data sent: quizResultId: ${errorData.quizResultId}, questionNumber: ${errorData.questionNumber}, similarityScore: ${errorData.similarityScore}, selfEvaluationScore: ${errorData.selfEvaluationScore}`;
+
+          console.log(errorMsg);
+
+          throw new Error(`Failed to submit result for question ${q_result.question}`);
+          
+        }
+      }
+
+      console.log('Successfully submitted quiz and question results.');
+      navigate(`/quiz/result/${quizResultId}/${name}`);
+
+    } 
+    catch (error) {
+      console.error('Error during quiz submission:', error);
+    }
+
+  }
 
   return (
     <div>
@@ -283,42 +380,42 @@ function FinalScreen() {
         the quiz and be taken to the results page.
       </p>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to={`/quiz/result/${name}`}>
-          <button className="btn btn-primary">Submit</button>
-        </Link>
+        <button onClick = {handleQuizSubmit} className="btn btn-primary">Submit</button>
       </div>
     </div>
   );
 }
 
 function QuizAttemptView() {
-  const { name } = useParams();
+  const { id, name } = useParams();
+  const [questions, setQuestions] = useState([]);
 
-  const questions: Question[] = [
-    {
-      description: "placeholder description",
-      audio: "/1-come-ti-chiami.m4a",
-    },
-    { description: "placeholder description", audio: "/2-come-stai.m4a" },
-    {
-      description: "placeholder description",
-      audio: "/3-questo-e-Matteo.m4a",
-    },
-  ];
+  useEffect(() => {
+    fetch(`/api/getquestions?id=${id}`) 
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const newQuestions = data.map(q => ({ audio: q.audio }));
+            setQuestions(newQuestions);
+        })
+        .catch(error => {
+            console.error('Error fetching questions:', error);
+        });
+  }, []);
 
   const [questionNumber, setQuestionNumber] = useState(0);
 
   const [quizResults, setQuizResults] = useState<Array<QuizResult>>([]);
 
   function submitResult(result: Result) {
-    const quizResult: QuizResult = { question: questionNumber, result: result };
-    setQuizResults([...quizResults, quizResult]);
-    setQuestionNumber(questionNumber + 1);
+    setQuizResults(prevQuizResults => {
+        const newQuizResult: QuizResult = { question: questionNumber, result: result };
+        return [...prevQuizResults, newQuizResult];
+    });
+    setQuestionNumber(prevQuestionNumber => prevQuestionNumber + 1);
   }
 
-  function handleQuizSubmit() {
-    window.location.href = "/";
-  }
+  console.log(questions)
 
   return (
     <div className="p-4">
@@ -329,13 +426,14 @@ function QuizAttemptView() {
           <Stack gap={3} className="mx-3">
             <h4>Question {questionNumber + 1}</h4>
             <QuestionView
+              key={questionNumber}
               q={questions[questionNumber]}
               submitResult={submitResult}
             />
           </Stack>
         </>
       ) : (
-        <FinalScreen />
+        <FinalScreen results={quizResults} />
       )}
     </div>
   );

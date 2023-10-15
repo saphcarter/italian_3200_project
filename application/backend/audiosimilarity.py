@@ -81,22 +81,16 @@ def compareFiles(path1, path2):
 
     # --------- PROCESS AUDIOS -----------
 
-    # process audio 1
-    b, a = signal.butter(10, [f_low, f_high], btype='bandpass', fs=rate1)
-    filt_audio1 = signal.lfilter(b, a, audio1)
     # Convert to decibel spectogram
-    spectogram1 = np.abs(librosa.stft(filt_audio1))
+    spectogram1 = np.abs(librosa.stft(audio1))
     dbSpectogram1 = librosa.amplitude_to_db(spectogram1, ref=np.max)
     # make recurrence matrix for non-median filtering
     rec1 = librosa.segment.recurrence_matrix(dbSpectogram1, mode='affinity', metric='cosine', sparse=True)
     # filter spectogram to reduce noise
     spectogram_filter1 = np.minimum(dbSpectogram1, librosa.decompose.nn_filter(dbSpectogram1, rec=rec1, aggregate=np.average, metric='cosine'))
 
-    # process audio 2
-    b, a = signal.butter(10, [f_low, f_high], btype='bandpass', fs=rate2)
-    filt_audio2 = signal.lfilter(b, a, audio2)
     # Convert to decibel spectogram
-    spectogram2 = np.abs(librosa.stft(filt_audio2))
+    spectogram2 = np.abs(librosa.stft(audio2))
     dbSpectogram2 = librosa.amplitude_to_db(spectogram2, ref=np.max)
     # make recurrence matrix for non-median filtering
     rec2 = librosa.segment.recurrence_matrix(dbSpectogram2, mode='affinity', metric='cosine', sparse=True)
@@ -154,4 +148,4 @@ def compareFiles(path1, path2):
     print("----------------------------------------")
     print("----------------------------------------")
 
-    return combined_score
+    return 100 * combined_score
