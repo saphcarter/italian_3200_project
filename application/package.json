@@ -22,7 +22,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
-    "recharts": "^2.8.0"
+    "recharts": "^2.8.0",
+    "@vercel/blob": "^0.13.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

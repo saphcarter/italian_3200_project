@@ -12,8 +12,10 @@ function Results() {
   useEffect(() => {
     const fetchClaims = async () => {
       const claims = await getIdTokenClaims();
-      const roles = claims['https://learnitalianpronunciation.com/roles'];
-      setIsAdmin(roles && roles.includes('admin'));
+      if (claims){
+        const roles = claims['https://learnitalianpronunciation.com/roles'];
+        setIsAdmin(roles && roles?.includes('admin'));
+      }
     };
     
     fetchClaims();
