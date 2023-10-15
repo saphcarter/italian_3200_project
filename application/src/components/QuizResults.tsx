@@ -130,13 +130,15 @@ export default function ResultsView() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`/question_results/questions/${id}`);
+        const response = await fetch(`/api/getresultsfromquiz?qrid=${id}`);
         const data = await response.json();
+        console.log(data)
         const transformedData = data.map((item) => ({
           question: item[2] + 1,
           simScore: item[3],
           selfScore: item[4],
         }));
+        console.log(transformedData)
         setResults(transformedData);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -5,9 +5,12 @@ function QuizCard({quizResultId, taskName, dateCompleted }) {
   const [questionResults, setQuestionResults] = useState([]);
 
   useEffect(() => {
-    fetch(`/question_results/questions/${quizResultId}`)
+    fetch(`/api/getquestionresults?qrid=${quizResultId}`)
       .then(response => response.json())
-      .then(data => setQuestionResults(data))
+      .then(data => {
+        console.log("received questionresults:", data);
+        setQuestionResults(data);
+      })
       .catch(error => console.error('Error fetching question results:', error));
   }, [quizResultId]);
   
@@ -20,10 +23,10 @@ function QuizCard({quizResultId, taskName, dateCompleted }) {
         </div>
         {questionResults.map(qResult => (
           <QuestionCard 
-            key={qResult[0]}
-            questionNumber={qResult[2] + 1}
-            SelfScore={qResult[4]}
-            GivenScore={qResult[3]}
+            key={qResult.id}
+            questionNumber={qResult.questionNumber + 1}
+            SelfScore={qResult.selfEvalScore}
+            GivenScore={qResult.similarityScore}
           />
         ))}
       </div>
@@ -63,7 +66,7 @@ function ScoreSection({name, user_id}) {
   }
 
   useEffect(() => {
-    fetch('/quiz_results/user', {
+    fetch(`/api/getquizresults`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -85,10 +88,10 @@ function ScoreSection({name, user_id}) {
         <div className="score-card-section">
           {quizResults.map(result => (
             <QuizCard
-              key={result[0]}
-              quizResultId={result[0]}
-              taskName= {result[4]}
-              dateCompleted={formatDateTime(result[3])}
+              key={result.id}
+              quizResultId={result.id}
+              taskName= {result.quizName}
+              dateCompleted={formatDateTime(result.dateCompleted)}
             />
           ))}
         </div>

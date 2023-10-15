@@ -19,6 +19,3 @@ else:
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-from routes import *
-from routes2 import *

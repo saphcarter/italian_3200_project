@@ -1,7 +1,6 @@
-from server import db
+from backend.server import db
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, DECIMAL, Text, ForeignKey
-from werkzeug.security import generate_password_hash, check_password_hash
 
 # create database model
 class Quiz(db.Model):
@@ -9,7 +8,7 @@ class Quiz(db.Model):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     name = Column(String(64), nullable = False)
-    due_date = Column(String(20), nullable = True)
+    due_date = Column(String(25), nullable = True)
 
     def __repr__(self):
         return '<Quiz-Id %r>' % self.id
@@ -19,7 +18,7 @@ class Question(db.Model):
 
     id = Column(Integer, primary_key = True, autoincrement = True)
     audio = Column(String(500))
-    quiz_id = Column(Integer, ForeignKey('quizzes.id'))
+    quizId = Column(Integer, ForeignKey('quizzes.id'))
     quiz = relationship("Quiz", backref='questions')
     def __repr__(self):
         return '<Question-Id %r>' % self.id
@@ -32,7 +31,7 @@ class QuizResults(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     userId = Column(String(60))
     quizId = Column(Integer, ForeignKey('quizzes.id'))
-    dateCompleted = Column(String(20), nullable = True)
+    dateCompleted = Column(String(25), nullable = True)
     quizName = Column(String(64), nullable = False)
     quiz = relationship("Quiz", backref='quiz_results')
 

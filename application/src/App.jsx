@@ -41,16 +41,6 @@ function App() {
             path="/profile"
             element={<AuthenticationGuard component={ProfilePage} />}
           />
-          {/* testing route remove at end */}
-          {/* <Route
-              path="/quizEnd"
-              element={<AuthenticationGuard component={ResultsView} />}
-            /> */}
-          {/* for quiz database */}
-          {/* <Route
-              path="/quiz/:id"
-              element={<AuthenticationGuard component={QuizAttemptView} />}
-            /> */}
         </Routes>
       </div>
     </Router>

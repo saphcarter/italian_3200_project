@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import ScoreSection from './Results';
 
 function StudentList({ users }) {
-    console.log("HELLO");
-    console.log(users);
     return (
         <div>
             {users.map(user => (
@@ -60,13 +58,15 @@ function StudentSelector() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('/get-users');
+                const response = await fetch('/api/getusers');
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
+                console.log(data)
+                
                 setAllUsers(data);
                 setDisplayedUsers(data);
 
@@ -76,6 +76,7 @@ function StudentSelector() {
         };
         
         fetchUsers();
+
     }, []);
 
     console.log(allUsers);
