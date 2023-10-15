@@ -59,15 +59,14 @@ const TaskAddForm = () => {
         if (uploadResponse.ok) {
           const audioPath = await uploadResponse.json();
 
-
-        if (warning) {
-            alert('Please select a future date and time.');
+          if (warning) {
+            alert("Please select a future date and time.");
             return;
-        }
+          }
 
-        const taskName = document.getElementById('taskName').value;
-        const quizResponse = await fetch('/api/addquiz', {
-            method: 'POST',
+          const taskName = document.getElementById("taskName").value;
+          const quizResponse = await fetch("/api/addquiz", {
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
@@ -75,79 +74,79 @@ const TaskAddForm = () => {
               quiz_id: responseData.id,
               audio: audioPath,
             }),
-        });
-    
-        if (quizResponse.ok) {
+          });
+
+          if (quizResponse.ok) {
             const responseData = await quizResponse.json();
 
             for (let i = 0; i < numOfQuestions; i++) {
-                const questionFile = questions[i].questionFile;
+              const questionFile = questions[i].questionFile;
 
-                const uploadResponse = await fetch(`/api/upload?filename=${questionFile.name}`, {
-                    method: 'POST',
-                    body: questionFile,
-                    headers: {
-                        'Content-Type': questionFile.type
-                    }
+              const uploadResponse = await fetch(
+                `/api/upload?filename=${questionFile.name}`,
+                {
+                  method: "POST",
+                  body: questionFile,
+                  headers: {
+                    "Content-Type": questionFile.type,
+                  },
+                }
+              );
+
+              const blobInfo = await uploadResponse.json();
+              if (uploadResponse.ok) {
+                console.log("Blob URL:", blobInfo.url);
+              } else {
+                console.error("Error uploading file:", blobInfo.error);
+              }
+
+              if (uploadResponse.ok) {
+                const audioPath = questionFile.name;
+
+                const questionResponse = await fetch("/api/addquestion", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    quizId: responseData.id,
+                    audio: audioPath,
+                    blob_url: blobInfo.url,
+                  }),
                 });
 
-                const blobInfo = await uploadResponse.json();
-                if (uploadResponse.ok) {
-                    console.log("Blob URL:", blobInfo.url);
-                } else {
-                    console.error("Error uploading file:", blobInfo.error);
+                if (!questionResponse.ok) {
+                  alert("Error adding question");
+                  return;
                 }
 
-                if (uploadResponse.ok) {
-                    const audioPath = questionFile.name;
-
-                    const questionResponse = await fetch('/api/addquestion', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            quizId: responseData.id,
-                            audio: audioPath,
-                            blob_url: blobInfo.url
-                        }),
-                    });
-        
-                    if (!questionResponse.ok) {
-                        alert('Error adding question');
-                        return;
-                    }
-
-                    const questionInfo = await questionResponse.json();
-                    console.log(questionInfo);
-                    
-                }
-                else {
-                    alert('Error uploading audio file');
-                    return;
-                }
+                const questionInfo = await questionResponse.json();
+                console.log(questionInfo);
+              } else {
+                alert("Error uploading audio file");
+                return;
+              }
             }
 
             setIsPopupOpen(false);
             setShowSuccessPopup(true);
-    
+
             setTimeout(() => {
-                setShowSuccessPopup(false);
+              setShowSuccessPopup(false);
             }, 5000);
-        } else {
-          alert("Error uploading audio file");
-          return;
+          } else {
+            alert("Error uploading audio file");
+            return;
+          }
         }
+
+        setIsPopupOpen(false);
+        setShowSuccessPopup(true);
+
+        setTimeout(() => {
+          setShowSuccessPopup(false);
+        }, 5000);
       }
-
-      setIsPopupOpen(false);
-      setShowSuccessPopup(true);
-
-      setTimeout(() => {
-        setShowSuccessPopup(false);
-      }, 5000);
-    } else {
-      alert("Error adding quiz");
     }
   };
 
