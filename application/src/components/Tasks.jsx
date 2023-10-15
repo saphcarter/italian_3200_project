@@ -31,7 +31,7 @@ function TaskSection() {
   // }
 
   useEffect(() => {
-    fetch("/quizzes")
+    fetch("/api/quizzes")
       .then((response) => response.json())
       .then((data) => setQuizzes(data))
       .catch((error) => console.error("Error fetching quizzes:", error));

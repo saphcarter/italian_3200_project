@@ -129,7 +129,7 @@ export default function QuizIntroScreen() {
         and have fun!
       </p>
       <div className="d-flex justify-content-end my-4">
-        <Link to={`/quiz/attempt/${name}`}>
+        <Link to={`/quiz/attempt/${id}/${name}`}>
           <button className="btn btn-primary">Start Quiz</button>
         </Link>
       </div>

@@ -1,12 +1,14 @@
 from http.server import BaseHTTPRequestHandler
 import json
-from ..backend.server import db
-from ..backend.models import Quiz
+from backend.server import app, db
+from backend.models import Quiz
 
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        quizzes = Quiz.query.all()
+        with app.app_context():
+            quizzes = Quiz.query.all()
+
         quiz_names = []
         for quiz in quizzes:
             quiz_details = []

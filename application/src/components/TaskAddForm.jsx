@@ -27,7 +27,7 @@ const TaskAddForm = () => {
         }
 
         const taskName = document.getElementById('taskName').value;
-        const quizResponse = await fetch('/quizzes/addquiz', {
+        const quizResponse = await fetch('/api/addquiz', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,29 +43,34 @@ const TaskAddForm = () => {
 
             for (let i = 0; i < numOfQuestions; i++) {
                 const questionFile = questions[i].questionFile;
-                const formData = new FormData();
-                formData.append('questionFile', questionFile);
 
-                for (const entry of formData.entries()) {
-                    console.log(entry);
-                }
-    
-                const uploadResponse = await fetch('/upload', {
+                const uploadResponse = await fetch(`/api/upload?filename=${questionFile.name}`, {
                     method: 'POST',
-                    body: formData,
+                    body: questionFile,
+                    headers: {
+                        'Content-Type': questionFile.type
+                    }
                 });
 
+                const blobInfo = await uploadResponse.json();
                 if (uploadResponse.ok) {
-                    const audioPath = await uploadResponse.json();
+                    console.log("Blob URL:", blobInfo.url);
+                } else {
+                    console.error("Error uploading file:", blobInfo.error);
+                }
 
-                    const questionResponse = await fetch('/questions/addquestion', {
+                if (uploadResponse.ok) {
+                    const audioPath = questionFile.name;
+
+                    const questionResponse = await fetch('/api/addquestion', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            quiz_id: responseData.id,
+                            quizId: responseData.id,
                             audio: audioPath,
+                            blob_url: blobInfo.url
                         }),
                     });
         
@@ -73,6 +78,9 @@ const TaskAddForm = () => {
                         alert('Error adding question');
                         return;
                     }
+
+                    const questionInfo = await questionResponse.json();
+                    console.log(questionInfo);
                     
                 }
                 else {
