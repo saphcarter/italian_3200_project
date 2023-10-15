@@ -14,6 +14,8 @@ import Loader from "./components/Loader";
 import { AuthenticationGuard } from "./components/AuthenticationGuard";
 import { ProfilePage } from "./pages/profile";
 import ResultsView from "./pages/quizResults";
+import AdminPage from './pages/AdminPage'; 
+
 
 function App() {
   const { isLoading } = useAuth0();
@@ -47,6 +49,7 @@ function App() {
               path="/quizEnd"
               element={<AuthenticationGuard component={ResultsView} />}
             />
+            <Route path="/admin" element={<AuthenticationGuard component={AdminPage} />} />
           </Routes>
         </div>
       </div>
