@@ -1,8 +1,8 @@
 import "../styles/App.css";
 import TaskSection from "../components/Tasks";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import TaskManager from "../components/TaskAddForm"
+import TaskManager from "../components/TaskAddForm";
 import TaskAddForm from "../components/TaskAddForm";
 import TaskRemoveForm from "../components/TaskRemoveForm";
 
@@ -20,11 +20,9 @@ function Home() {
         setIsAdmin(roles && roles?.includes('admin'));
       }
     };
-    
+
     fetchClaims();
   }, [getIdTokenClaims]);
-
-  console.log(isAdmin)
 
   if (isLoading) {
     return (
@@ -35,17 +33,21 @@ function Home() {
   }
 
   if (!isAuthenticated) {
-    return null; 
+    return null;
   }
 
   return (
     <div className="home">
-      {isAdmin ?
-      <>
-      <TaskAddForm />
-      <TaskRemoveForm />
-      <TaskSection />
-      </> : <TaskSection />}
+      <div className="section">
+        {isAdmin && (
+          <>
+            <h2>Admin Tools</h2>
+            <TaskAddForm />
+            <TaskRemoveForm />
+          </>
+        )}
+      </div>
+      <TaskSection isAdmin={isAdmin} />
     </div>
   );
 }

@@ -23,7 +23,9 @@ function NavbarComponent() {
     <Navbar expand="lg" className="bg-primary" data-bs-theme="dark">
       <Container className="align-items-baseline mx-3">
         <Link to="/" className="nav-link">
-          <Navbar.Brand className="fs-1 ">Learn Italian</Navbar.Brand>
+          <Navbar.Brand className="fs-3">
+            Improve Your Italian Oral Skills
+          </Navbar.Brand>
         </Link>
         {isAuthenticated && (
           <>

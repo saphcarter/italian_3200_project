@@ -18,7 +18,7 @@ function TaskCard({ taskName, dueDate, quizId }) {
 }
 
 // container for all available task entry points
-function TaskSection() {
+function TaskSection(isAdmin) {
   const [quizzes, setQuizzes] = useState([]);
 
   // useEffect(() => {
@@ -52,7 +52,9 @@ function TaskSection() {
   return (
     <>
       <div className="section">
-        <h2 className="section-header">Your Tasks</h2>
+        <h2 className="section-header">
+          {isAdmin ? "All Quizzes" : "Your Quizzes"}
+        </h2>
         <div className="task-card-section">
           {quizzes.map((quiz) => (
             <TaskCard
