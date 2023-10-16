@@ -10,8 +10,6 @@ CLIENT_SECRET = 'e_Q6CP0_7RMK2H6PWepWzUhieRpFgWQ2_ghk3fwtZP-8NCOYs_VFxa-jLqGh6mX
 GRANT_TYPE = 'client_credentials'
 AUDIENCE = f'https://{AUTH0_DOMAIN}/api/v2/'
 
-# METHOD 1:
-
 class handler(BaseHTTPRequestHandler):
 
     def get_management_api_token(self):

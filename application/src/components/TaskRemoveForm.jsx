@@ -64,10 +64,6 @@ const TaskRemoveForm = () => {
 
     setSelectedQuiz("");
     setShowSuccessPopup(true);
-
-    setTimeout(() => {
-      setShowSuccessPopup(false);
-    }, 5000);
   };
 
   return (

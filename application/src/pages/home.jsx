@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import TaskManager from "../components/TaskAddForm";
 import TaskAddForm from "../components/TaskAddForm";
 import TaskRemoveForm from "../components/TaskRemoveForm";
+import WipeRecordsForm from "../components/WipeRecordsForm";
 
 function Home() {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -15,9 +16,9 @@ function Home() {
   useEffect(() => {
     const fetchClaims = async () => {
       const claims = await getIdTokenClaims();
-      if (claims){
-        const roles = claims['https://learnitalianpronunciation.com/roles'];
-        setIsAdmin(roles && roles?.includes('admin'));
+      if (claims) {
+        const roles = claims["https://learnitalianpronunciation.com/roles"];
+        setIsAdmin(roles && roles?.includes("admin"));
       }
     };
 
@@ -44,6 +45,7 @@ function Home() {
             <h2>Admin Tools</h2>
             <TaskAddForm />
             <TaskRemoveForm />
+            <WipeRecordsForm isAdmin={isAdmin} />
           </>
         )}
       </div>

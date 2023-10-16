@@ -12,6 +12,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
+import Loader from "./Loader";
 
 const InfoPopOver = ({
   name,
@@ -126,26 +127,33 @@ function Legend() {
 export default function ResultsView() {
   const { id, name } = useParams();
   const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(`/api/getresultsfromquiz?qrid=${id}`);
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         const transformedData = data.map((item) => ({
           question: item[2] + 1,
           simScore: item[3],
           selfScore: item[4],
         }));
-        console.log(transformedData)
+        console.log(transformedData);
         setResults(transformedData);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     }
     fetchData();
   }, [id]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">

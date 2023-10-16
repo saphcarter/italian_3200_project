@@ -9,6 +9,7 @@ const TaskAddForm = () => {
   const [questions, setQuestions] = useState(
     Array.from({ length: numOfQuestions }, () => ({ questionFile: "" }))
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const OpenPopup = () => {
     setIsPopupOpen(true);
@@ -24,11 +25,12 @@ const TaskAddForm = () => {
 
     if (warning) {
       alert("Please select a future date and time.");
+      setIsSubmitting(false);
       return;
     }
 
     const taskName = document.getElementById("taskName").value;
-    const quizResponse = await fetch("/quizzes/addquiz", {
+    const quizResponse = await fetch("/api/addquiz", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,109 +46,61 @@ const TaskAddForm = () => {
 
       for (let i = 0; i < numOfQuestions; i++) {
         const questionFile = questions[i].questionFile;
-        const formData = new FormData();
-        formData.append("questionFile", questionFile);
 
-        for (const entry of formData.entries()) {
-          console.log(entry);
+        const uploadResponse = await fetch(
+          `/api/upload?filename=${questionFile.name}`,
+          {
+            method: "POST",
+            body: questionFile,
+            headers: {
+              "Content-Type": questionFile.type,
+            },
+          }
+        );
+
+        const blobInfo = await uploadResponse.json();
+        if (uploadResponse.ok) {
+          console.log("Blob URL:", blobInfo.url);
+        } else {
+          console.error("Error uploading file:", blobInfo.error);
         }
 
-        const uploadResponse = await fetch("/upload", {
-          method: "POST",
-          body: formData,
-        });
-
         if (uploadResponse.ok) {
-          const audioPath = await uploadResponse.json();
+          const audioPath = questionFile.name;
 
-          if (warning) {
-            alert("Please select a future date and time.");
-            return;
-          }
-
-          const taskName = document.getElementById("taskName").value;
-          const quizResponse = await fetch("/api/addquiz", {
+          const questionResponse = await fetch("/api/addquestion", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              quiz_id: responseData.id,
+              quizId: responseData.id,
               audio: audioPath,
+              blob_url: blobInfo.url,
             }),
           });
 
-          if (quizResponse.ok) {
-            const responseData = await quizResponse.json();
-
-            for (let i = 0; i < numOfQuestions; i++) {
-              const questionFile = questions[i].questionFile;
-
-              const uploadResponse = await fetch(
-                `/api/upload?filename=${questionFile.name}`,
-                {
-                  method: "POST",
-                  body: questionFile,
-                  headers: {
-                    "Content-Type": questionFile.type,
-                  },
-                }
-              );
-
-              const blobInfo = await uploadResponse.json();
-              if (uploadResponse.ok) {
-                console.log("Blob URL:", blobInfo.url);
-              } else {
-                console.error("Error uploading file:", blobInfo.error);
-              }
-
-              if (uploadResponse.ok) {
-                const audioPath = questionFile.name;
-
-                const questionResponse = await fetch("/api/addquestion", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    quizId: responseData.id,
-                    audio: audioPath,
-                    blob_url: blobInfo.url,
-                  }),
-                });
-
-                if (!questionResponse.ok) {
-                  alert("Error adding question");
-                  return;
-                }
-
-                const questionInfo = await questionResponse.json();
-                console.log(questionInfo);
-              } else {
-                alert("Error uploading audio file");
-                return;
-              }
-            }
-
-            setIsPopupOpen(false);
-            setShowSuccessPopup(true);
-
-            setTimeout(() => {
-              setShowSuccessPopup(false);
-            }, 5000);
-          } else {
-            alert("Error uploading audio file");
+          if (!questionResponse.ok) {
+            alert("Error adding question");
+            setIsSubmitting(false);
             return;
           }
+
+          const questionInfo = await questionResponse.json();
+          console.log(questionInfo);
+        } else {
+          alert("Error uploading audio file");
+          setIsSubmitting(false);
+          return;
         }
-
-        setIsPopupOpen(false);
-        setShowSuccessPopup(true);
-
-        setTimeout(() => {
-          setShowSuccessPopup(false);
-        }, 5000);
       }
+
+      setIsPopupOpen(false);
+      setIsSubmitting(false);
+      setShowSuccessPopup(true);
+    } else {
+      setIsSubmitting(false);
+      alert("Error adding quiz");
     }
   };
 
@@ -203,7 +157,16 @@ const TaskAddForm = () => {
               Cancel Add Quiz &times;
             </button>
 
-            <form onSubmit={Submit} encType="multipart/form-data" method="post">
+            <form
+              onSubmit={(event) => {
+                if (!isSubmitting) {
+                  setIsSubmitting(true);
+                  Submit(event);
+                }
+              }}
+              encType="multipart/form-data"
+              method="post"
+            >
               <div className="form-group">
                 <label style={{ marginRight: "8px" }} htmlFor="taskName">
                   Task Name:{" "}
@@ -270,11 +233,16 @@ const TaskAddForm = () => {
           </div>
         </div>
       )}
+      {isSubmitting && (
+        <div className="loading-popup">
+          <div className="loading-icon">&#xe027; Quiz is submitting...</div>
+        </div>
+      )}
 
       {showSuccessPopup && (
         <div className="success-popup">
           <div className="tick-icon">
-            &#10004; Task added successfully. Please refresh the page.
+            &#10004; Quiz added successfully. Please refresh the page.
           </div>
         </div>
       )}

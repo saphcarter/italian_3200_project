@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  "https://uqkijiayajogyreusvdh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxa2lqaWF5YWpvZ3lyZXVzdmRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxNzM4MzksImV4cCI6MjAxMjc0OTgzOX0.vUxc_bauot2pMBcGz18fyTR_e88nGJ6jkkqV6mcBLHs"
-);
+import Loader, { VariableHeightLoader } from "./Loader";
 
 // individual task entry point, will take you to quiz page
 function TaskCard({ taskName, dueDate, quizId }) {
@@ -18,23 +13,21 @@ function TaskCard({ taskName, dueDate, quizId }) {
 }
 
 // container for all available task entry points
-function TaskSection(isAdmin) {
+function TaskSection({ isAdmin }) {
   const [quizzes, setQuizzes] = useState([]);
-
-  // useEffect(() => {
-  //   getQuizzes();
-  // }, []);
-
-  // async function getQuizzes() {
-  //   const { data } = await supabase.from("quizzes").select();
-  //   setQuizzes(data);
-  // }
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/quizzes")
       .then((response) => response.json())
-      .then((data) => setQuizzes(data))
-      .catch((error) => console.error("Error fetching quizzes:", error));
+      .then((data) => {
+        setQuizzes(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching quizzes:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   function formatDateTime(isoDate) {
@@ -56,14 +49,18 @@ function TaskSection(isAdmin) {
           {isAdmin ? "All Quizzes" : "Your Quizzes"}
         </h2>
         <div className="task-card-section">
-          {quizzes.map((quiz) => (
-            <TaskCard
-              key={quiz[0]}
-              taskName={quiz[1]}
-              dueDate={formatDateTime(quiz[2])}
-              quizId={quiz[0]}
-            />
-          ))}
+          {isLoading ? (
+            <VariableHeightLoader height="50px" />
+          ) : (
+            quizzes.map((quiz) => (
+              <TaskCard
+                key={quiz[0]}
+                taskName={quiz[1]}
+                dueDate={formatDateTime(quiz[2])}
+                quizId={quiz[0]}
+              />
+            ))
+          )}
         </div>
       </div>
     </>

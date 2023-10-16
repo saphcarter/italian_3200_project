@@ -10,16 +10,13 @@ export const ProfilePage = () => {
 
   return (
     <div>
-      {/* <h2>Profile</h2> */}
       <div>
         <div className="profile-grid">
-          <img
-            src={user.picture}
-            alt="Profile picture"
-            className="profile-avatar"
-          />
           <div>
-            <h3>Name: {user.nickname}</h3>
+            <h3>
+              Name: {user.user_metadata ? user.user_metadata.name : user.name}
+            </h3>
+            <div>Student Number: {user.nickname}</div>
             <div>Email: {user.email}</div>
           </div>
         </div>

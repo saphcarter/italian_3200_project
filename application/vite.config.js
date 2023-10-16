@@ -6,10 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/time": {
-        target: "ws://127.0.0.1:5000/",
-        ws: true,
-      },
       "/audio": {
         target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
         ws: true,
@@ -59,6 +55,10 @@ export default defineConfig({
         ws: true,
       },
       "/getusers": {
+        target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
+        ws: true,
+      },
+      "/wiperecords": {
         target: "ws://db.uqkijiayajogyreusvdh.supabase.co/",
         ws: true,
       },
